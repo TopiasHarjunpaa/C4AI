@@ -2,6 +2,10 @@
 
 Description to be added.
 
+## Releases
+
+To be added.
+
 ## Documentation
 
 - [Project definition document](https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/definitions.md)
@@ -21,8 +25,48 @@ Description to be added.
 
 ## Assembly instructions
 
-Assembly instructions to be added.
+Start by cloning the repository:
+
+```
+$ git clone git@github.com:TopiasHarjunpaa/C4AI.git
+$ cd C4AI
+```
+
+Install dependencies
+
+```
+$ poetry install
+```
+
+Start the program using the command:
+
+```
+$ poetry run invoke start
+```
 
 ## Other commands
 
-Other commands to be added.
+#### Testing:
+
+Tests can be executed using the command:
+
+```
+poetry run invoke test
+```
+
+Coverage report can be generated using the command:
+
+```
+poetry run invoke coverage-report
+```
+
+Report will be generated into the folder named `htmlcov`. Coverage report can be also found from [Codecov (placeholder)]()
+
+
+#### Pylint:
+
+Style checks can be executed using the command:
+
+```
+poetry run invoke lint
+```
