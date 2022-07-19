@@ -3,10 +3,10 @@
 #### Week 1
 | Day | Hour | What did I do? |
 | :----:|:-----| :-----|
-| 18.7 | 0 h    | xxx |
-| 19.7 | 0 h    | xxx |
+| 18.7 | 1 h    | Topic selection |
+| 19.7 | 3 h    | Topic selection continues and initialization of repository |
 | 20.7 | 0 h    | xxx |
-| **Total** | **0 h** | |
+| **Total** | **4 h** | |
 
 #### Week 2
 | Day | Hour | What did I do? |
