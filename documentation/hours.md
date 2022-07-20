@@ -5,8 +5,8 @@
 | :----:|:-----| :-----|
 | 18.7 | 1 h    | Topic selection |
 | 19.7 | 3 h    | Topic selection continues and initialization of repository |
-| 20.7 | 0 h    | xxx |
-| **Total** | **4 h** | |
+| 20.7 | 3 h    | Creation of UI |
+| **Total** | **7 h** | |
 
 #### Week 2
 | Day | Hour | What did I do? |
