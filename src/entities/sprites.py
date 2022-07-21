@@ -1,5 +1,6 @@
 import pygame
-from entities.player import Player
+from entities.coin import Coin
+from entities.grid import Grid
 
 
 class Sprites:
@@ -19,22 +20,36 @@ class Sprites:
         """
 
         self._board = board
-        self._size = (width, height)
+        self._cell_size = width / 20
+        self._start_x = width / 2 - 3 * self._cell_size
+        self._start_y = height / 2 - 2.5 * self._cell_size
         self.all_sprites = pygame.sprite.Group()
-
-        # Just testing
-        self.player1 = Player(self._board, self._size[0]/2,
-                             self._size[1] / 4 * 3, self._size[0] / 40, (255,0,0))
-        self.player2 = Player(self._board, self._size[0]/2,
-                      self._size[1] / 4 * 2, self._size[0] / 40, (255,255,0))
-
+        self.grids = pygame.sprite.Group()
+        self.coins = pygame.sprite.Group()
         self._init_sprites()
 
     def _init_sprites(self):
         """Initialises all sprites
         """
 
-        self.all_sprites.add(self.player1, self.player2)
 
-    def _draw_new_token():
-        pass
+        for i in range(6):
+            for j in range(7):
+                grid = Grid(self._start_x + j * self._cell_size,
+                            self._start_y + i * self._cell_size,
+                            self._cell_size)
+                self.grids.add(grid)
+        self.grids.add(grid)
+        self.all_sprites.add(self.grids)
+
+    def draw_new_token(self, row_number, col_number, player_number):
+        YELLOW = (255,204,0)
+        RED = (255,0,0)
+        color = RED
+        if player_number == 2:
+            color = YELLOW
+        coin = Coin(self._board, self._start_x + col_number * self._cell_size,
+                    self._start_y + row_number * self._cell_size,
+                    self._cell_size, color)
+        self.coins.add(coin)
+        self.all_sprites.add(coin)

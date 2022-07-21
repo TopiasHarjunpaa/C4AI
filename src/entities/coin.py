@@ -1,22 +1,22 @@
 import pygame
 
 
-class Player(pygame.sprite.Sprite):
-    """A class to represent player object at the game board.
+class Coin(pygame.sprite.Sprite):
+    """A class to represent coin object at the game board.
     Attributes:
         board: Board object
         x_coordinate: Spawn location at the x-axis.
         y_coordinate: Spawn location at the y-axis.
-        size: side length of the rectangular player object.
+        size: side length of the round coin object.
     """
 
     def __init__(self, board, x_coordinate, y_coordinate, size, color):
-        """Constructs all the necessary attributes for the player object.
+        """Constructs all the necessary attributes for the coin object.
         Args:
             board (Board): Board object
             x_coordinate (int): Spawn location at the x-axis.
             y_coordinate (int): Spawn location at the y-axis.
-            size (int): side length of the rectangular player object.
+            size (int): side length of the round coin object.
             color: color of the token.
         """
 
@@ -28,7 +28,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.position = pygame.math.Vector2(x_coordinate, y_coordinate)
         self.speed = 0 # placeholder for animation
-        self.rect.midbottom = (x_coordinate, y_coordinate) # change to center
+        self.rect.center = (x_coordinate, y_coordinate)
 
     def drop(self):
         """Placeholder
@@ -37,16 +37,16 @@ class Player(pygame.sprite.Sprite):
 
 
     def update(self):
-        """Updates location of the player object.
+        """Updates location of the coin object.
         """
         pass
 
     def _visualize(self, size):
-        """Creates visualization for the player object.
-        Player object white borders.
+        """Creates visualization for the coin object.
+        Coin object white borders.
         Args:
-            size (int): side length of the rectangular player object.
+            size (int): side length of the round token object.
         """
-        # change shape
-        pygame.draw.rect(self.image, (255,255,255), (0, 0, size, size))
-        pygame.draw.rect(self.image, (self.color),(3, 3, size - 6, size - 6))
+
+        pygame.draw.circle(self.image, (255,255,255), (size*0.5, size*0.5), size*0.45)
+        pygame.draw.circle(self.image, (self.color),(size*0.5, size*0.5), size*0.43)

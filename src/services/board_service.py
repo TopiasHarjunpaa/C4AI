@@ -14,31 +14,44 @@ class BoardService:
             width (int): Width of the display.
             height (int): Heigth of the display.
         """
-
+        self.grid = [[0 for row in range(7)] for col in range(6)]
         self.sprites = Sprites(self, width, height)
         self.all_sprites = self.sprites.all_sprites
-
-        #Just for testing
-        self.player1 = self.sprites.player1
-        self.player2 = self.sprites.player2
-
         self.update()
 
     def update(self):
         """To be added
         """
-
         self.all_sprites.update()
-        return self._check_win()
 
 
-    def _add_token(self):
+    def add_token(self, col_number, player_number):
         """To be added
         """
-        self.sprites._draw_new_token()
+        for row_number in reversed(range(6)):
+            if self.grid[row_number][col_number] == 0:
+                self.grid[row_number][col_number] = player_number
+                self.sprites.draw_new_token(row_number ,col_number, player_number)
+                return True
+        return False
 
-    def _check_win(self):
+
+    def test_grid(self):
+        for row in self.grid:
+            print(row)
+    
+    def check_win(self, player_number):
         """To be added
         """
+        # Vertical check
+        for row in range(3):
+            for col in range(6):
+                if (self.grid[row][col] == player_number and 
+                    self.grid[row+1][col] == player_number and 
+                    self.grid[row+2][col] == player_number and 
+                    self.grid[row+3][col] == player_number):
+                    return True
+        
+        #Missing other checks...
 
-        return True
+        return False

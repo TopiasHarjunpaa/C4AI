@@ -35,10 +35,10 @@ class Renderer:
         self._display.fill((0, 0, 0))
         board.all_sprites.draw(self._display)
         self._draw_text("TEST", self._extra_small,
-                        self.width / 2 + 3, self.height / 8 + 3, (0, 0, 0))
-        self._draw_text("TEST", self._extra_small,
-                        self.width / 2 + 3, self.height / 8 + self._extra_small * 1.2 + 3, (0, 0, 0))
+                        self.width / 2 + 3, self.height / 8 + 3, (255, 255, 255))
         self._draw_text("OTHER", self._extra_small,
+                        self.width / 2 + 3, self.height / 8 + self._extra_small * 1.2 + 3, (255, 255, 255))
+        self._draw_text("TEST", self._extra_small,
                         self.width / 2, self.height / 8, (255, 0, 255))
         self._draw_text("OTHER", self._extra_small,
                         self.width / 2, self.height / 8 + self._extra_small * 1.2, (255, 0, 255))
