@@ -7,6 +7,7 @@
 | 19.7 | 3 h    | Topic selection continues and initialization of repository |
 | 20.7 | 3 h    | Creation of UI |
 | 21.7 | 3 h    | Creation of UI continues and game rules and logic|
+| 22.7 | 0 h    | - |
 | **Total** | **10 h** | |
 
 #### Week 2
