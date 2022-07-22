@@ -4,6 +4,7 @@ Description to be added.
 
 
 ![GitHub Actions](https://github.com/TopiasHarjunpaa/C4AI/workflows/CI/badge.svg)
+[![codecov](https://codecov.io/gh/TopiasHarjunpaa/C4AI/branch/main/graph/badge.svg?token=56BPEV86O7)](https://codecov.io/gh/TopiasHarjunpaa/C4AI)
 
 
 ## Releases
