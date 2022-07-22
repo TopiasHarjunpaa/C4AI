@@ -65,7 +65,7 @@ Coverage report can be generated using the command:
 poetry run invoke coverage-report
 ```
 
-Report will be generated into the folder named `htmlcov`. Coverage report can be also found from [Codecov (placeholder)]()
+Report will be generated into the folder named `htmlcov`. Coverage report can be also found from [Codecov](https://app.codecov.io/gh/TopiasHarjunpaa/C4AI)
 
 
 #### Pylint:
