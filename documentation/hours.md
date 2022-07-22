@@ -7,8 +7,8 @@
 | 19.7 | 3 h    | Topic selection continues and initialization of repository |
 | 20.7 | 3 h    | Creation of UI |
 | 21.7 | 3 h    | Creation of UI continues and game rules and logic|
-| 22.7 | 2 h    | Game rules and logic continues, GitHub actions, Docstring and formating |
-| **Total** | **12 h** | |
+| 22.7 | 4 h    | Game rules and logic continues, GitHub actions, Docstring and formating |
+| **Total** | **14 h** | |
 
 #### Week 2
 | Day | Hour | What did I do? |
