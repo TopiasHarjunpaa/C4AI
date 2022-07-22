@@ -4,6 +4,11 @@ from dotenv import load_dotenv
 TITLE = "C4AI"
 FPS = 60
 
+PINK = (255, 0, 255)
+WHITE = (255, 255, 255)
+YELLOW = (255, 204, 0)
+RED = (255, 0, 0)
+
 dirname = os.path.dirname(__file__)
 
 try:

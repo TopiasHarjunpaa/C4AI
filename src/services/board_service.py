@@ -62,7 +62,7 @@ class BoardService:
                 return True
         return False
 
-    def test_grid(self):
+    def print_grid(self):
         """Prints current grid matrix
         """
         for row in self.grid:

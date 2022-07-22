@@ -1,10 +1,7 @@
 import pygame
 from entities.coin import Coin
 from entities.grid import Grid
-
-YELLOW = (255, 204, 0)
-RED = (255, 0, 0)
-
+from config import YELLOW, RED
 
 class Sprites:
     """A class to represent sprites object. This object initialises all sprites.

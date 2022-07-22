@@ -56,11 +56,17 @@ class UI:
 
         pass
 
-    def show_game_over_view(self):
-        """Shows the game over view
+    def show_game_ended_view(self, player_number):
+        """Shows the game ended view.
+        Play again by pressing the key N or go back to menu
+        by pressing the key ESC
         """
-
-        pass
+        self._renderer.render_game_ended(self._board, player_number)
+        key = self._wait_and_check_accepted_keys([pygame.K_RETURN, pygame.K_n])
+        if key == pygame.K_RETURN:
+            self._show_menu_view()
+        if key == pygame.K_n:
+            self._game.start_gameloop()
 
     def quit(self):
         """Quits the game.

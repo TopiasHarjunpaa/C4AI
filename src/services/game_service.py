@@ -37,19 +37,16 @@ class GameService:
         """Starts the game loop and sets playing to true ie. game has started.
         Check events, playing status and renders the display during the loop.
         """
-
+        
+        self.player_number = 1
         self.playing = True
         self._board.reset()
         while self.playing:
             self._clock.tick()
             self._check_events()
             self._board.update()
-            if self._board.check_win(self.player_number):
-                # Just for testing
-                self.playing = False
-                print(f"Player {self.player_number} won!")
             self._render()
-        self._menu.start_menu()
+        self._menu.show_game_ended_view(self.player_number)
 
     def _check_events(self):
         """Checks player events.
@@ -68,10 +65,13 @@ class GameService:
                 self._menu.quit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_t:
-                    self._board.test_grid()
+                    self._board.print_grid()
                 if event.key in accepted_keys:
                     if self._board.add_coin(event.key - 49, self.player_number):
-                        self._change_turn()
+                        if self._board.check_win(self.player_number):
+                            self.playing = False
+                        else:
+                            self._change_turn()
                 if event.key == pygame.K_ESCAPE:
                     self.playing = False
                     self._menu.start_menu()
@@ -89,4 +89,10 @@ class GameService:
         """Call renderer object which renders the display.
         """
 
-        self._renderer.render_game(self._board)
+        self._renderer.render_game(self._board, self.player_number)
+
+    def _render_game_ended(self):
+        """Call renderer object which renders the game ended screen.
+        """
+
+        self._renderer.render_game_ended(self._board, self.player_number)
