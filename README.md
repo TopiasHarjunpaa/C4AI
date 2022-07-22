@@ -2,6 +2,10 @@
 
 Description to be added.
 
+
+![GitHub Actions](https://github.com/TopiasHarjunpaa/C4AI/workflows/CI/badge.svg)
+
+
 ## Releases
 
 To be added.
