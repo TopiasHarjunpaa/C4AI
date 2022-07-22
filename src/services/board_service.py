@@ -51,7 +51,32 @@ class BoardService:
                     self.grid[row+2][col] == player_number and 
                     self.grid[row+3][col] == player_number):
                     return True
-        
-        #Missing other checks...
+
+        # Horizontal check
+        for row in range(5):
+            for col in range(4):
+                if (self.grid[row][col] == player_number and 
+                    self.grid[row][col+1] == player_number and 
+                    self.grid[row][col+2] == player_number and 
+                    self.grid[row][col+3] == player_number):
+                    return True     
+
+        # Up diagonal check
+        for row in range(3,6):
+            for col in range(4):
+                if (self.grid[row][col] == player_number and 
+                    self.grid[row-1][col+1] == player_number and 
+                    self.grid[row-2][col+2] == player_number and 
+                    self.grid[row-3][col+3] == player_number):
+                    return True 
+
+        # Up diagonal check
+        for row in range(3):
+            for col in range(4):
+                if (self.grid[row][col] == player_number and 
+                    self.grid[row+1][col+1] == player_number and 
+                    self.grid[row+2][col+2] == player_number and 
+                    self.grid[row+3][col+3] == player_number):
+                    return True 
 
         return False
