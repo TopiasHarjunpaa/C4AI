@@ -7,6 +7,7 @@ class EventQueueService:
 
     def get(self):
         """Gets events from the queue.
+
         Returns:
             Eventlist (list): Returns all the messages and removes them from the queue.
         """

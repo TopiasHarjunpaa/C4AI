@@ -11,6 +11,7 @@ class UI:
 
     def __init__(self, renderer, event_queue, clock):
         """Constructs all the necessary attributes for UI.
+
         Args:
             renderer (Renderer): Renderer object.
             event_queue (EventQueueService: Event and queue service object.
@@ -33,7 +34,6 @@ class UI:
 
     def _show_menu_view(self):
         """Shows the menu view.
-        Shows the menu view.
         Waits for key and forwards to the next view:
         n = new game view
         s = game setup view
@@ -46,16 +46,15 @@ class UI:
         self._menu_view_is_open = False
         if key == pygame.K_n:
             self._game.start_gameloop()
-            print("game has started")
         if key == pygame.K_s:
-            #self._show_setup_view()
-            print("setup is open")
+            pass
+            # self._show_setup_view()
 
     def _show_setup_view(self):
         """Shows the game setup view.
         """
-        pass
 
+        pass
 
     def show_game_over_view(self):
         """Shows the game over view
@@ -70,7 +69,6 @@ class UI:
         pygame.quit()
         sys.exit()
 
-
     def _wait_and_check_accepted_keys(self, keys: list, event_type=pygame.KEYUP):
         """Waits and checks accepted keys.
         Check escape and quit keys:
@@ -79,9 +77,11 @@ class UI:
         Waits for accepted keys. When proper key is found:
         1. Save the key
         2. Stop wait loop
+
         Args:
             keys (list): List of accepted keys
             event_type ((pygame.event), optional): Defaults to pygame.KEYUP.
+
         Returns:
             int: Returns ascii number of pressed key.
         """

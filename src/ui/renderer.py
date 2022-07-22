@@ -4,6 +4,7 @@ from config import FONT_PATH
 
 class Renderer:
     """A class to represent renderer object which renders the display.
+
     Attributes:
         display: Pygame display object.
         width (int): Width of the display.
@@ -13,6 +14,7 @@ class Renderer:
     def __init__(self, display, width, height):
         """Constructs all the necessary attributes for the renderer object.
         Background images will be scaled according to screen size.
+
         Args:
             display (Display): Pygame display object.
             width (int): Width of the display.
@@ -28,6 +30,7 @@ class Renderer:
     def render_game(self, board):
         """Renders the display during game loop.
         Fills the display and draws all sprites and texts to the screen.
+
         Args:
             board (BoardService): Board service object.
         """
@@ -49,6 +52,7 @@ class Renderer:
         Fills the display and draw texts with multiple colors.
         Read the information from each line and draw text according
         to the information.
+
         Args:
             title (str): Screen title text.
             lines (list): Information which is stored into multiple lines.
@@ -63,14 +67,15 @@ class Renderer:
                         self.height / 5 + 3 + (self._big * 1.2))
         self._draw_text(title, self._big, self.width / 2,
                         self.height / 5 + (self._big * 1.2), (0, 200, 0))
-        
+
         for line in lines:
-          self._draw_text(line[0], line[1], line[2], line[3])
-        
+            self._draw_text(line[0], line[1], line[2], line[3])
+
         pygame.display.flip()
 
     def _draw_text(self, text, font_size, x_coordinate, y_coordinate, color=(255, 255, 255)):
         """Draws the text according to all necessary attributes.
+
         Args:
             text (str): Text
             font_size (int): Font size

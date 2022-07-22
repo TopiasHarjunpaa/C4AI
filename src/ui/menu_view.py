@@ -1,11 +1,13 @@
 class MenuView:
     """A class to represent menu view of UI.
+
     Attributes:
         renderer: Renderer object.
     """
 
     def __init__(self, renderer):
         """Constructs all the necessary attributes for finish view.
+
         Args:
             renderer (Renderer): Renderer object which renders the display.
         """
@@ -20,9 +22,12 @@ class MenuView:
         """Prepares all information to show for the renderer object.
         Information is forwarded inside list of lines.
         Following information will be rendered:
+
         1. Game and view name
         2. New game view key
+        3. Game setup view key
         3. Exit key
+
         Args:
             records (list): List of save objects.
         """

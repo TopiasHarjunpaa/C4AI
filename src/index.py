@@ -5,6 +5,7 @@ from ui.renderer import Renderer
 from ui.ui import UI
 from config import FPS, TITLE
 
+
 def main():
     """Start the game.
     Read display size, set title and create classes needed for UI.
@@ -22,6 +23,7 @@ def main():
     user_interface = UI(renderer, event_queue, clock)
 
     user_interface.start_menu()
+
 
 if __name__ == "__main__":
     main()

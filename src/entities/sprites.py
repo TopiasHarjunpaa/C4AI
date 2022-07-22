@@ -2,17 +2,24 @@ import pygame
 from entities.coin import Coin
 from entities.grid import Grid
 
+YELLOW = (255, 204, 0)
+RED = (255, 0, 0)
+
 
 class Sprites:
     """A class to represent sprites object. This object initialises all sprites.
+
     Attributes:
-        level: Level object
+        board: Board object
         width: Width of the display.
         heigth: Heigth of the display.
     """
 
     def __init__(self, board, width, height):
         """Constructs all the necessary attributes for the sprites object and inits all sprites.
+        Start X and Y indicates top-left coordinates of the game board at the screen.
+        Cell size means side length of the each squared cell of the game board grid.
+
         Args:
             board (Board): Board object
             width (int): Width of the display.
@@ -26,12 +33,12 @@ class Sprites:
         self.all_sprites = pygame.sprite.Group()
         self.grids = pygame.sprite.Group()
         self.coins = pygame.sprite.Group()
-        self._init_sprites()
+        self._init_game_board()
 
-    def _init_sprites(self):
-        """Initialises all sprites
+    def _init_game_board(self):
+        """Initialises all grid cells which together forms a game board
+        and adds them to the sprites group
         """
-
 
         for i in range(6):
             for j in range(7):
@@ -42,13 +49,19 @@ class Sprites:
         self.grids.add(grid)
         self.all_sprites.add(self.grids)
 
-    def draw_new_token(self, row_number, col_number, player_number):
-        YELLOW = (255,204,0)
-        RED = (255,0,0)
+    def draw_new_coin(self, row_number, col_number, player_number):
+        """Initialises a game coin. First player has red coin and second player has yellow coin.
+        Adds each coin to the sprite group.
+
+        Args:
+            row_number (int): Game board row number
+            col_number (int): Game board column number
+            player_number (int): Player number (1 = first player, 2 = second player)
+        """
         color = RED
         if player_number == 2:
             color = YELLOW
-        coin = Coin(self._board, self._start_x + col_number * self._cell_size,
+        coin = Coin(self._start_x + col_number * self._cell_size,
                     self._start_y + row_number * self._cell_size,
                     self._cell_size, color)
         self.coins.add(coin)

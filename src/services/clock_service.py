@@ -3,12 +3,14 @@ import pygame
 
 class ClockService:
     """A class to represent clock service which tracks time.
+
     Attributes:
         fps: Framerate
     """
 
     def __init__(self, fps):
         """Constructs framerate attribute for the clock object.
+
         Args:
             fps (int): Framerate
         """
@@ -25,6 +27,7 @@ class ClockService:
 
     def get_ticks(self):
         """Gets the time in milliseconds.
+
         Returns:
             milliseconds (int): Returns the number of milliseconds since the pygame inited.
         """
