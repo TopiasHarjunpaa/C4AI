@@ -17,6 +17,6 @@ In order to set up couple of measurable goals, I would say that AI should spend 
 
 Sources:  
 [Minimax (wikipedia)](https://en.wikipedia.org/wiki/Minimax)  
-[Alpha-beta pruning](https://en.wikipedia.org/wikiAlpha%E2%80%93beta_pruning)  
+[Alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha_beta_pruning)  
 [Solving connect 4: How to build a perfect AI](http://blog.gamesolver.org/)  
 
