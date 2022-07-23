@@ -16,7 +16,7 @@ On top of that, there will be several ways to expand the project. As a one solut
 In order to set up couple of measurable goals, I would say that AI should spend at most 5s to calculate next move. I am also expecting that it should be able to beat me in most of the games.
 
 Sources:
-[Minimax (wikipedia)](https://en.wikipedia.org/wiki/Minimax)
-[Alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning)
+[Minimax (wikipedia)](https://en.wikipedia.org/wiki/Minimax)  
+[Alpha-beta pruning](https://en.wikipedia.org/wiki/  Alpha%E2%80%93beta_pruning)
 [Solving connect 4: How to build a perfect AI](http://blog.gamesolver.org/)
 
