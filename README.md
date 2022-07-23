@@ -1,6 +1,6 @@
 # C4AI
 
-C4AI is the University of Helsinki's Data Structures Lab 2022 course project. C4AI refers to board game Connect Four and the goal for this project is to create AI which plays Connect Four computer game against the player.
+C4AI is the University of Helsinki's Data Structures Lab 2022 course project. C4AI refers to board game called Connect Four and the goal for this project is to create AI which plays Connect Four computer game against the player.
 
 ![GitHub Actions](https://github.com/TopiasHarjunpaa/C4AI/workflows/CI/badge.svg)
 [![codecov](https://codecov.io/gh/TopiasHarjunpaa/C4AI/branch/main/graph/badge.svg?token=56BPEV86O7)](https://codecov.io/gh/TopiasHarjunpaa/C4AI)
