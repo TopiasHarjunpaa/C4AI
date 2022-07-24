@@ -8,6 +8,7 @@ PINK = (255, 0, 255)
 WHITE = (255, 255, 255)
 YELLOW = (255, 204, 0)
 RED = (255, 0, 0)
+GREEN = (0, 200, 0)
 
 dirname = os.path.dirname(__file__)
 

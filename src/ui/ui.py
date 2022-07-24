@@ -1,6 +1,7 @@
 from os import sys
 import pygame
 from ui.menu_view import MenuView
+from ui.setup_view import SetupView
 from services.board_service import BoardService
 from services.game_service import GameService
 
@@ -47,20 +48,26 @@ class UI:
         if key == pygame.K_n:
             self._game.start_gameloop()
         if key == pygame.K_s:
-            pass
-            # self._show_setup_view()
+            self._show_setup_view()
 
     def _show_setup_view(self):
-        """Shows the game setup view.
+        """Shows the game setup view. Allows user to change player
+        setup with keys 1 and 2. Pressing the key allows user to choose
+        different player type such as human player or different AI players.
         """
 
-        pass
+        while True:
+            player_setup = self._game.get_player_setup()
+            SetupView(self._renderer).show(player_setup)
+            key = self._wait_and_check_accepted_keys([pygame.K_1, pygame.K_2]) - 48
+            self._game.change_player_setup(key)
 
     def show_game_ended_view(self, player_number):
         """Shows the game ended view.
         Play again by pressing the key N or go back to menu
         by pressing the key ESC
         """
+        
         self._renderer.render_game_ended(self._board, player_number)
         key = self._wait_and_check_accepted_keys([pygame.K_RETURN, pygame.K_n])
         if key == pygame.K_RETURN:

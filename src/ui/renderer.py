@@ -1,5 +1,5 @@
 import pygame
-from config import FONT_PATH, WHITE, YELLOW, RED, PINK, RED
+from config import FONT_PATH, WHITE, YELLOW, RED, PINK, RED, GREEN
 
 
 class Renderer:
@@ -104,10 +104,13 @@ class Renderer:
         self._draw_text(title, self._big, self.width / 2 + 3,
                         self.height / 5 + 3 + (self._big * 1.2))
         self._draw_text(title, self._big, self.width / 2,
-                        self.height / 5 + (self._big * 1.2), (0, 200, 0))
+                        self.height / 5 + (self._big * 1.2), GREEN)
 
         for line in lines:
-            self._draw_text(line[0], line[1], line[2], line[3])
+            if len(line) == 5:
+                self._draw_text(line[0], line[1], line[2], line[3], line[4])
+            else:
+                self._draw_text(line[0], line[1], line[2], line[3])
 
         pygame.display.flip()
 
