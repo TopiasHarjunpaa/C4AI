@@ -14,10 +14,10 @@
 #### Week 2
 | Day | Hour | What did I do? |
 | :----:|:-----| :-----|
+| 24.7 | 2 h    | Creation of setup view where player types can be changed. |
 | xx.x | 0 h    | xxx |
 | xx.x | 0 h    | xxx |
-| xx.x | 0 h    | xxx |
-| **Total** | **0 h** | |
+| **Total** | **2 h** | |
 
 #### Week 3
 | Day | Hour | What did I do? |
