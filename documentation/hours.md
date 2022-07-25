@@ -15,9 +15,9 @@
 | Day | Hour | What did I do? |
 | :----:|:-----| :-----|
 | 24.7 | 2 h    | Creation of setup view where player types can be changed. |
+| 25.7 | 3 h    | Unit and integration test and preliminary base for the ai class |
 | xx.x | 0 h    | xxx |
-| xx.x | 0 h    | xxx |
-| **Total** | **2 h** | |
+| **Total** | **5 h** | |
 
 #### Week 3
 | Day | Hour | What did I do? |
