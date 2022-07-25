@@ -1,5 +1,5 @@
-import random
 import pygame
+from services.ai_service import AiService
 
 
 PLAYER = 1
@@ -42,6 +42,7 @@ class GameService:
         self._menu = menu
         self.player_number = 1
         self._player_setup = {1: PLAYER, 2: AI_BASIC}
+        self.ai = AiService(self._board)
 
     def start_gameloop(self):
         """Starts the game loop and sets playing to true ie. game has started.
@@ -94,9 +95,8 @@ class GameService:
         """Calculates and creates the next move for AI player.
         """
 
-        available_columns = self._board.get_available_columns()
-        column = random.choice(available_columns)
-        self._board.add_coin(column, self.player_number)
+        column_number = self.ai.calculate_move_randomly()
+        self._board.add_coin(column_number, self.player_number)
         if self._board.check_win(self.player_number):
             self.playing = False
         else:
