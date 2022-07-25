@@ -31,18 +31,24 @@ class Renderer:
         self._start_x = width / 2 - 3 * self._cell_size
         self._start_y = height / 2 - 2.5 * self._cell_size
 
-    def render_game(self, board, player_number):
+    def render_game(self, board, player_number, game_ended):
         """Renders the display during game loop.
         Fills the display and draws all sprites and texts to the screen.
 
         Args:
             board (BoardService): Board service object.
             player_number (int): Player number (1 = first player, 2 = second player)
+            game_ended (bool): Renders game ended screen if set to True.
+            Otherwise renders normal game screen. Defaults to False.
         """
         
         color = RED
         if player_number ==  2:
             color = YELLOW
+        
+        player_text = f"PLAYER {player_number} TURN"
+        if game_ended:
+            player_text = f"PLAYER {player_number} HAS WON! (press N to play again)"
 
         self._display.fill((0, 0, 0))
         board.all_sprites.draw(self._display)
@@ -50,40 +56,14 @@ class Renderer:
                         self.width / 2 + 3, self.height / 8 + 3, WHITE)
         self._draw_text("FOUR CONNECT GAME", self._small,
                         self.width / 2, self.height / 8, PINK)
-        self._draw_text(f"PLAYER {player_number} TURN", self._extra_small,
+        self._draw_text(player_text, self._extra_small,
                         self.width / 2 + 1.5, self.height / 5 + 1.5, WHITE)                
-        self._draw_text(f"PLAYER {player_number} TURN", self._extra_small,
+        self._draw_text(player_text, self._extra_small,
                         self.width / 2, self.height / 5, color)
         for i in range(7):
             self._draw_text(str(i+1), self._small, self._start_x + i * self._cell_size + 3, self._start_y + 6 * self._cell_size + 3, WHITE)
             self._draw_text(str(i+1), self._small, self._start_x + i * self._cell_size, self._start_y + 6 * self._cell_size, PINK)
-        pygame.display.flip()
-    
-    def render_game_ended(self, board, player_number):
-        """Renders the display when game has ended.
-        Fills the display and draws all sprites and texts to the screen.
-
-        Args:
-            board (BoardService): Board service object.
-            player_number (int): Player number (1 = first player, 2 = second player)
-        """
-
-        color = RED
-        if player_number ==  2:
-            color = YELLOW
-
-        # Remove repeated code
-        self._display.fill((0, 0, 0))
-        board.all_sprites.draw(self._display)
-        self._draw_text("FOUR CONNECT GAME", self._small,
-                        self.width / 2 + 3, self.height / 8 + 3, WHITE)
-        self._draw_text("FOUR CONNECT GAME", self._small,
-                        self.width / 2, self.height / 8, PINK)
-        self._draw_text(f"PLAYER {player_number} HAS WON! (press N to play again)", self._extra_small,
-                        self.width / 2 + 1.5, self.height / 5 + 1.5, WHITE)                
-        self._draw_text(f"PLAYER {player_number} HAS WON! (press N to play again)", self._extra_small,
-                        self.width / 2, self.height / 5, color)
-        pygame.display.flip()        
+        pygame.display.flip()      
 
     def render_menu(self, title, lines: list):
         """Renders the display during menu screens.

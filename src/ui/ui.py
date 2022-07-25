@@ -68,7 +68,7 @@ class UI:
         by pressing the key ESC
         """
         
-        self._renderer.render_game_ended(self._board, player_number)
+        self._game.render(True)
         key = self._wait_and_check_accepted_keys([pygame.K_RETURN, pygame.K_n])
         if key == pygame.K_RETURN:
             self._show_menu_view()
