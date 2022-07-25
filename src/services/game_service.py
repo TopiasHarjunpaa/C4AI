@@ -59,7 +59,7 @@ class GameService:
             else:
                 self._calculate_next_move()
             self._board.update()
-            self._render()
+            self.render()
         self._menu.show_game_ended_view(self.player_number)
 
     def _check_events(self):
@@ -134,14 +134,12 @@ class GameService:
 
         self._player_setup[number] = self._player_setup[number] % 3 + 1
 
-    def _render(self):
+    def render(self, game_ended=False):
         """Call renderer object which renders the display.
+
+        Args:
+            game_ended (bool, optional): Renders game ended screen if set to True.
+            Otherwise renders normal game screen. Defaults to False.
         """
 
-        self._renderer.render_game(self._board, self.player_number)
-
-    def _render_game_ended(self):
-        """Call renderer object which renders the game ended screen.
-        """
-
-        self._renderer.render_game_ended(self._board, self.player_number)
+        self._renderer.render_game(self._board, self.player_number, game_ended)

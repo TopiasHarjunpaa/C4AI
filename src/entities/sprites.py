@@ -58,6 +58,7 @@ class Sprites:
         color = RED
         if player_number == 2:
             color = YELLOW
+
         coin = Coin(self._start_x + col_number * self._cell_size,
                     self._start_y + row_number * self._cell_size,
                     self._cell_size, color)

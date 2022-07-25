@@ -1,4 +1,5 @@
 import pygame
+from config import WHITE
 
 
 class Coin(pygame.sprite.Sprite):
@@ -28,24 +29,17 @@ class Coin(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (x_coordinate, y_coordinate)
 
-    def drop(self):
-        """Drops the coin object into the game board (placeholder)
-        """
-
-    def update(self):
-        """Updates location of the coin object (placeholder).
-        """
 
     def _visualize(self, size):
         """Creates visualization for the coin object.
-        Coin object is colored circle with borders and
+        Coin object is colored circle with white borders and
         radius 0.45 times of side length of cell size.
 
         Args:
             size (int): side length of the round token object.
         """
 
-        pygame.draw.circle(self.image, (255, 255, 255),
+        pygame.draw.circle(self.image, WHITE,
                            (size*0.5, size*0.5), size*0.45)
         pygame.draw.circle(self.image, (self.color),
                            (size*0.5, size*0.5), size*0.43)
