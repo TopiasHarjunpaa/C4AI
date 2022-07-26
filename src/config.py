@@ -4,6 +4,9 @@ from dotenv import load_dotenv
 TITLE = "C4AI"
 FPS = 60
 
+ROWS = 6
+COLUMNS = 7
+
 PINK = (255, 0, 255)
 WHITE = (255, 255, 255)
 YELLOW = (255, 204, 0)

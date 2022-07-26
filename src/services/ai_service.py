@@ -4,15 +4,15 @@ class AiService:
     """A class to represent AI services.
 
     Attributes:
-        board: Board object.
+        situation: Situation service object.
     """
-    def __init__(self, board):
+    def __init__(self, situation):
         """Constructs all the necessary attributes for the AI service object.
 
         Args:
-            board (Board: Board object
+            situation (Situation): Situation service object
         """
-        self._board = board
+        self._situation = situation
     
     def calculate_move_randomly(self):
         """Calculates next move randomly.
@@ -23,7 +23,7 @@ class AiService:
             int: Index of the chosen column.
         """
 
-        available_columns = self._board.get_available_columns()
+        available_columns = self._situation.get_available_columns()
         column_number = random.choice(available_columns)
         return column_number
 

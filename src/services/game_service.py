@@ -1,5 +1,6 @@
 import pygame
 from services.ai_service import AiService
+from services.situation_service import SituationService
 
 
 PLAYER = 1
@@ -42,7 +43,9 @@ class GameService:
         self._menu = menu
         self.player_number = 1
         self._player_setup = {1: PLAYER, 2: AI_BASIC}
-        self.ai = AiService(self._board)
+        self._situation = SituationService(self._board)
+        self.ai = AiService(self._situation)
+        
 
     def start_gameloop(self):
         """Starts the game loop and sets playing to true ie. game has started.
@@ -82,8 +85,11 @@ class GameService:
                 if event.key == pygame.K_t:
                     self._board.print_grid()
                 if event.key in accepted_keys:
-                    if self._board.add_coin(event.key - 49, self.player_number):
-                        if self._board.check_win(self.player_number):
+                    col_number = event.key - 49
+                    row_number = self._situation.check_column_available(col_number)
+                    if row_number != -1:
+                        self._board.add_coin(col_number, row_number, self.player_number)
+                        if self._situation.check_win(self.player_number):
                             self.playing = False
                         else:
                             self._change_turn()
@@ -95,9 +101,10 @@ class GameService:
         """Calculates and creates the next move for AI player.
         """
 
-        column_number = self.ai.calculate_move_randomly()
-        self._board.add_coin(column_number, self.player_number)
-        if self._board.check_win(self.player_number):
+        col_number = self.ai.calculate_move_randomly()
+        row_number = self._situation.check_column_available(col_number)
+        self._board.add_coin(col_number, row_number, self.player_number)
+        if self._situation.check_win(self.player_number):
             self.playing = False
         else:
             self._change_turn()
