@@ -6,6 +6,8 @@ On sunday, I created setup view which allows user to change different player set
 
 On monday, I did spent most of the time for creating unit and integration tests. I also created preliminary base for the ai service class and for its tests. On top of that, I did some small refactoring for the UI classes.
 
+On tuesday, I created preliminary heuristic value calculation for game scenarios. This also involved quite a lot changes for the existing code and for that reason I spent most of the time modificating the code structure and tests.
+
 ### How has the program progressed?
 
 To be added
