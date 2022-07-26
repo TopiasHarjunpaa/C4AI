@@ -29,7 +29,6 @@ class Coin(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (x_coordinate, y_coordinate)
 
-
     def _visualize(self, size):
         """Creates visualization for the coin object.
         Coin object is colored circle with white borders and

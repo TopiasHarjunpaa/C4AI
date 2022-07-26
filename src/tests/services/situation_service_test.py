@@ -3,6 +3,7 @@ from services.board_service import BoardService
 from services.situation_service import SituationService
 from tests.test_grids import G_VE1, G_HO1, G_UD1, G_DD1, G_SF1
 
+
 class TestSituationService(unittest.TestCase):
     def setUp(self):
         self.width = 640
@@ -23,13 +24,15 @@ class TestSituationService(unittest.TestCase):
 
     def test_get_available_columns_returns_all_available_columns(self):
         available_columns = self.situation.get_available_columns()
-        self.assertEqual(available_columns, [0,1,2,3,4,5,6])
+        self.assertEqual(available_columns, [
+                         (5, 0), (5, 1), (5, 2), (5, 3), (5, 4), (5, 5), (5, 6)])
         self.board.grid = G_SF1
         available_columns = self.situation.get_available_columns()
-        self.assertEqual(available_columns, [0,3,4])
+        self.assertEqual(available_columns, [(5, 0), (1, 3), (1, 4)])
         self.board.grid = G_DD1
         available_columns = self.situation.get_available_columns()
-        self.assertEqual(available_columns, [0,2,3,4,5,6])
+        self.assertEqual(available_columns, [
+                         (5, 0), (3, 2), (1, 3), (2, 4), (3, 5), (2, 6)])
 
     def test_check_win_finds_vertical_win(self):
         self.assertFalse(self.situation.check_win(1))

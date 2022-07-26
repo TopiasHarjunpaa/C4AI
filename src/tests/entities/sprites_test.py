@@ -16,8 +16,8 @@ class TestSprites(unittest.TestCase):
 
     def test_draw_new_coin_adds_coins_to_sprite_groups(self):
         self.assertEqual(len(self.sprites.coins), 0)
-        self.sprites.draw_new_coin(5,0,1)
-        self.sprites.draw_new_coin(4,0,2)
-        self.sprites.draw_new_coin(5,1,1)
+        self.sprites.draw_new_coin(5, 0, 1)
+        self.sprites.draw_new_coin(4, 0, 2)
+        self.sprites.draw_new_coin(5, 1, 1)
         self.assertEqual(len(self.sprites.coins), 3)
         self.assertEqual(len(self.sprites.all_sprites), 45)

@@ -3,6 +3,7 @@ from entities.coin import Coin
 from entities.grid import Grid
 from config import YELLOW, RED
 
+
 class Sprites:
     """A class to represent sprites object. This object initialises all sprites.
 

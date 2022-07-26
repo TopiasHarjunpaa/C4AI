@@ -2,6 +2,7 @@ import unittest
 from services.ai_service import AiService
 from services.board_service import BoardService
 
+
 class TestAiService(unittest.TestCase):
     def setUp(self):
         self.width = 640

@@ -42,12 +42,12 @@ class BoardService:
 
         self.all_sprites.update()
 
-    def add_coin(self, col_number, row_number, player_number):
+    def add_coin(self, row_number, col_number, player_number):
         """Adds new coin to the game board.
         Creates new coin and updates grid matrix with player number.
 
         Args:
-            
+
             col_number (int): Column number of game board to drop coin
             col_number (int): Last free row number of game board at indicated column
             player_number (int): Player number (1 = first player, 2 = second player)

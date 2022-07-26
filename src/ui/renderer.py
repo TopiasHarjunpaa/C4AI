@@ -41,11 +41,11 @@ class Renderer:
             game_ended (bool): Renders game ended screen if set to True.
             Otherwise renders normal game screen. Defaults to False.
         """
-        
+
         color = RED
-        if player_number ==  2:
+        if player_number == 2:
             color = YELLOW
-        
+
         player_text = f"PLAYER {player_number} TURN"
         if game_ended:
             player_text = f"PLAYER {player_number} HAS WON! (press N to play again)"
@@ -57,13 +57,15 @@ class Renderer:
         self._draw_text("FOUR CONNECT GAME", self._small,
                         self.width / 2, self.height / 8, PINK)
         self._draw_text(player_text, self._extra_small,
-                        self.width / 2 + 1.5, self.height / 5 + 1.5, WHITE)                
+                        self.width / 2 + 1.5, self.height / 5 + 1.5, WHITE)
         self._draw_text(player_text, self._extra_small,
                         self.width / 2, self.height / 5, color)
         for i in range(7):
-            self._draw_text(str(i+1), self._small, self._start_x + i * self._cell_size + 3, self._start_y + 6 * self._cell_size + 3, WHITE)
-            self._draw_text(str(i+1), self._small, self._start_x + i * self._cell_size, self._start_y + 6 * self._cell_size, PINK)
-        pygame.display.flip()      
+            self._draw_text(str(i+1), self._small, self._start_x + i *
+                            self._cell_size + 3, self._start_y + 6 * self._cell_size + 3, WHITE)
+            self._draw_text(str(i+1), self._small, self._start_x + i *
+                            self._cell_size, self._start_y + 6 * self._cell_size, PINK)
+        pygame.display.flip()
 
     def render_menu(self, title, lines: list):
         """Renders the display during menu screens.

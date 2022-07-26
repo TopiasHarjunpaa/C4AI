@@ -2,6 +2,7 @@ import unittest
 from services.board_service import BoardService
 from tests.test_grids import G_VE1
 
+
 class TestBoardService(unittest.TestCase):
     def setUp(self):
         self.width = 640
@@ -26,9 +27,9 @@ class TestBoardService(unittest.TestCase):
         self.board.add_coin(0, 5, 1)
         self.board.add_coin(0, 4, 2)
         self.board.add_coin(0, 3, 1)
-        self.assertEqual(self.board.grid[5][0], 1)
-        self.assertEqual(self.board.grid[4][0], 2)
-        self.assertEqual(self.board.grid[3][0], 1)
+        self.assertEqual(self.board.grid[0][5], 1)
+        self.assertEqual(self.board.grid[0][4], 2)
+        self.assertEqual(self.board.grid[0][3], 1)
         self.assertEqual(self.board.grid[2][0], 0)
 
     def test_add_coin_creates_sprites_correctly(self):

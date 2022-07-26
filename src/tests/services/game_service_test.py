@@ -46,22 +46,20 @@ class StubUI:
         pass
 
 
-
-
 class TestGameService(unittest.TestCase):
     def setUp(self):
         self.board = BoardService(640, 480)
         self.menu = StubUI()
-    
+
     def test_player_one_wins(self):
         events = [StubEvent(pygame.KEYDOWN, pygame.K_1),
-                    StubEvent(pygame.KEYDOWN, pygame.K_2),
-                    StubEvent(pygame.KEYDOWN, pygame.K_1),
-                    StubEvent(pygame.KEYDOWN, pygame.K_2),
-                    StubEvent(pygame.KEYDOWN, pygame.K_1),
-                    StubEvent(pygame.KEYDOWN, pygame.K_2),
-                    StubEvent(pygame.KEYDOWN, pygame.K_1), ]
-        
+                  StubEvent(pygame.KEYDOWN, pygame.K_2),
+                  StubEvent(pygame.KEYDOWN, pygame.K_1),
+                  StubEvent(pygame.KEYDOWN, pygame.K_2),
+                  StubEvent(pygame.KEYDOWN, pygame.K_1),
+                  StubEvent(pygame.KEYDOWN, pygame.K_2),
+                  StubEvent(pygame.KEYDOWN, pygame.K_1), ]
+
         gameloop = GameService(
             self.menu,
             self.board,
@@ -77,14 +75,14 @@ class TestGameService(unittest.TestCase):
 
     def test_player_two_wins(self):
         events = [StubEvent(pygame.KEYDOWN, pygame.K_5),
-                    StubEvent(pygame.KEYDOWN, pygame.K_2),
-                    StubEvent(pygame.KEYDOWN, pygame.K_1),
-                    StubEvent(pygame.KEYDOWN, pygame.K_2),
-                    StubEvent(pygame.KEYDOWN, pygame.K_1),
-                    StubEvent(pygame.KEYDOWN, pygame.K_2),
-                    StubEvent(pygame.KEYDOWN, pygame.K_1),
-                    StubEvent(pygame.KEYDOWN, pygame.K_2), ]
-        
+                  StubEvent(pygame.KEYDOWN, pygame.K_2),
+                  StubEvent(pygame.KEYDOWN, pygame.K_1),
+                  StubEvent(pygame.KEYDOWN, pygame.K_2),
+                  StubEvent(pygame.KEYDOWN, pygame.K_1),
+                  StubEvent(pygame.KEYDOWN, pygame.K_2),
+                  StubEvent(pygame.KEYDOWN, pygame.K_1),
+                  StubEvent(pygame.KEYDOWN, pygame.K_2), ]
+
         gameloop = GameService(
             self.menu,
             self.board,
@@ -100,14 +98,14 @@ class TestGameService(unittest.TestCase):
 
     def test_returns_correct_player_setup(self):
         events = [StubEvent(None, None), ]
-        
+
         gameloop = GameService(
             self.menu,
             self.board,
             StubRenderer(),
             StubEventQueue(events),
             StubClock()
-        )     
+        )
 
         setup = gameloop.get_player_setup()
         self.assertEqual(setup, ("Player", "AI (basic)"))
@@ -117,11 +115,10 @@ class TestGameService(unittest.TestCase):
         gameloop._player_setup = {1: 3, 2: 1}
         setup = gameloop.get_player_setup()
         self.assertEqual(setup, ("AI (advanced)", "Player"))
-           
 
     def test_escape_key_ends_loop(self):
         events = [StubEvent(pygame.KEYDOWN, pygame.K_ESCAPE), ]
-        
+
         gameloop = GameService(
             self.menu,
             self.board,
