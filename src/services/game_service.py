@@ -87,11 +87,11 @@ class GameService:
                 if event.key in accepted_keys:
                     col_number = event.key - 49
                     row_number = self._situation.check_column_available(
-                        col_number)
+                        self._board.grid, col_number)
                     if row_number != -1:
                         self._board.add_coin(
                             row_number, col_number, self.player_number)
-                        if self._situation.check_win(self.player_number):
+                        if self._situation.check_win(self._board.grid, self.player_number):
                             self.playing = False
                         else:
                             self._change_turn()
@@ -103,11 +103,11 @@ class GameService:
         """Calculates and creates the next move for AI player.
         """
 
-        move_location = self.ai.calculate_next_move(
+        move_location = self.ai.calculate_move_minimax(
             self._board.grid, self.player_number)
         self._board.add_coin(
             move_location[0], move_location[1], self.player_number)
-        if self._situation.check_win(self.player_number):
+        if self._situation.check_win(self._board.grid, self.player_number):
             self.playing = False
         else:
             self._change_turn()

@@ -27,15 +27,15 @@ class AiService:
             int: Index of the chosen column.
         """
 
-        available_columns = self._situation.get_available_columns()
-        column_number = random.choice(available_columns)[1]
-        return column_number
+        available_locations = self._situation.get_available_locations(self._situation.get_game_grid())
+        location = random.choice(available_locations)
+        return location
 
     def calculate_next_move(self, grid, player_number):
         max_value = -math.inf
-        available_columns = self._situation.get_available_columns()
-        targeted_location = available_columns[0]
-        for location in available_columns:
+        available_locations = self._situation.get_available_locations(self._situation.get_game_grid())
+        targeted_location = available_locations[0]
+        for location in available_locations:
 
             # Fix this one later...
             new_grid = []
@@ -52,6 +52,9 @@ class AiService:
                 max_value = value
                 targeted_location = location
         return targeted_location
+    
+    def calculate_move_minimax(self, grid, player_number):
+        return self.minimax(grid, player_number, 6, True)[1]
 
     def count_values(self, loc, player_number):
         opponent_number = player_number % 2 + 1
@@ -76,8 +79,8 @@ class AiService:
 
     def get_vertical_values(self, grid, player_number):
         value = 0
-        for i in range(COLUMNS):
-            col = [row[i] for row in grid]
+        for col in range(COLUMNS):
+            col = [row[col] for row in grid]
             for row in range(ROWS - 3):
                 loc = col[row:row + 4]
                 value += self.count_values(loc, player_number)
@@ -94,12 +97,18 @@ class AiService:
 
     def get_inc_diagonal_values(self, grid, player_number):
         value = 0
-        # To be added
+        for row in range(3, ROWS):
+            for col in range(COLUMNS - 3):
+                loc = [grid[row-i][col+i] for i in range(4)]
+                value += self.count_values(loc, player_number)
         return value
 
     def get_dec_diagonal_values(self, grid, player_number):
         value = 0
-        # To be added
+        for row in range(ROWS - 3):
+            for col in range(COLUMNS - 3):
+                loc = [grid[row+i][col+i] for i in range(4)]
+                value += self.count_values(loc, player_number)
         return value
 
     def heurestic_value(self, grid, player_number):
@@ -110,3 +119,75 @@ class AiService:
         score += self.get_dec_diagonal_values(grid, player_number)
         score += self.get_positional_values(grid, player_number)
         return score
+    
+    def minimax(self, grid, player_number, depth, maximizing_player, alpha=-math.inf, beta=math.inf):
+        opponent_number = player_number % 2 + 1
+       
+        if depth == 0:
+            return (self.heurestic_value(grid, player_number), None)
+        
+        if self._situation.check_win(grid, player_number):
+            return (math.inf, None)
+        
+        if self._situation.check_win(grid, opponent_number):
+            return (-math.inf, None)
+        
+        if self._situation.check_draw(grid):
+            return (0, None)
+        
+        available_locations = self._situation.get_available_columns(grid)
+        targeted_location = available_locations[0]
+        
+        if maximizing_player:
+            max_value = -math.inf
+            
+            for location in available_locations:
+
+                # Fix this one later...
+                new_grid = []
+                for row in grid:
+                    new_row = []
+                    for col in row:
+                        new_row.append(col)
+                    new_grid.append(new_row)
+                # ...
+
+                new_grid[location[0]][location[1]] = player_number   
+                value = self.minimax(new_grid, player_number, depth - 1, False, alpha, beta)[0]
+
+                if value > max_value:
+                    max_value = value
+                    targeted_location = location
+                
+                alpha = max(alpha, value)
+                if value >= beta:
+                    break
+
+            return max_value, targeted_location
+        
+        else:
+            min_value = math.inf
+            
+            for location in available_locations:
+
+                # Fix this one later...
+                new_grid = []
+                for row in grid:
+                    new_row = []
+                    for col in row:
+                        new_row.append(col)
+                    new_grid.append(new_row)
+                # ...
+
+                new_grid[location[0]][location[1]] = opponent_number
+                value = self.minimax(new_grid, player_number, depth - 1, True, alpha, beta)[0]
+                if value < min_value:
+                    min_value = value
+                    targeted_location = location
+                
+                beta = min(beta, value)
+                if value <= alpha:
+                    break
+                
+            return min_value, targeted_location
+        

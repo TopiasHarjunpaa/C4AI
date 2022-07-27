@@ -9,10 +9,14 @@ class SituationService:
     def __init__(self, board):
         self._board = board
 
-    def check_column_available(self, col_number):
+    def get_game_grid(self):
+        return self._board.grid
+
+    def check_column_available(self, grid, col_number):
         """Checks if certain column is available to put next game coin.
 
         Args:
+            
             col_number (int): Index of column in game grid matrix
 
         Returns:
@@ -20,11 +24,13 @@ class SituationService:
         """
 
         for row_number in reversed(range(ROWS)):
-            if self._board.grid[row_number][col_number] == 0:
+            if grid[row_number][col_number] == 0:
                 return row_number
         return -1
+    
+    # Rename this later..
+    def get_available_columns(self, grid):
 
-    def get_available_columns(self):
         """Gets all available columns to put next game coin.
 
         Returns:
@@ -33,12 +39,17 @@ class SituationService:
 
         available_columns = []
         for column in range(COLUMNS):
-            row = self.check_column_available(column)
+            row = self.check_column_available(grid, column)
             if row != -1:
                 available_columns.append((row, column))
         return available_columns
+    
+    def check_draw(self, grid):
+        if len(self.get_available_columns(grid)) == 0:
+            return True
+        return False
 
-    def check_win(self, player_number):
+    def check_win(self, grid, player_number):
         """Checks if the player has won the game ie. gets four connect:
         1. checks for connect in vertical direction
         2. checks for connect in horizontal direction
@@ -53,33 +64,29 @@ class SituationService:
         """
 
         for col in range(COLUMNS):
-            col = [row[col] for row in self._board.grid]
+            col = [row[col] for row in grid]
             for row in range(ROWS - 3):
                 loc = col[row:row + 4]
                 if loc.count(player_number) == 4:
                     return True
 
         for row in range(ROWS):
-            row = self._board.grid[row]
+            row = grid[row]
             for col in range(COLUMNS - 3):
                 loc = row[col:col + 4]
                 if loc.count(player_number) == 4:
                     return True
 
-        for row in range(3, 6):
-            for col in range(4):
-                if (self._board.grid[row][col] == player_number and
-                    self._board.grid[row-1][col+1] == player_number and
-                    self._board.grid[row-2][col+2] == player_number and
-                        self._board.grid[row-3][col+3] == player_number):
+        for row in range(3, ROWS):
+            for col in range(COLUMNS - 3):
+                loc = [grid[row-i][col+i] for i in range(4)]
+                if loc.count(player_number) == 4:
                     return True
 
-        for row in range(3):
-            for col in range(4):
-                if (self._board.grid[row][col] == player_number and
-                    self._board.grid[row+1][col+1] == player_number and
-                    self._board.grid[row+2][col+2] == player_number and
-                        self._board.grid[row+3][col+3] == player_number):
+        for row in range(ROWS - 3):
+            for col in range(COLUMNS - 3):
+                loc = [grid[row+i][col+i] for i in range(4)]
+                if loc.count(player_number) == 4:
                     return True
 
         return False
