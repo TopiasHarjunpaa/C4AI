@@ -12,53 +12,45 @@ class TestSituationService(unittest.TestCase):
         self.situation = SituationService(self.board)
 
     def test_column_available_return_correct_column_number(self):
-        col_number = self.situation.check_column_available(0)
+        col_number = self.situation.check_column_available(self.board.grid, 0)
         self.assertEqual(col_number, 5)
-        self.board.grid = G_SF1
-        col_number = self.situation.check_column_available(0)
+        col_number = self.situation.check_column_available(G_SF1, 0)
         self.assertEqual(col_number, 5)
-        col_number = self.situation.check_column_available(1)
+        col_number = self.situation.check_column_available(G_SF1, 1)
         self.assertEqual(col_number, -1)
-        col_number = self.situation.check_column_available(4)
+        col_number = self.situation.check_column_available(G_SF1, 4)
         self.assertEqual(col_number, 1)
 
     def test_get_available_columns_returns_all_available_columns(self):
-        available_columns = self.situation.get_available_columns()
+        available_columns = self.situation.get_available_columns(self.board.grid)
         self.assertEqual(available_columns, [
                          (5, 0), (5, 1), (5, 2), (5, 3), (5, 4), (5, 5), (5, 6)])
-        self.board.grid = G_SF1
-        available_columns = self.situation.get_available_columns()
+        available_columns = self.situation.get_available_columns(G_SF1)
         self.assertEqual(available_columns, [(5, 0), (1, 3), (1, 4)])
-        self.board.grid = G_DD1
-        available_columns = self.situation.get_available_columns()
+        available_columns = self.situation.get_available_columns(G_DD1)
         self.assertEqual(available_columns, [
                          (5, 0), (3, 2), (1, 3), (2, 4), (3, 5), (2, 6)])
 
     def test_check_win_finds_vertical_win(self):
-        self.assertFalse(self.situation.check_win(1))
-        self.assertFalse(self.situation.check_win(2))
-        self.board.grid = G_VE1
-        self.assertFalse(self.situation.check_win(2))
-        self.assertTrue(self.situation.check_win(1))
+        self.assertFalse(self.situation.check_win(self.board.grid, 1))
+        self.assertFalse(self.situation.check_win(self.board.grid, 2))
+        self.assertFalse(self.situation.check_win(G_VE1, 2))
+        self.assertTrue(self.situation.check_win(G_VE1, 1))
 
     def test_check_win_finds_horizontal_win(self):
-        self.assertFalse(self.situation.check_win(1))
-        self.assertFalse(self.situation.check_win(2))
-        self.board.grid = G_HO1
-        self.assertFalse(self.situation.check_win(1))
-        self.assertTrue(self.situation.check_win(2))
+        self.assertFalse(self.situation.check_win(self.board.grid, 1))
+        self.assertFalse(self.situation.check_win(self.board.grid, 2))
+        self.assertFalse(self.situation.check_win(G_HO1, 1))
+        self.assertTrue(self.situation.check_win(G_HO1, 2))
 
     def test_check_win_finds_up_diagonal_win(self):
-        self.assertFalse(self.situation.check_win(1))
-        self.assertFalse(self.situation.check_win(2))
-        self.board.grid = G_UD1
-        self.assertFalse(self.situation.check_win(1))
-        self.assertTrue(self.situation.check_win(2))
+        self.assertFalse(self.situation.check_win(self.board.grid, 1))
+        self.assertFalse(self.situation.check_win(self.board.grid, 2))
+        self.assertFalse(self.situation.check_win(G_UD1, 1))
+        self.assertTrue(self.situation.check_win(G_UD1, 2))
 
     def test_check_win_finds_down_diagonal_win(self):
-        self.board.grid = G_SF1
-        self.assertFalse(self.situation.check_win(1))
-        self.assertFalse(self.situation.check_win(2))
-        self.board.grid = G_DD1
-        self.assertFalse(self.situation.check_win(2))
-        self.assertTrue(self.situation.check_win(1))
+        self.assertFalse(self.situation.check_win(G_SF1, 1))
+        self.assertFalse(self.situation.check_win(G_SF1, 2))
+        self.assertFalse(self.situation.check_win(G_DD1, 2))
+        self.assertTrue(self.situation.check_win(G_DD1, 1))
