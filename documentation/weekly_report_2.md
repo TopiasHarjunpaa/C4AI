@@ -8,7 +8,7 @@ On monday, I did spent most of the time for creating unit and integration tests.
 
 On tuesday, I created preliminary heuristic value calculation for game scenarios. This also involved quite a lot changes for the existing code and for that reason I spent most of the time modificating the code structure and tests.
 
-Wednesday will be my last working day for the project before week 2 deadline. I did continue working with heuristic value calculations and I also created minimax algorithm with alpha-beta pruning. After playing the game few times, I am quite confident that the AI is playing better than it did when I played the game only with heuristic value calculation. However, I am almost as confident that there are still some flaws with the algorithm or the heuristic value calculations, because it didn't that hard to defeat using the search depth of 6.
+Wednesday will be my last working day for the project before week 2 deadline. I did continue working with heuristic value calculations and I also created minimax algorithm with alpha-beta pruning. After playing the game few times, I am quite confident that the AI is playing better than it did when I played the game only with heuristic value calculation. However, I am almost as confident that there are still some flaws with the algorithm or the heuristic value calculations, because it isn't that hard to defeat using the search depth of 6. *EDIT: I did actually found a bug with heurestic calculation and after fixing that, the AI became significantly better. Still beatable so there is definately room for improvements.*
 
 ### How has the program progressed?
 
