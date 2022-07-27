@@ -1,7 +1,7 @@
 import unittest
 from services.board_service import BoardService
 from services.situation_service import SituationService
-from tests.test_grids import G_VE1, G_HO1, G_UD1, G_DD1, G_SF1
+from tests.test_grids import G_VE1, G_HO1, G_UD1, G_DD1, G_SF1, G_WO1
 
 
 class TestSituationService(unittest.TestCase):
@@ -41,7 +41,7 @@ class TestSituationService(unittest.TestCase):
         self.assertFalse(self.situation.check_win(self.board.grid, 1))
         self.assertFalse(self.situation.check_win(self.board.grid, 2))
         self.assertFalse(self.situation.check_win(G_HO1, 1))
-        self.assertTrue(self.situation.check_win(G_HO1, 2))
+        self.assertTrue(self.situation.check_win(G_HO1, 2))       
 
     def test_check_win_finds_up_diagonal_win(self):
         self.assertFalse(self.situation.check_win(self.board.grid, 1))
@@ -54,3 +54,10 @@ class TestSituationService(unittest.TestCase):
         self.assertFalse(self.situation.check_win(G_SF1, 2))
         self.assertFalse(self.situation.check_win(G_DD1, 2))
         self.assertTrue(self.situation.check_win(G_DD1, 1))
+        self.assertFalse(self.situation.check_win(G_WO1, 1))
+        self.assertFalse(self.situation.check_win(G_WO1, 2))
+    
+    def test_check_draw(self):
+        self.assertFalse(self.situation.check_draw(self.board.grid))
+        self.assertFalse(self.situation.check_draw(G_SF1))
+        self.assertTrue(self.situation.check_draw(G_WO1))

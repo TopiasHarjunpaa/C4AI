@@ -60,11 +60,11 @@ class AiService:
         opponent_number = player_number % 2 + 1
         value = 0
         multipliers = {0: 10000, 1: 10, 2: 2}
-        for key, value in multipliers.items():
-            if loc.count(player_number) == 4 - key and loc.count(0) == key:
-                value += value
+        for k, v in multipliers.items():
+            if loc.count(player_number) == 4 - k and loc.count(0) == k:
+                value += v
 
-        if loc.count(opponent_number) == 4 - 1 and loc.count(0) == 1:
+        if loc.count(opponent_number) == 3 and loc.count(0) == 1:
             value -= 25
 
         return value
