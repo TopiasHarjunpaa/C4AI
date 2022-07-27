@@ -13,11 +13,11 @@ class TestAiService(unittest.TestCase):
 
     def test_positional_values_returns_correct_value(self):
         value = self.ai.get_positional_values(G_AE1, 1)
-        self.assertEqual(value, 2)    
+        self.assertEqual(value, 2)
 
     def test_get_vertical_values(self):
         value = self.ai.get_vertical_values(G_AE1, 1)
-        self.assertEqual(value, 0) 
+        self.assertEqual(value, 0)
 
     def test_heurestic_value_returns_correct_value(self):
         value = self.ai.heurestic_value(G_AE1, 1)

@@ -48,8 +48,8 @@ class BoardService:
 
         Args:
 
+            row_number (int): Last free row number of game board at indicated column
             col_number (int): Column number of game board to drop coin
-            col_number (int): Last free row number of game board at indicated column
             player_number (int): Player number (1 = first player, 2 = second player)
         """
 
@@ -59,5 +59,6 @@ class BoardService:
     def print_grid(self):
         """Prints current grid matrix
         """
+
         for row in self.grid:
             print(row)

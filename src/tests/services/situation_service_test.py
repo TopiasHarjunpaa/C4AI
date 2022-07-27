@@ -22,7 +22,8 @@ class TestSituationService(unittest.TestCase):
         self.assertEqual(col_number, 1)
 
     def test_get_available_columns_returns_all_available_columns(self):
-        available_columns = self.situation.get_available_columns(self.board.grid)
+        available_columns = self.situation.get_available_columns(
+            self.board.grid)
         self.assertEqual(available_columns, [
                          (5, 0), (5, 1), (5, 2), (5, 3), (5, 4), (5, 5), (5, 6)])
         available_columns = self.situation.get_available_columns(G_SF1)
@@ -41,7 +42,7 @@ class TestSituationService(unittest.TestCase):
         self.assertFalse(self.situation.check_win(self.board.grid, 1))
         self.assertFalse(self.situation.check_win(self.board.grid, 2))
         self.assertFalse(self.situation.check_win(G_HO1, 1))
-        self.assertTrue(self.situation.check_win(G_HO1, 2))       
+        self.assertTrue(self.situation.check_win(G_HO1, 2))
 
     def test_check_win_finds_up_diagonal_win(self):
         self.assertFalse(self.situation.check_win(self.board.grid, 1))
@@ -56,7 +57,7 @@ class TestSituationService(unittest.TestCase):
         self.assertTrue(self.situation.check_win(G_DD1, 1))
         self.assertFalse(self.situation.check_win(G_WO1, 1))
         self.assertFalse(self.situation.check_win(G_WO1, 2))
-    
+
     def test_check_draw(self):
         self.assertFalse(self.situation.check_draw(self.board.grid))
         self.assertFalse(self.situation.check_draw(G_SF1))

@@ -12,11 +12,12 @@ class SituationService:
     def get_game_grid(self):
         return self._board.grid
 
+    # Update docstring
     def check_column_available(self, grid, col_number):
         """Checks if certain column is available to put next game coin.
 
         Args:
-            
+
             col_number (int): Index of column in game grid matrix
 
         Returns:
@@ -27,10 +28,9 @@ class SituationService:
             if grid[row_number][col_number] == 0:
                 return row_number
         return -1
-    
-    # Rename this later..
-    def get_available_columns(self, grid):
 
+    # Rename and update docstring
+    def get_available_columns(self, grid):
         """Gets all available columns to put next game coin.
 
         Returns:
@@ -43,12 +43,13 @@ class SituationService:
             if row != -1:
                 available_columns.append((row, column))
         return available_columns
-    
+
     def check_draw(self, grid):
         if len(self.get_available_columns(grid)) == 0:
             return True
         return False
 
+    # Update docstring
     def check_win(self, grid, player_number):
         """Checks if the player has won the game ie. gets four connect:
         1. checks for connect in vertical direction
