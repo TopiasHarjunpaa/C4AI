@@ -23,10 +23,10 @@
 #### Week 3
 | Day | Hour | What did I do? |
 | :----:|:-----| :-----|
+| 31.7 | 3 h    | Docstring, refactoring and tests |
 | xx.x | 0 h    | xxx |
 | xx.x | 0 h    | xxx |
-| xx.x | 0 h    | xxx |
-| **Total** | **0 h** | |
+| **Total** | **3 h** | |
 
 #### Week 4
 | Day | Hour | What did I do? |
