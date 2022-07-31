@@ -239,20 +239,66 @@ class AiService:
         score += self._get_positional_values(grid, player_number)
         return score
 
-    def _minimax(self, grid, player_number, depth, maximizing_player, alpha=-math.inf, beta=math.inf):
-        opponent_number = player_number % 2 + 1
-
-        if depth == 0:
-            return (self._heuristic_value(grid, player_number), None)
-
+    def _check_terminal_node(self, grid, player_number, opponent_number):
         if self._situation.check_win(grid, player_number):
-            return (math.inf, None)
+            return math.inf
 
         if self._situation.check_win(grid, opponent_number):
-            return (-math.inf, None)
+            return -math.inf
 
         if self._situation.check_draw(grid):
-            return (0, None)
+            return 0
+        
+        return None
+
+    def _minimax(self, grid, player_number, depth, maximizing_player, alpha=-math.inf, beta=math.inf):
+        """Evalutes the most optimal next move using Minimax algorithm and fail-soft alpha beta pruning:
+
+        1.  Check the terminal situation ie. when one of the players has won or game it is draw.
+            Returns location as a None and values INF, -INF or 0.
+        2.  If search has reached depth 0, returns heuristic value and location as a None.
+        3.  Search all available locations where to put game coin.          
+        
+        4.  For the maximizing player:
+            4.1 Sets maximum heuristic value -INF and loops through all locations to place a game coin
+            4.2 For each of the locations, calls minimax algorithm with updated grid, smaller depth
+                and sets turn for minimizing player (false).
+            4.3 Keeps track of heuristic value and it's location recieved from minimax algorithm
+            4.4 Updates the minimum score for maximizing player if heuristic value is greater than that
+            4.5 Ends the loop if heuristic value is greater than maximum score for minimizing player
+                ie. no need to investigate remaining branches.
+            4.6 Returns maximum heuristic value and it's location
+        
+        5.  For the minimizing player:
+            5.1 Sets minimum heuristic value INF and loops through all locations to place a game coin
+            5.2 For each of the locations, calls minimax algorithm with updated grid, smaller depth
+                and sets turn for maximising player (true).
+            5.3 Keeps track of heuristic value and it's location recieved from minimax algorithm
+            5.4 Updates the maximum score for minimizing player if heuristic value is less than that
+            5.5 Ends the loop if heuristic value is less than minimum score for maximizing player
+                ie. no need to investigate remaining branches.
+            5.6 Returns minimum heuristic value and it's location
+            
+        Args:
+            grid (list): Grid matrix of the game board.
+            player_number (int): Player number (1 = first player, 2 = second player)
+            depth (int): Depth of the minimax search
+            maximizing_player (boolean): True looks for max score and false min score
+            alpha (int, optional): Minimum score for maximizing player. Defaults to -INF.
+            beta (int, optional): Maximum score for minimizing player. Defaults to INF.
+
+        Returns:
+            tuple: Returns tuple which first item is heuristic value of the next move and
+            second item contains location coordinates of the next move (row index, col index)
+        """
+
+        opponent_number = player_number % 2 + 1
+        terminal_value = self._check_terminal_node(grid, player_number, opponent_number)
+        
+        if terminal_value != None:
+            return (terminal_value, None)
+        elif depth == 0:
+            return (self._heuristic_value(grid, player_number), None)
 
         available_locations = self._situation.get_available_columns(grid)
         targeted_location = available_locations[0]
