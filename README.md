@@ -21,7 +21,7 @@ To be added.
 
 - [Week 1](https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/weekly_report_1.md)
 - [Week 2](https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/weekly_report_2.md)
-- [Week 3 (placeholder)](https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/weekly_report_3.md)
+- [Week 3](https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/weekly_report_3.md)
 - [Week 4 (placeholder)](https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/weekly_report_4.md)
 - [Week 5 (placeholder)](https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/weekly_report_5.md)
 - [Week 6 (placeholder)](https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/weekly_report_6.md)
