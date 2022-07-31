@@ -19,6 +19,18 @@ class AiService:
         """
         self._situation = situation
 
+    def _copy_grid(self, grid):
+        """Creates copy of the grid using list comprehension.
+
+        Args:
+            grid (list): Grid matrix of the game board.
+
+        Returns:
+            list: Returns copied list from the grid
+        """
+        
+        return [[grid[row][col] for col in range(COLUMNS)] for row in range(ROWS)]
+
     def calculate_next_move_basic(self, grid, player_number):
         """Calculates one of the possible moves using heuristic calculation.
         This method is used for the basic level AI:
@@ -40,22 +52,16 @@ class AiService:
         max_value = -math.inf
         available_locations = self._situation.get_available_locations(grid)
         targeted_location = available_locations[0]
+        
         for location in available_locations:
-
-            # Fix this one later...
-            new_grid = []
-            for row in grid:
-                new_row = []
-                for col in row:
-                    new_row.append(col)
-                new_grid.append(new_row)
-            # ...
-
+            new_grid = self._copy_grid(grid)
             new_grid[location[0]][location[1]] = player_number
-            value = self.heuristic_value(new_grid, player_number)
+            value = self._heuristic_value(new_grid, player_number)          
+            
             if value > max_value:
                 max_value = value
                 targeted_location = location
+        
         return targeted_location
 
     def calculate_next_move_minimax(self, grid, player_number, depth=6):
@@ -71,9 +77,9 @@ class AiService:
             tuple: Returns column and row indexes of the next move location
         """
 
-        return self.minimax(grid, player_number, depth, True)[1]
+        return self._minimax(grid, player_number, depth, True)[1]
 
-    def count_values(self, loc, player_number):
+    def _count_values(self, loc, player_number):
         """Counts the total score for line of connect. Line of connect is a 4 cells long list
         of cell values (0, 1, 2) which can be in any directions at the game grid
         (horizontal, vertical, both diagonals). If:
@@ -98,7 +104,7 @@ class AiService:
 
         return value
 
-    def get_positional_values(self, grid, player_number):
+    def _get_positional_values(self, grid, player_number):
         """Calculates positional values from the game situation
         from one of the players perspective. This means method is used
         as a part for the heuristic value calculation. Positional values
@@ -122,11 +128,11 @@ class AiService:
         value += side_cols.count(player_number) * 1
         return value
 
-    def get_vertical_values(self, grid, player_number):
+    def _get_vertical_values(self, grid, player_number):
         """Calculates sum of heuristic values from vertical directions.
         This method loops through the game grid and creates all possible
         four cell long lists in vertical directions. Heuristic values
-        will be calculated using count_values method from each of the lists
+        will be calculated using _count_values method from each of the lists
         and the values will added to the total value.
 
         Args:
@@ -142,14 +148,14 @@ class AiService:
             col = [row[col] for row in grid]
             for row in range(ROWS - 3):
                 loc = col[row:row + 4]
-                total_value += self.count_values(loc, player_number)
+                total_value += self._count_values(loc, player_number)
         return total_value
 
-    def get_horizontal_values(self, grid, player_number):
+    def _get_horizontal_values(self, grid, player_number):
         """Calculates sum of heuristic values from horizontal directions.
         This method loops through the game grid and creates all possible
         four cell long lists in horizontal directions. Heuristic values
-        will be calculated using count_values method from each of the lists
+        will be calculated using _count_values method from each of the lists
         and the values will added to the total value.
 
         Args:
@@ -165,14 +171,14 @@ class AiService:
             row = grid[row]
             for col in range(COLUMNS - 3):
                 loc = row[col:col + 4]
-                total_value += self.count_values(loc, player_number)
+                total_value += self._count_values(loc, player_number)
         return total_value
 
-    def get_inc_diagonal_values(self, grid, player_number):
+    def _get_inc_diagonal_values(self, grid, player_number):
         """Calculates sum of heuristic values from increasing diagonal directions.
         This method loops through the game grid and creates all possible
         four cell long lists in increasing diagonal directions. Heuristic values
-        will be calculated using count_values method from each of the lists
+        will be calculated using _count_values method from each of the lists
         and the values will added to the total value.
 
         Args:
@@ -187,14 +193,14 @@ class AiService:
         for row in range(3, ROWS):
             for col in range(COLUMNS - 3):
                 loc = [grid[row-i][col+i] for i in range(4)]
-                total_value += self.count_values(loc, player_number)
+                total_value += self._count_values(loc, player_number)
         return total_value
 
-    def get_dec_diagonal_values(self, grid, player_number):
+    def _get_dec_diagonal_values(self, grid, player_number):
         """Calculates sum of heuristic values from decreasing diagonal directions.
         This method loops through the game grid and creates all possible
         four cell long lists in decreasing diagonal directions. Heuristic values
-        will be calculated using count_values method from each of the lists
+        will be calculated using _count_values method from each of the lists
         and the values will added to the total value.
 
         Args:
@@ -209,10 +215,10 @@ class AiService:
         for row in range(ROWS - 3):
             for col in range(COLUMNS - 3):
                 loc = [grid[row+i][col+i] for i in range(4)]
-                total_value += self.count_values(loc, player_number)
+                total_value += self._count_values(loc, player_number)
         return total_value
 
-    def heuristic_value(self, grid, player_number):
+    def _heuristic_value(self, grid, player_number):
         """Calculates total heuristic value (score) from the game grid.
         This value includes values from each directions and 
         from the positional values.
@@ -226,18 +232,18 @@ class AiService:
         """
 
         score = 0
-        score += self.get_vertical_values(grid, player_number)
-        score += self.get_horizontal_values(grid, player_number)
-        score += self.get_inc_diagonal_values(grid, player_number)
-        score += self.get_dec_diagonal_values(grid, player_number)
-        score += self.get_positional_values(grid, player_number)
+        score += self._get_vertical_values(grid, player_number)
+        score += self._get_horizontal_values(grid, player_number)
+        score += self._get_inc_diagonal_values(grid, player_number)
+        score += self._get_dec_diagonal_values(grid, player_number)
+        score += self._get_positional_values(grid, player_number)
         return score
 
-    def minimax(self, grid, player_number, depth, maximizing_player, alpha=-math.inf, beta=math.inf):
+    def _minimax(self, grid, player_number, depth, maximizing_player, alpha=-math.inf, beta=math.inf):
         opponent_number = player_number % 2 + 1
 
         if depth == 0:
-            return (self.heuristic_value(grid, player_number), None)
+            return (self._heuristic_value(grid, player_number), None)
 
         if self._situation.check_win(grid, player_number):
             return (math.inf, None)
@@ -255,18 +261,9 @@ class AiService:
             max_value = -math.inf
 
             for location in available_locations:
-
-                # Fix this one later...
-                new_grid = []
-                for row in grid:
-                    new_row = []
-                    for col in row:
-                        new_row.append(col)
-                    new_grid.append(new_row)
-                # ...
-
+                new_grid = self._copy_grid(grid)
                 new_grid[location[0]][location[1]] = player_number
-                value = self.minimax(
+                value = self._minimax(
                     new_grid, player_number, depth - 1, False, alpha, beta)[0]
 
                 if value > max_value:
@@ -283,19 +280,11 @@ class AiService:
             min_value = math.inf
 
             for location in available_locations:
-
-                # Fix this one later...
-                new_grid = []
-                for row in grid:
-                    new_row = []
-                    for col in row:
-                        new_row.append(col)
-                    new_grid.append(new_row)
-                # ...
-
+                new_grid = self._copy_grid(grid)
                 new_grid[location[0]][location[1]] = opponent_number
-                value = self.minimax(
+                value = self._minimax(
                     new_grid, player_number, depth - 1, True, alpha, beta)[0]
+               
                 if value < min_value:
                     min_value = value
                     targeted_location = location
