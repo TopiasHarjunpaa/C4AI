@@ -103,7 +103,7 @@ class GameService:
         """Calculates and creates the next move for AI player.
         """
 
-        move_location = self.ai.calculate_move_minimax(
+        move_location = self.ai.calculate_next_move_minimax(
             self._board.grid, self.player_number)
         self._board.add_coin(
             move_location[0], move_location[1], self.player_number)
