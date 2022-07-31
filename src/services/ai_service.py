@@ -240,6 +240,26 @@ class AiService:
         return score
 
     def _check_terminal_node(self, grid, player_number, opponent_number):
+        """Checks if the game situation means that the game has ended.
+        
+        Game ends if one of the player has gotten connect four. In that case
+        the method will return value of INF if the winning player is the same
+        with player number given for the method. Otherwise the return value will
+        be -INF. Game will end as draw if the grid is full and none of the players
+        has not won. In this case return value will be 0.
+
+        Game hasn't ended if none of the player has not won and the grid is not
+        full. In that case return value will be None.
+
+        Args:
+            grid (list): Grid matrix of the game board.
+            player_number (int): Player number (1 = first player, 2 = second player)
+            opponent_number (int): Opposite for player number (2 = first player, 1 = second player)
+
+        Returns:
+            INF, -INF, 0 or None
+        """
+
         if self._situation.check_win(grid, player_number):
             return math.inf
 
