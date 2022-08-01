@@ -4,6 +4,8 @@ from config import ROWS, COLUMNS
 
 class BoardService:
     """A class to represent game board services.
+    Game board service handles changes at the game board
+    such as updating the game grid and game elements.
 
     Attributes:
         width: Width of the display.
@@ -13,7 +15,9 @@ class BoardService:
     def __init__(self, width, height):
         """Constructs all the necessary attributes for the board service object.
         Game grid has 6 rows and 7 columns and each cell
-        will be initialised with the value 0 (empty).
+        will be initialised with the value 0 (empty). During the game play
+        situations, these empty values will be replaced either with 1 or 2
+        depending from the players number.
 
         Args:
             width (int): Width of the display.
@@ -28,8 +32,8 @@ class BoardService:
         self.update()
 
     def reset(self):
-        """Resets the object in order to get empty grid
-        and sprites
+        """Resets the game situation back to the start. Grid will be initialised
+        with zeros and all sprites and their groups will be reseted.
         """
 
         self.grid = [[0 for col in range(COLUMNS)] for row in range(ROWS)]
@@ -47,7 +51,6 @@ class BoardService:
         Creates new coin and updates grid matrix with player number.
 
         Args:
-
             row_number (int): Last free row number of game board at indicated column
             col_number (int): Column number of game board to drop coin
             player_number (int): Player number (1 = first player, 2 = second player)
@@ -55,10 +58,3 @@ class BoardService:
 
         self.grid[row_number][col_number] = player_number
         self.sprites.draw_new_coin(row_number, col_number, player_number)
-
-    def print_grid(self):
-        """Prints current grid matrix
-        """
-
-        for row in self.grid:
-            print(row)
