@@ -27,7 +27,7 @@ class Sprites:
         self._board = board
         self._cell_size = width / 20
         self._start_x = width / 2 - 3 * self._cell_size
-        self._start_y = height / 2 - 2.5 * self._cell_size
+        self._start_y = height / 2 - 2 * self._cell_size
         self.all_sprites = pygame.sprite.Group()
         self.grids = pygame.sprite.Group()
         self.coins = pygame.sprite.Group()

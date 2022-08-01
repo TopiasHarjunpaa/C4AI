@@ -1,7 +1,5 @@
 import pygame
-
-BLACK = (0, 0, 0)
-BLUE = (0, 87, 217)
+from config import BLACK, BLUE
 
 
 class Grid(pygame.sprite.Sprite):

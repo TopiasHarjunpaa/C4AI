@@ -1,5 +1,5 @@
 import pygame
-from config import FONT_PATH, WHITE, YELLOW, RED, PINK, RED, GREEN
+from config import FONT_PATH, BLACK, WHITE, YELLOW, RED, BLUE, RED, GREEN, LOGO_PATH, BG_IMG_PATH
 
 
 class Renderer:
@@ -26,10 +26,16 @@ class Renderer:
         self.height = height
         self._big = int(self.height / 10)
         self._small = int(self.height / 20)
-        self._extra_small = int(self.height / 30)
+        self._extra_small = int(self.height / 26)
         self._cell_size = width / 20
         self._start_x = width / 2 - 3 * self._cell_size
-        self._start_y = height / 2 - 2.5 * self._cell_size
+        self._start_y = height / 2 - 2.1 * self._cell_size
+        self._bg_img = pygame.image.load(BG_IMG_PATH)
+        self._bg_img = pygame.transform.scale(
+            self._bg_img, (self.width, self.height))
+        self._game_logo = pygame.image.load(LOGO_PATH)
+        self._game_logo = pygame.transform.scale(
+            self._game_logo, (self.width / 1920 * 720, self.width * 173 / 1920))
 
     def render_game(self, board, player_number, game_ended, draw):
         """Renders the display during game loop.
@@ -55,21 +61,19 @@ class Renderer:
             else:
                 player_text = f"PLAYER {player_number} HAS WON! (press N to play again)"
 
-        self._display.fill((0, 0, 0))
+        self._display.blit(self._bg_img, (0, 0))
+        self._display.blit(self._game_logo, (self.width / 2 - self.width / 3840 * 720, self.height / 15))   
         board.all_sprites.draw(self._display)
-        self._draw_text("FOUR CONNECT GAME", self._small,
-                        self.width / 2 + 3, self.height / 8 + 3, WHITE)
-        self._draw_text("FOUR CONNECT GAME", self._small,
-                        self.width / 2, self.height / 8, PINK)
+
         self._draw_text(player_text, self._extra_small,
-                        self.width / 2 + 1.5, self.height / 5 + 1.5, WHITE)
+                        self.width / 2 + 2.5, self.height / 4 + 2.5, BLACK)
         self._draw_text(player_text, self._extra_small,
-                        self.width / 2, self.height / 5, color)
+                        self.width / 2, self.height / 4, color)
         for i in range(7):
             self._draw_text(str(i+1), self._small, self._start_x + i *
-                            self._cell_size + 3, self._start_y + 6 * self._cell_size + 3, WHITE)
+                            self._cell_size + 3, self._start_y + 6 * self._cell_size + 3, BLACK)
             self._draw_text(str(i+1), self._small, self._start_x + i *
-                            self._cell_size, self._start_y + 6 * self._cell_size, PINK)
+                            self._cell_size, self._start_y + 6 * self._cell_size, WHITE)
         pygame.display.flip()
 
     def render_menu(self, title, lines: list):
@@ -83,11 +87,8 @@ class Renderer:
             lines (list): Information which is stored into multiple lines.
         """
 
-        self._display.fill((0, 0, 0))
-        self._draw_text("4CAI GAME", self._big,
-                        self.width / 2 + 3, self.height / 5 + 3)
-        self._draw_text("4CAI GAME", self._big,
-                        self.width / 2, self.height / 5, (150, 50, 255))
+        self._display.blit(self._bg_img, (0, 0))
+        self._display.blit(self._game_logo, (self.width / 2 - self.width / 3840 * 720, self.height / 15))
         self._draw_text(title, self._big, self.width / 2 + 3,
                         self.height / 5 + 3 + (self._big * 1.2))
         self._draw_text(title, self._big, self.width / 2,
@@ -97,11 +98,11 @@ class Renderer:
             if len(line) == 5:
                 self._draw_text(line[0], line[1], line[2], line[3], line[4])
             else:
-                self._draw_text(line[0], line[1], line[2], line[3])
+                self._draw_text(line[0], line[1], line[2], line[3], WHITE)
 
         pygame.display.flip()
 
-    def _draw_text(self, text, font_size, x_coordinate, y_coordinate, color=(255, 255, 255)):
+    def _draw_text(self, text, font_size, x_coordinate, y_coordinate, color=BLACK):
         """Draws the text according to all necessary attributes.
 
         Args:
