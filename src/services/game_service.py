@@ -45,7 +45,7 @@ class GameService:
         self.player_number = 1
         self._player_setup = {1: PLAYER, 2: AI_BASIC}
         self._situation = SituationService(self._board)
-        self.ai = AiService(self._situation)
+        self.ai_service = AiService(self._situation)
 
     def start_gameloop(self):
         """Starts the game loop and sets playing to true ie. game has started.
@@ -103,7 +103,7 @@ class GameService:
         """Calculates and creates the next move for AI player.
         """
 
-        move_location = self.ai.calculate_next_move_minimax(
+        move_location = self.ai_service.calculate_next_move_minimax(
             self._board.grid, self.player_number)
         self._board.add_coin(
             move_location[0], move_location[1], self.player_number)
