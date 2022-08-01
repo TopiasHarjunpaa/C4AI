@@ -50,7 +50,7 @@ class AiService:
         """
 
         max_value = -math.inf
-        available_locations = self._situation.get_available_locations(grid)
+        available_locations = self._situation.get_available_columns(grid)
         targeted_location = available_locations[0]
 
         for location in available_locations:

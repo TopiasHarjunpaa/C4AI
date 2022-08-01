@@ -58,7 +58,7 @@ class GameService:
         self._board.reset()
         while self.playing:
             self._clock.tick()
-            if self._player_setup[self.player_number] == 1:
+            if self._player_setup[self.player_number] == PLAYER:
                 self._check_events()
             else:
                 self._calculate_next_move()
@@ -70,9 +70,10 @@ class GameService:
         """Checks player events.
         Quits when player closes the game window.
         Places a coin to the certain column according to key number between 1-7
-        and translates the input to indexes between 0-6.
+        and translates the input to column indexes between 0-6.
         Show start menu when player presses escape.
         """
+
         accepted_keys = [pygame.K_1, pygame.K_2,
                          pygame.K_3, pygame.K_4,
                          pygame.K_5, pygame.K_6,
@@ -81,34 +82,72 @@ class GameService:
         for event in self._event_queue.get():
             if event.type == pygame.QUIT:
                 self._menu.quit()
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_t:
                     self._board.print_grid()
+
                 if event.key in accepted_keys:
                     col_number = event.key - 49
                     row_number = self._situation.check_column_available(
-                        self._board.grid, col_number)
+                                                self._board.grid, col_number)
                     if row_number != -1:
-                        self._board.add_coin(
-                            row_number, col_number, self.player_number)
+                        self._board.add_coin(row_number, col_number, self.player_number)
                         if self._situation.check_win(self._board.grid, self.player_number):
                             self.playing = False
                         else:
                             self._change_turn()
+
                 if event.key == pygame.K_ESCAPE:
                     self.playing = False
                     self._menu.start_menu()
 
-    def _calculate_next_move(self):
-        """Calculates and creates the next move for AI player.
+    def _calculate_next_move_basic(self):
+        """Calculates one of the possible moves using heuristic calculation.
+        This method is used for the basic level AI.
+
+        Returns:
+            tuple: Returns column and row indexes of the next move location
         """
 
-        move_location = self.ai_service.calculate_next_move_minimax(
-            self._board.grid, self.player_number)
+        return self.ai_service.calculate_next_move_basic(
+                                self._board.grid, self.player_number)
+
+    def _calculate_next_move_advanced(self):
+        """Calculates next possible move using Minimax algorithm.
+        This method is used for the intermediate level of AI.
+
+        Returns:
+            tuple: Returns column and row indexes of the next move location
+        """
+
+        return self.ai_service.calculate_next_move_minimax(
+                                self._board.grid, self.player_number)
+
+    def _calculate_next_move(self):
+        """Calculates and creates the next move for AI player.
+        Uses different calculation method depending
+        from the AI type (basic / advanced):
+
+        1.  Calculate the move and get row and column indexes
+        2.  Adds new game coing on the board after move has been calculated.
+        3.  Checks if the current player has won the game:
+            3.1 If won, sets playing false which will end the game loop
+            3.2 Else, change the player turn and game loop will continue
+        """
+
+        location = None
+        if self._player_setup[self.player_number] == AI_BASIC:
+            location = self._calculate_next_move_basic()
+        else:
+            location = self._calculate_next_move_advanced()
+
         self._board.add_coin(
-            move_location[0], move_location[1], self.player_number)
+                    location[0], location[1], self.player_number)
+
         if self._situation.check_win(self._board.grid, self.player_number):
             self.playing = False
+
         else:
             self._change_turn()
 
@@ -116,10 +155,7 @@ class GameService:
         """Changes turns between player 1 and player 2.
         """
 
-        if self.player_number == 1:
-            self.player_number = 2
-        else:
-            self.player_number = 1
+        self.player_number = self.player_number % 2 + 1
 
     def get_player_setup(self):
         """Gives player setup names as a tuple with two player name strings.
