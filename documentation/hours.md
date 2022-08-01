@@ -24,9 +24,9 @@
 | Day | Hour | What did I do? |
 | :----:|:-----| :-----|
 | 31.7 | 3 h    | Docstring, refactoring and tests |
+| 1.8. | 4 h    | More docstring and test. Small updates for the UI. |
 | xx.x | 0 h    | xxx |
-| xx.x | 0 h    | xxx |
-| **Total** | **3 h** | |
+| **Total** | **7 h** | |
 
 #### Week 4
 | Day | Hour | What did I do? |
