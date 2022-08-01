@@ -41,6 +41,7 @@ class GameService:
         self._renderer = renderer
         self._event_queue = event_queue
         self.playing = False
+        self.draw = False
         self._menu = menu
         self.player_number = 1
         self._player_setup = {1: PLAYER, 2: AI_BASIC}
@@ -55,6 +56,7 @@ class GameService:
 
         self.player_number = 1
         self.playing = True
+        self.draw = False
         self._board.reset()
         while self.playing:
             self._clock.tick()
@@ -64,7 +66,7 @@ class GameService:
                 self._calculate_next_move()
             self._board.update()
             self.render()
-        self._menu.show_game_ended_view(self.player_number)
+        self._menu.show_game_ended_view(self.draw)
 
     def _check_events(self):
         """Checks player events.
@@ -84,19 +86,13 @@ class GameService:
                 self._menu.quit()
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_t:
-                    self._board.print_grid()
-
                 if event.key in accepted_keys:
                     col_number = event.key - 49
                     row_number = self._situation.check_column_available(
                                                 self._board.grid, col_number)
                     if row_number != -1:
                         self._board.add_coin(row_number, col_number, self.player_number)
-                        if self._situation.check_win(self._board.grid, self.player_number):
-                            self.playing = False
-                        else:
-                            self._change_turn()
+                        self._check_terminal_situation()
 
                 if event.key == pygame.K_ESCAPE:
                     self.playing = False
@@ -124,6 +120,28 @@ class GameService:
         return self.ai_service.calculate_next_move_minimax(
                                 self._board.grid, self.player_number)
 
+    def _check_terminal_situation(self):
+        """Checks the terminal situation ie. current player wins or
+        game has ended in draw. Uses situation service methods to
+        check wheter the current player has won and stops the game loop if so.
+        Sets also self.draw to true if the game has ended in draw.
+        Otherwise turn will be changed for another player and game loop can continue.
+
+        Returns:
+            Boolean: Returns true if game has ended. Otherwise returns false.
+        """
+        if self._situation.check_win(self._board.grid, self.player_number):
+            self.playing = False
+            return True
+
+        if self._situation.check_draw(self._board.grid):
+            self.playing = False
+            self.draw = True
+            return True
+
+        self._change_turn()
+        return False
+
     def _calculate_next_move(self):
         """Calculates and creates the next move for AI player.
         Uses different calculation method depending
@@ -131,9 +149,8 @@ class GameService:
 
         1.  Calculate the move and get row and column indexes
         2.  Adds new game coing on the board after move has been calculated.
-        3.  Checks if the current player has won the game:
-            3.1 If won, sets playing false which will end the game loop
-            3.2 Else, change the player turn and game loop will continue
+        3.  Checks if the current player has won the game using the
+            check_terminal_situation method.
         """
 
         location = None
@@ -142,14 +159,8 @@ class GameService:
         else:
             location = self._calculate_next_move_advanced()
 
-        self._board.add_coin(
-                    location[0], location[1], self.player_number)
-
-        if self._situation.check_win(self._board.grid, self.player_number):
-            self.playing = False
-
-        else:
-            self._change_turn()
+        self._board.add_coin(location[0], location[1], self.player_number)
+        self._check_terminal_situation()
 
     def _change_turn(self):
         """Changes turns between player 1 and player 2.
@@ -180,7 +191,7 @@ class GameService:
 
         self._player_setup[number] = self._player_setup[number] % 3 + 1
 
-    def render(self, game_ended=False):
+    def render(self, game_ended=False, draw=False):
         """Call renderer object which renders the display.
 
         Args:
@@ -188,4 +199,4 @@ class GameService:
             Otherwise renders normal game screen. Defaults to False.
         """
 
-        self._renderer.render_game(self._board, self.player_number, game_ended)
+        self._renderer.render_game(self._board, self.player_number, game_ended, draw)

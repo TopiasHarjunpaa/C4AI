@@ -31,7 +31,7 @@ class Renderer:
         self._start_x = width / 2 - 3 * self._cell_size
         self._start_y = height / 2 - 2.5 * self._cell_size
 
-    def render_game(self, board, player_number, game_ended):
+    def render_game(self, board, player_number, game_ended, draw):
         """Renders the display during game loop.
         Fills the display and draws all sprites and texts to the screen.
 
@@ -43,12 +43,17 @@ class Renderer:
         """
 
         color = RED
-        if player_number == 2:
+        if draw:
+            color = GREEN
+        elif player_number == 2:
             color = YELLOW
 
-        player_text = f"PLAYER {player_number} TURN"
+        player_text = f"PLAYER {player_number} TURN"      
         if game_ended:
-            player_text = f"PLAYER {player_number} HAS WON! (press N to play again)"
+            if draw:
+                player_text = f"DRAW! (press N to play again)"
+            else:
+                player_text = f"PLAYER {player_number} HAS WON! (press N to play again)"
 
         self._display.fill((0, 0, 0))
         board.all_sprites.draw(self._display)

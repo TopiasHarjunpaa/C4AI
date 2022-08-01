@@ -63,13 +63,13 @@ class UI:
                 [pygame.K_1, pygame.K_2]) - 48
             self._game.change_player_setup(key)
 
-    def show_game_ended_view(self, player_number):
+    def show_game_ended_view(self, draw):
         """Shows the game ended view.
         Play again by pressing the key N or go back to menu
         by pressing the key ESC
         """
 
-        self._game.render(True)
+        self._game.render(True, draw)
         key = self._wait_and_check_accepted_keys([pygame.K_RETURN, pygame.K_n])
         if key == pygame.K_RETURN:
             self._show_menu_view()
