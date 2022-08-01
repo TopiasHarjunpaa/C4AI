@@ -3,8 +3,8 @@ import math
 from services.ai_service import AiService
 from services.board_service import BoardService
 from services.situation_service import SituationService
-from tests.test_grids import (G_AE1, G_AE2, G_AE3, G_AE4, G_1W1, 
-                                G_1W2, G_WO1, G_SF1, G_SF2)
+from tests.test_grids import (G_AE1, G_AE2, G_AE3, G_AE4, G_1W1,
+                              G_1W2, G_WO1, G_SF1, G_SF2)
 
 
 class TestAiService(unittest.TestCase):
@@ -50,4 +50,4 @@ class TestAiService(unittest.TestCase):
         self.assertEqual(location, (1, 4))
 
     def test_minimax_returns_best_move(self):
-        pass     
+        pass

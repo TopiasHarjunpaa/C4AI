@@ -28,13 +28,13 @@ class AiService:
         Returns:
             list: Returns copied list from the grid
         """
-        
+
         return [[grid[row][col] for col in range(COLUMNS)] for row in range(ROWS)]
 
     def calculate_next_move_basic(self, grid, player_number):
         """Calculates one of the possible moves using heuristic calculation.
         This method is used for the basic level AI:
-        
+
         1.  Search all available locations where to put game coin.
         2.  Loops through all locations places a game coin on that location
             and calculate heurestic values of each move.
@@ -52,16 +52,16 @@ class AiService:
         max_value = -math.inf
         available_locations = self._situation.get_available_locations(grid)
         targeted_location = available_locations[0]
-        
+
         for location in available_locations:
             new_grid = self._copy_grid(grid)
             new_grid[location[0]][location[1]] = player_number
-            value = self._heuristic_value(new_grid, player_number)          
-            
+            value = self._heuristic_value(new_grid, player_number)
+
             if value > max_value:
                 max_value = value
                 targeted_location = location
-        
+
         return targeted_location
 
     def calculate_next_move_minimax(self, grid, player_number, depth=6):
@@ -98,9 +98,9 @@ class AiService:
 
         value = 0
         multipliers = {0: 10000, 1: 10, 2: 2}
-        for k, v in multipliers.items():
+        for k, val in multipliers.items():
             if loc.count(player_number) == 4 - k and loc.count(0) == k:
-                value += v
+                value += val
 
         return value
 
@@ -165,7 +165,7 @@ class AiService:
         Returns:
             int: Returns total value from the horizontal direction.
         """
-        
+
         total_value = 0
         for row in range(ROWS):
             row = grid[row]
@@ -188,7 +188,7 @@ class AiService:
         Returns:
             int: Returns total value from the increasing diagonal direction.
         """
-        
+
         total_value = 0
         for row in range(3, ROWS):
             for col in range(COLUMNS - 3):
@@ -210,7 +210,7 @@ class AiService:
         Returns:
             int: Returns total value from the decreasing diagonal direction.
         """
-        
+
         total_value = 0
         for row in range(ROWS - 3):
             for col in range(COLUMNS - 3):
@@ -220,7 +220,7 @@ class AiService:
 
     def _heuristic_value(self, grid, player_number):
         """Calculates total heuristic value (score) from the game grid.
-        This value includes values from each directions and 
+        This value includes values from each directions and
         from the positional values.
 
         Args:
@@ -241,7 +241,7 @@ class AiService:
 
     def _check_terminal_node(self, grid, player_number, opponent_number):
         """Checks if the game situation means that the game has ended.
-        
+
         Game ends if one of the player has gotten connect four. In that case
         the method will return value of INF if the winning player is the same
         with player number given for the method. Otherwise the return value will
@@ -268,37 +268,39 @@ class AiService:
 
         if self._situation.check_draw(grid):
             return 0
-        
+
         return None
 
-    def _minimax(self, grid, player_number, depth, maximizing_player, alpha=-math.inf, beta=math.inf):
-        """Evalutes the most optimal next move using Minimax algorithm and fail-soft alpha beta pruning:
+    def _minimax(self, grid, player_number, depth,
+                maximizing_player, alpha=-math.inf, beta=math.inf):
+        """Evalutes the most optimal next move using Minimax algorithm
+        and fail-soft alpha beta pruning:
 
         1.  Check the terminal situation ie. when one of the players has won or game it is draw.
             Returns location as a None and values INF, -INF or 0.
         2.  If search has reached depth 0, returns heuristic value and location as a None.
-        3.  Search all available locations where to put game coin.          
-        
+        3.  Search all available locations where to put game coin.
+
         4.  For the maximizing player:
-            4.1 Sets maximum heuristic value -INF and loops through all locations to place a game coin
+            4.1 Sets max heuristic value -INF and loops through all locations to place a game coin
             4.2 For each of the locations, calls minimax algorithm with updated grid, smaller depth
                 and sets turn for minimizing player (false).
             4.3 Keeps track of heuristic value and it's location recieved from minimax algorithm
-            4.4 Updates the minimum score for maximizing player if heuristic value is greater than that
+            4.4 Updates the min score for maximizing player if heuristic value is greater than that
             4.5 Ends the loop if heuristic value is greater than maximum score for minimizing player
                 ie. no need to investigate remaining branches.
             4.6 Returns maximum heuristic value and it's location
-        
+
         5.  For the minimizing player:
-            5.1 Sets minimum heuristic value INF and loops through all locations to place a game coin
+            5.1 Sets min heuristic value INF and loops through all locations to place a game coin
             5.2 For each of the locations, calls minimax algorithm with updated grid, smaller depth
                 and sets turn for maximising player (true).
             5.3 Keeps track of heuristic value and it's location recieved from minimax algorithm
-            5.4 Updates the maximum score for minimizing player if heuristic value is less than that
+            5.4 Updates the max score for minimizing player if heuristic value is less than that
             5.5 Ends the loop if heuristic value is less than minimum score for maximizing player
                 ie. no need to investigate remaining branches.
             5.6 Returns minimum heuristic value and it's location
-            
+
         Args:
             grid (list): Grid matrix of the game board.
             player_number (int): Player number (1 = first player, 2 = second player)
@@ -312,12 +314,13 @@ class AiService:
             second item contains location coordinates of the next move (row index, col index)
         """
 
-        opponent_number = player_number % 2 + 1
-        terminal_value = self._check_terminal_node(grid, player_number, opponent_number)
-        
-        if terminal_value != None:
+        terminal_value = self._check_terminal_node(
+            grid, player_number, player_number % 2 + 1)
+
+        if terminal_value is not None:
             return (terminal_value, None)
-        elif depth == 0:
+
+        if depth == 0:
             return (self._heuristic_value(grid, player_number), None)
 
         available_locations = self._situation.get_available_columns(grid)
@@ -342,21 +345,20 @@ class AiService:
 
             return max_value, targeted_location
 
-        else:
-            min_value = math.inf
+        min_value = math.inf
 
-            for location in available_locations:
-                new_grid = self._copy_grid(grid)
-                new_grid[location[0]][location[1]] = opponent_number
-                value = self._minimax(
-                    new_grid, player_number, depth - 1, True, alpha, beta)[0]
-               
-                if value < min_value:
-                    min_value = value
-                    targeted_location = location
+        for location in available_locations:
+            new_grid = self._copy_grid(grid)
+            new_grid[location[0]][location[1]] = player_number % 2 + 1
+            value = self._minimax(
+                new_grid, player_number, depth - 1, True, alpha, beta)[0]
 
-                beta = min(beta, value)
-                if value <= alpha:
-                    break
+            if value < min_value:
+                min_value = value
+                targeted_location = location
 
-            return min_value, targeted_location
+            beta = min(beta, value)
+            if value <= alpha:
+                break
+
+        return min_value, targeted_location
