@@ -1,4 +1,4 @@
-# C4AI
+<img src='src/assets/fonts/logo.png'></img>
 
 C4AI is the University of Helsinki's Data Structures Lab 2022 course project. C4AI refers to board game called Connect Four and the goal for this project is to create AI which plays Connect Four computer game against the player.
 
@@ -74,3 +74,12 @@ Style checks can be executed using the command:
 ```
 poetry run invoke lint
 ```
+
+## Credits
+
+Font style:
+* Loaded from address [dafont](https://www.dafont.com/no-virus.font)
+* Author **Khurasan**
+
+C4AI logo:
+* Generated from address [COOLTEXT](https://cooltext.com/)
