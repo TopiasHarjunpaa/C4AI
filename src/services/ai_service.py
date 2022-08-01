@@ -50,7 +50,7 @@ class AiService:
         """
 
         max_value = -math.inf
-        available_locations = self._situation.get_available_columns(grid)
+        available_locations = self._situation.get_available_locations(grid)
         targeted_location = available_locations[0]
 
         for location in available_locations:
@@ -323,7 +323,7 @@ class AiService:
         if depth == 0:
             return (self._heuristic_value(grid, player_number), None)
 
-        available_locations = self._situation.get_available_columns(grid)
+        available_locations = self._situation.get_available_locations(grid)
         targeted_location = available_locations[0]
 
         if maximizing_player:

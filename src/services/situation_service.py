@@ -2,8 +2,9 @@ from config import ROWS, COLUMNS
 
 
 class SituationService:
-    """A class to represent services for checking
-    different game scenarios
+    """A class to represent services for checking different
+    game scenarios such as checking terminal situations and
+    finding available columns on a game grid.
     """
 
     def __init__(self, board):
@@ -12,26 +13,30 @@ class SituationService:
     def get_game_grid(self):
         return self._board.grid
 
-    # Update docstring
     def check_column_available(self, grid, col_number):
-        """Checks if certain column is available to put next game coin.
+        """Check if certain column has room to put game coin.
+        Uses the chosen column number and loops through
+        row indexes in reversed order in order to find
+        down-most row which value is 0 (empty).
 
         Args:
-
-            col_number (int): Index of column in game grid matrix
+            grid (list): Grid matrix of the game board.
+            col_number (int): Column index of the game board.
 
         Returns:
-            int: Index of first available row ie. where coin will be dropped in.
+            int: Returns row index if free row has been found. Otherwise returns -1.
         """
+
 
         for row_number in reversed(range(ROWS)):
             if grid[row_number][col_number] == 0:
                 return row_number
         return -1
 
-    # Rename and update docstring
-    def get_available_columns(self, grid):
-        """Gets all available columns to put next game coin.
+    def get_available_locations(self, grid):
+        """Gets all available locations where game coin can be placed.
+        Loops through all game grid columns using the check_column_available method.
+        Adds location (row, col indexes) to the list if the column is not full.
 
         Returns:
             list: List of tuples (row index, column index) where coins can be dropped in.
@@ -45,11 +50,21 @@ class SituationService:
         return available_columns
 
     def check_draw(self, grid):
-        if len(self.get_available_columns(grid)) == 0:
+        """Checks if the game has ended draw.
+        Game is draw if game grid is full of coins ie. no
+        available columns has been found from the game grid.
+
+        Args:
+            grid (list): Grid matrix of the game board.
+
+        Returns:
+            Boolean: Returns true if game is draw, otherwise returns false.
+        """
+
+        if len(self.get_available_locations(grid)) == 0:
             return True
         return False
 
-    # Update docstring
     def check_win(self, grid, player_number):
         """Checks if the player has won the game ie. gets four connect:
         1. checks for connect in vertical direction
@@ -58,6 +73,7 @@ class SituationService:
         4. checks for connect in decreasing diagonal direction
 
         Args:
+            grid (list): Grid matrix of the game board.
             player_number (int): Player number (1 = first player, 2 = second player)
 
         Returns:

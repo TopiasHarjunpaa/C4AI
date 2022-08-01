@@ -21,14 +21,14 @@ class TestSituationService(unittest.TestCase):
         col_number = self.situation.check_column_available(G_SF1, 4)
         self.assertEqual(col_number, 1)
 
-    def test_get_available_columns_returns_all_available_columns(self):
-        available_columns = self.situation.get_available_columns(
+    def test_get_available_locations_returns_all_available_columns(self):
+        available_columns = self.situation.get_available_locations(
             self.board.grid)
         self.assertEqual(available_columns, [
                          (5, 0), (5, 1), (5, 2), (5, 3), (5, 4), (5, 5), (5, 6)])
-        available_columns = self.situation.get_available_columns(G_SF1)
+        available_columns = self.situation.get_available_locations(G_SF1)
         self.assertEqual(available_columns, [(5, 0), (1, 3), (1, 4)])
-        available_columns = self.situation.get_available_columns(G_DD1)
+        available_columns = self.situation.get_available_locations(G_DD1)
         self.assertEqual(available_columns, [
                          (5, 0), (3, 2), (1, 3), (2, 4), (3, 5), (2, 6)])
 
