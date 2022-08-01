@@ -28,7 +28,7 @@ class StubRenderer:
         self.width = 640
         self.height = 480
 
-    def render_game(self, board, player_number, game_ended):
+    def render_game(self, board, player_number, game_ended, draw):
         pass
 
 
