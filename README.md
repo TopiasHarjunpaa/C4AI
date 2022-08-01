@@ -1,4 +1,4 @@
-<img src='src/assets/fonts/logo.png'></img>
+<img src='src/assets/fonts/game_logo.png'></img>
 
 C4AI is the University of Helsinki's Data Structures Lab 2022 course project. C4AI refers to board game called Connect Four and the goal for this project is to create AI which plays Connect Four computer game against the player.
 
