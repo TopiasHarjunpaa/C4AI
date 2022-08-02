@@ -30,3 +30,12 @@ LOGO_PATH = os.path.join(dirname, "assets", "fonts", LOGO_FILENAME)
 
 BG_IMG_FILENAME = os.getenv("BG_IMG_FILENAME") or "background.png"
 BG_IMG_PATH = os.path.join(dirname, "assets", "images", BG_IMG_FILENAME)
+
+BOARD0_FILENAME = os.getenv("BOARD0_FILENAME") or "Board0.png"
+BOARD0_PATH = os.path.join(dirname, "assets", "images", BOARD0_FILENAME)
+
+COIN1_FILENAME = os.getenv("COIN1_FILENAME") or "Coin1.png"
+COIN1_PATH = os.path.join(dirname, "assets", "images", COIN1_FILENAME)
+
+COIN2_FILENAME = os.getenv("COIN1_FILENAME") or "Coin2.png"
+COIN2_PATH = os.path.join(dirname, "assets", "images", COIN2_FILENAME)

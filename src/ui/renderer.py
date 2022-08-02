@@ -27,9 +27,7 @@ class Renderer:
         self._big = int(self.height / 10)
         self._small = int(self.height / 20)
         self._extra_small = int(self.height / 26)
-        self._cell_size = width / 20
-        self._start_x = width / 2 - 3 * self._cell_size
-        self._start_y = height / 2 - 2.1 * self._cell_size
+        self._cell_size = width / 22
         self._bg_img = pygame.image.load(BG_IMG_PATH)
         self._bg_img = pygame.transform.scale(
             self._bg_img, (self.width, self.height))
@@ -69,11 +67,9 @@ class Renderer:
                         self.width / 2 + 2.5, self.height / 4 + 2.5, BLACK)
         self._draw_text(player_text, self._extra_small,
                         self.width / 2, self.height / 4, color)
-        for i in range(7):
-            self._draw_text(str(i+1), self._small, self._start_x + i *
-                            self._cell_size + 3, self._start_y + 6 * self._cell_size + 3, BLACK)
-            self._draw_text(str(i+1), self._small, self._start_x + i *
-                            self._cell_size, self._start_y + 6 * self._cell_size, WHITE)
+        for i in range(-3, 4):
+            self._draw_text(str(i+4), self._small, self.width / 2 + i * self._cell_size + 3, self.height - 1.3 * self._cell_size + 3, BLACK)
+            self._draw_text(str(i+4), self._small, self.width / 2 + i * self._cell_size, self.height - 1.3 * self._cell_size, WHITE)
         pygame.display.flip()
 
     def render_menu(self, title, lines: list):

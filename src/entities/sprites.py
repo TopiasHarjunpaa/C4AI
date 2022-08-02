@@ -1,7 +1,6 @@
 import pygame
 from entities.coin import Coin
 from entities.grid import Grid
-from config import YELLOW, RED
 
 
 class Sprites:
@@ -25,25 +24,21 @@ class Sprites:
         """
 
         self._board = board
-        self._cell_size = width / 20
+        self._width = width
+        self._height = height
+        self._cell_size = width / 22
         self._start_x = width / 2 - 3 * self._cell_size
-        self._start_y = height / 2 - 2 * self._cell_size
+        self._start_y = height / 2 - 1.6 * self._cell_size
         self.all_sprites = pygame.sprite.Group()
         self.grids = pygame.sprite.Group()
         self.coins = pygame.sprite.Group()
         self._init_game_board()
 
     def _init_game_board(self):
-        """Initialises all grid cells which together forms a game board
-        and adds them to the sprites group
+        """Initialises game board and adds to the sprites group
         """
 
-        for i in range(6):
-            for j in range(7):
-                grid = Grid(self._start_x + j * self._cell_size,
-                            self._start_y + i * self._cell_size,
-                            self._cell_size)
-                self.grids.add(grid)
+        grid = Grid(self._width, self._height, self._cell_size)
         self.grids.add(grid)
         self.all_sprites.add(self.grids)
 
@@ -56,12 +51,9 @@ class Sprites:
             col_number (int): Game board column number
             player_number (int): Player number (1 = first player, 2 = second player)
         """
-        color = RED
-        if player_number == 2:
-            color = YELLOW
 
         coin = Coin(self._start_x + col_number * self._cell_size,
                     self._start_y + row_number * self._cell_size,
-                    self._cell_size, color)
+                    self._cell_size * 0.97, player_number)
         self.coins.add(coin)
         self.all_sprites.add(coin)

@@ -11,8 +11,8 @@ class TestSprites(unittest.TestCase):
         self.sprites = Sprites(self.board, self.width, self.height)
 
     def test_init_game_board_creates_game_grid(self):
-        self.assertEqual(len(self.sprites.all_sprites), 42)
-        self.assertEqual(len(self.sprites.grids), 42)
+        self.assertEqual(len(self.sprites.all_sprites), 1)
+        self.assertEqual(len(self.sprites.grids), 1)
 
     def test_draw_new_coin_adds_coins_to_sprite_groups(self):
         self.assertEqual(len(self.sprites.coins), 0)
@@ -20,4 +20,4 @@ class TestSprites(unittest.TestCase):
         self.sprites.draw_new_coin(4, 0, 2)
         self.sprites.draw_new_coin(5, 1, 1)
         self.assertEqual(len(self.sprites.coins), 3)
-        self.assertEqual(len(self.sprites.all_sprites), 45)
+        self.assertEqual(len(self.sprites.all_sprites), 4)

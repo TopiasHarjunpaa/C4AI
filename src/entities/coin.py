@@ -1,5 +1,5 @@
 import pygame
-from config import WHITE
+from config import COIN1_PATH, COIN2_PATH
 
 
 class Coin(pygame.sprite.Sprite):
@@ -12,7 +12,7 @@ class Coin(pygame.sprite.Sprite):
         size: side length of the round coin object.
     """
 
-    def __init__(self, x_coordinate, y_coordinate, size, color):
+    def __init__(self, x_coordinate, y_coordinate, size, player_number):
         """Constructs all the necessary attributes for the coin object.
 
         Args:
@@ -23,22 +23,11 @@ class Coin(pygame.sprite.Sprite):
         """
 
         super().__init__()
-        self.image = pygame.Surface((size, size), pygame.SRCALPHA)
-        self.color = color
-        self._visualize(size)
+
+        self.image = pygame.image.load(COIN1_PATH)
+        self.image = pygame.transform.scale(self.image, (size, size))
+        if player_number== 2:
+            self.image = pygame.image.load(COIN2_PATH)
+            self.image = pygame.transform.scale(self.image, (size, size))
         self.rect = self.image.get_rect()
         self.rect.center = (x_coordinate, y_coordinate)
-
-    def _visualize(self, size):
-        """Creates visualization for the coin object.
-        Coin object is colored circle with white borders and
-        radius 0.45 times of side length of cell size.
-
-        Args:
-            size (int): side length of the round token object.
-        """
-
-        pygame.draw.circle(self.image, WHITE,
-                           (size*0.5, size*0.5), size*0.45)
-        pygame.draw.circle(self.image, (self.color),
-                           (size*0.5, size*0.5), size*0.43)
