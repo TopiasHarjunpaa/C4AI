@@ -65,6 +65,12 @@ class SituationService:
             return True
         return False
 
+    def count_free_slots(self, grid):
+        free_slots = 0
+        for row in grid:
+            free_slots += row.count(0)
+        return free_slots
+
     def check_win(self, grid, player_number):
         """Checks if the player has won the game ie. gets four connect:
         1. checks for connect in vertical direction

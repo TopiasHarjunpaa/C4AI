@@ -1,4 +1,5 @@
 import math
+import time
 from config import ROWS, COLUMNS
 
 
@@ -18,6 +19,9 @@ class AiService:
             situation (Situation): Situation service object
         """
         self._situation = situation
+        self._start_time = time.time()
+        self._current_time = time.time()
+        self._time_limit = 5
 
     def _copy_grid(self, grid):
         """Creates copy of the grid using list comprehension.
@@ -76,8 +80,28 @@ class AiService:
         Returns:
             tuple: Returns column and row indexes of the next move location
         """
-
+        self._time_limit = 10
+        self._start_time = time.time()
         return self._minimax(grid, player_number, depth, True)[1]
+
+    def _check_timeout(self):
+        if self._time_limit + self._start_time < time.time():
+            return True
+        return False
+
+    def calculate_next_move_id_minimax(self, grid, player_number):
+        locations = {}
+        self._time_limit = 1
+        self._start_time = time.time()
+        depth = 1
+        max_depth = self._situation.count_free_slots(grid)
+        print(f"free slots left: {max_depth}")
+        while not self._check_timeout() and depth < max_depth:
+            locations[depth] = self._minimax(grid, player_number, depth, True)
+            print(f"D: {depth} - Score: {locations[depth][0]} - Loc: {locations[depth][1]}")
+            depth += 1
+        depth -= 1
+        return locations[max(1, depth - 1)][1]
 
     def _count_values(self, loc, player_number):
         """Counts the total score for line of connect. Line of connect is a 4 cells long list
@@ -313,6 +337,9 @@ class AiService:
             tuple: Returns tuple which first item is heuristic value of the next move and
             second item contains location coordinates of the next move (row index, col index)
         """
+
+        if self._check_timeout():
+            return (-math.inf, None)
 
         terminal_value = self._check_terminal_node(
             grid, player_number, player_number % 2 + 1)

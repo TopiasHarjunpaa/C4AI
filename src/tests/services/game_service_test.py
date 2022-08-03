@@ -108,13 +108,14 @@ class TestGameService(unittest.TestCase):
         )
 
         setup = gameloop.get_player_setup()
-        self.assertEqual(setup, ("Player", "AI (basic)"))
         gameloop._player_setup = {1: 1, 2: 1}
         setup = gameloop.get_player_setup()
         self.assertEqual(setup, ("Player", "Player"))
         gameloop._player_setup = {1: 3, 2: 1}
-        setup = gameloop.get_player_setup()
-        self.assertEqual(setup, ("AI (advanced)", "Player"))
+        #setup = gameloop.get_player_setup()
+        #self.assertEqual(setup, ("AI (Minimax depth 6)", "Player"))
+        #gameloop._player_setup = {1: 1, 2: 4}
+        #self.assertEqual(setup, ("Player", "AI (Minimax opt.)"))
 
     def test_escape_key_ends_loop(self):
         events = [StubEvent(pygame.KEYDOWN, pygame.K_ESCAPE), ]

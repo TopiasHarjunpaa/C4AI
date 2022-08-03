@@ -5,10 +5,12 @@ from services.situation_service import SituationService
 
 PLAYER = 1
 AI_BASIC = 2
-AI_ADVANCED = 3
+AI_INTERMEDIATE = 3
+AI_ADVANCED = 4
 PLAYER_TYPES = {PLAYER: "Player",
                 AI_BASIC: "AI (basic)",
-                AI_ADVANCED: "AI (advanced)"}
+                AI_INTERMEDIATE: "AI (Minimax depth 6)",
+                AI_ADVANCED: "AI (Minimax opt.)"}
 
 
 class GameService:
@@ -44,7 +46,8 @@ class GameService:
         self.draw = False
         self._menu = menu
         self.player_number = 1
-        self._player_setup = {1: PLAYER, 2: AI_BASIC}
+        #self._player_setup = {1: AI_ADVANCED, 2: PLAYER}
+        self._player_setup = {1: PLAYER, 2: AI_ADVANCED}
         self._situation = SituationService(self._board)
         self.ai_service = AiService(self._situation)
 
@@ -109,7 +112,7 @@ class GameService:
         return self.ai_service.calculate_next_move_basic(
                                 self._board.grid, self.player_number)
 
-    def _calculate_next_move_advanced(self):
+    def _calculate_next_move_intermediate(self):
         """Calculates next possible move using Minimax algorithm.
         This method is used for the intermediate level of AI.
 
@@ -118,6 +121,17 @@ class GameService:
         """
 
         return self.ai_service.calculate_next_move_minimax(
+                                self._board.grid, self.player_number)
+
+    def _calculate_next_move_advanced(self):
+        """Calculates next possible move using optimised Minimax algorithm.
+        This method is used for the advanced level of AI.
+
+        Returns:
+            tuple: Returns column and row indexes of the next move location
+        """
+
+        return self.ai_service.calculate_next_move_id_minimax(
                                 self._board.grid, self.player_number)
 
     def _check_terminal_situation(self):
@@ -154,8 +168,13 @@ class GameService:
         """
 
         location = None
+
         if self._player_setup[self.player_number] == AI_BASIC:
             location = self._calculate_next_move_basic()
+
+        elif self._player_setup[self.player_number] == AI_INTERMEDIATE:
+            location = self._calculate_next_move_intermediate()
+
         else:
             location = self._calculate_next_move_advanced()
 
@@ -182,14 +201,14 @@ class GameService:
     def change_player_setup(self, number):
         """Changes the player setup. Player one and player two can
         have several types, suchs as player or AI which can be changed
-        from game setup manu. Rotates between values 1,2,3 which indicates
-        each player type (player and two AI types).
+        from game setup manu. Rotates between values 1,2,3,4 which indicates
+        each player type (player and three AI types).
 
         Args:
             number (int): Player number (1 or 2) which type will be changed
         """
 
-        self._player_setup[number] = self._player_setup[number] % 3 + 1
+        self._player_setup[number] = self._player_setup[number] % 4 + 1
 
     def render(self, game_ended=False, draw=False):
         """Call renderer object which renders the display.
