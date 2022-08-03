@@ -25,8 +25,9 @@
 | :----:|:-----| :-----|
 | 31.7 | 3 h    | Docstring, refactoring and tests |
 | 1.8. | 4 h    | More docstring and test. Small updates for the UI. |
-| xx.x | 0 h    | xxx |
-| **Total** | **7 h** | |
+| 2.8 | 2 h    | Update UI by using picture of the game board and coins. |
+| 3.8 | 3 h    | Starting to implement iterative deepening. |
+| **Total** | **12 h** | |
 
 #### Week 4
 | Day | Hour | What did I do? |
