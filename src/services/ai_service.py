@@ -14,6 +14,8 @@ class AiService:
 
     def __init__(self, situation):
         """Constructs all the necessary attributes for the AI service object.
+        Several time variables are used to determine timeout limit for the
+        AI functions.
 
         Args:
             situation (Situation): Situation service object
@@ -68,30 +70,54 @@ class AiService:
 
         return targeted_location
 
-    def calculate_next_move_minimax(self, grid, player_number, depth=6):
+    def calculate_next_move_minimax(self, grid, player_number, depth=7):
         """Calculates next possible move using Minimax algorithm.
         This method is used for the intermediate level of AI.
 
         Args:
             grid (list): Grid matrix of the game board.
             player_number (int): Player number (1 = first player, 2 = second player)
-            depth (int, optional): Depth of the Minimax search. Defaults to 6.
+            depth (int, optional): Depth of the Minimax search. Defaults to 7.
 
         Returns:
             tuple: Returns column and row indexes of the next move location
         """
-        self._time_limit = 10
+
+        self._time_limit = 20
         self._start_time = time.time()
-        result = self._minimax(grid, player_number, 9, True)[1]
+        result = self._minimax(grid, player_number, depth, True)[1]
         print(time.time() - self._start_time)
         return result
 
     def _check_timeout(self):
+        """Checks if certain time limit has exceeded.
+
+        Returns:
+            Boolean: Returns true if the limit has passed. Else returns false.
+        """
+
         if self._time_limit + self._start_time < time.time():
             return True
         return False
 
     def calculate_next_move_id_minimax(self, grid, player_number):
+        """Calculates next possible move using Minimax algorithm
+        and iterative deepening. This method is used for the advanced level of AI:
+
+        1.  Uses time limit of 5 seconds and initializes the start time.
+        2.  Loops Minimax algorithm starting from depth 1 and ends if time has exceeded
+            or if maximum depth has exceeded.
+        3.  Keeps track of the heuristic value and move location for each iteration
+        4.  Once the loop has ended, returns the last fully completed Minimax results
+
+        Args:
+            grid (list): Grid matrix of the game board.
+            player_number (int): Player number (1 = first player, 2 = second player)
+
+        Returns:
+            tuple: Returns column and row indexes of the next move location
+        """
+
         locations = {}
         self._time_limit = 5
         self._start_time = time.time()
@@ -103,6 +129,8 @@ class AiService:
             print(f"D: {depth} - Score: {locations[depth][0]} - Loc: {locations[depth][1]}")
             depth += 1
         depth -= 1
+        if depth == max_depth:
+            return locations[depth][1]
         return locations[max(1, depth - 1)][1]
 
     def _count_values(self, loc, player_number):
@@ -129,7 +157,7 @@ class AiService:
             if loc.count(player_number) == 4 - k and loc.count(0) == k:
                 value += val
             if loc.count(opponent_number) == 4 - k and loc.count(0) == k:
-                value -= val            
+                value -= val
         return value
 
     def _get_positional_values(self, grid, player_number):
@@ -304,10 +332,12 @@ class AiService:
         """Evalutes the most optimal next move using Minimax algorithm
         and fail-soft alpha beta pruning:
 
+        0.  Check if the timer has ended. If so, returns location as a None and -INF value.
         1.  Check the terminal situation ie. when one of the players has won or game it is draw.
             Returns location as a None and values INF, -INF or 0.
         2.  If search has reached depth 0, returns heuristic value and location as a None.
-        3.  Search all available locations where to put game coin.
+        3.  Search all available locations where to put game coin. Available locations has been
+            ranked to start closest to the middle column and ending closest to the side columns.
 
         4.  For the maximizing player:
             4.1 Sets max heuristic value -INF and loops through all locations to place a game coin

@@ -38,6 +38,9 @@ class SituationService:
         Loops through all game grid columns using the check_column_available method.
         Adds location (row, col indexes) to the list if the column is not full.
 
+        Args:
+            grid (list): Grid matrix of the game board.
+
         Returns:
             list: List of tuples (row index, column index) where coins can be dropped in.
         """
@@ -50,13 +53,24 @@ class SituationService:
         return available_columns
 
     def get_available_locations_ranked(self, grid):
+        """Similar than get_available_locations -method but also ranks the result
+        starting from closest to the middle column and ending to closest to the side
+        columns.
+
+        Args:
+            grid (list): Grid matrix of the game board.
+
+        Returns:
+            list: List of tuples (row index, column index) where coins can be dropped in.
+        """
+
         available_columns = []
         column_order = [3,2,4,1,5,0,6]
         for column in column_order:
             row = self.check_column_available(grid, column)
             if row != -1:
                 available_columns.append((row, column))
-        return available_columns      
+        return available_columns
 
     def check_draw(self, grid):
         """Checks if the game has ended draw.
@@ -75,6 +89,16 @@ class SituationService:
         return False
 
     def count_free_slots(self, grid):
+        """Counts the number of free slots ie. number of zeros (empty)
+        remaining on the current game grid.
+
+        Args:
+            grid (list): Grid matrix of the game board.
+
+        Returns:
+            int: Returns number of free slots
+        """
+
         free_slots = 0
         for row in grid:
             free_slots += row.count(0)
