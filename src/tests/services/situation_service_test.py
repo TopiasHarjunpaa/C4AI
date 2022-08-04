@@ -1,7 +1,7 @@
 import unittest
 from services.board_service import BoardService
 from services.situation_service import SituationService
-from tests.test_grids import G_VE1, G_HO1, G_UD1, G_DD1, G_SF1, G_WO1
+from tests.test_grids import G_VE1, G_HO1, G_UD1, G_DD1, G_SF1, G_WO1, G_SF2,G_AE2
 
 
 class TestSituationService(unittest.TestCase):
@@ -31,6 +31,16 @@ class TestSituationService(unittest.TestCase):
         available_columns = self.situation.get_available_locations(G_DD1)
         self.assertEqual(available_columns, [
                          (5, 0), (3, 2), (1, 3), (2, 4), (3, 5), (2, 6)])
+
+    def test_get_available_locations_ranked_returns_locations_in_ranked_order(self):
+        available_columns = self.situation.get_available_locations_ranked(
+            self.board.grid)
+        self.assertEqual(available_columns, [
+                         (5, 3), (5, 2), (5, 4), (5, 1), (5, 5), (5, 0), (5, 6)])
+        available_columns = self.situation.get_available_locations_ranked(G_SF1)
+        self.assertEqual(available_columns, [(1, 3), (1, 4), (5, 0)])
+        available_columns = self.situation.get_available_locations_ranked(G_WO1)
+        self.assertEqual(available_columns, [])
 
     def test_check_win_finds_vertical_win(self):
         self.assertFalse(self.situation.check_win(self.board.grid, 1))
@@ -62,3 +72,11 @@ class TestSituationService(unittest.TestCase):
         self.assertFalse(self.situation.check_draw(self.board.grid))
         self.assertFalse(self.situation.check_draw(G_SF1))
         self.assertTrue(self.situation.check_draw(G_WO1))
+    
+    def test_count_free_slots_counts_correctly(self):
+        slots = self.situation.count_free_slots(G_WO1)
+        self.assertEqual(slots, 0)
+        slots = self.situation.count_free_slots(G_SF2)
+        self.assertEqual(slots, 9)
+        slots = self.situation.count_free_slots(G_AE2)
+        self.assertEqual(slots, 40)

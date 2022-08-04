@@ -70,6 +70,8 @@ class TestGameService(unittest.TestCase):
 
         gameloop._player_setup = {1: 1, 2: 1}
         gameloop.start_gameloop()
+        setup = gameloop.get_player_setup()
+        self.assertEqual(setup, ("Player", "Player"))     
         self.assertFalse(gameloop.playing)
         self.assertEqual(gameloop.player_number, 1)
 
@@ -93,6 +95,8 @@ class TestGameService(unittest.TestCase):
 
         gameloop._player_setup = {1: 1, 2: 1}
         gameloop.start_gameloop()
+        setup = gameloop.get_player_setup()
+        self.assertEqual(setup, ("Player", "Player"))   
         self.assertFalse(gameloop.playing)
         self.assertEqual(gameloop.player_number, 2)
 
@@ -107,15 +111,15 @@ class TestGameService(unittest.TestCase):
             StubClock()
         )
 
-        setup = gameloop.get_player_setup()
         gameloop._player_setup = {1: 1, 2: 1}
         setup = gameloop.get_player_setup()
         self.assertEqual(setup, ("Player", "Player"))
         gameloop._player_setup = {1: 3, 2: 1}
-        #setup = gameloop.get_player_setup()
-        #self.assertEqual(setup, ("AI (Minimax depth 6)", "Player"))
-        #gameloop._player_setup = {1: 1, 2: 4}
-        #self.assertEqual(setup, ("Player", "AI (Minimax opt.)"))
+        setup = gameloop.get_player_setup()
+        self.assertEqual(setup, ("AI (Minimax depth 6)", "Player"))
+        gameloop._player_setup = {1: 1, 2: 4}
+        setup = gameloop.get_player_setup()
+        self.assertEqual(setup, ("Player", "AI (Minimax opt.)"))
 
     def test_escape_key_ends_loop(self):
         events = [StubEvent(pygame.KEYDOWN, pygame.K_ESCAPE), ]
@@ -128,5 +132,6 @@ class TestGameService(unittest.TestCase):
             StubClock()
         )
 
+        gameloop._player_setup = {1: 1, 2: 1}
         gameloop.start_gameloop()
         self.assertFalse(gameloop.playing)

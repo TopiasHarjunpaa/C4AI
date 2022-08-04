@@ -1,5 +1,6 @@
 import unittest
 import math
+import time
 from services.ai_service import AiService
 from services.board_service import BoardService
 from services.situation_service import SituationService
@@ -42,11 +43,13 @@ class TestAiService(unittest.TestCase):
 
     def test_count_values_correctly(self):
         value = self.ai._count_values(L1W, 1)
-        self.assertEqual(value, 10000)
+        self.assertEqual(value, math.inf)
         value = self.ai._count_values(L1W, 2)
-        self.assertEqual(value, 0)
+        self.assertEqual(value, -math.inf)
         value = self.ai._count_values(L1T1, 1)
         self.assertEqual(value, 10)
+        value = self.ai._count_values(L1T1, 2)
+        self.assertEqual(value, -10)        
         value = self.ai._count_values(L1T2, 1)
         self.assertEqual(value, 10)
         value = self.ai._count_values(L1F1, 1)
@@ -68,11 +71,11 @@ class TestAiService(unittest.TestCase):
     
     def test_get_inc_diagonal_values(self):
         value = self.ai._get_inc_diagonal_values(G_HO1, 1)
-        self.assertEqual(value, 0)
+        self.assertEqual(value, -6)
         value = self.ai._get_inc_diagonal_values(G_HO1, 2)
         self.assertEqual(value, 6)
         value = self.ai._get_inc_diagonal_values(G_UD1, 2)
-        self.assertEqual(value, 10012)
+        self.assertEqual(value, math.inf)
 
     def test_get_dec_diagonal_values(self):
         value = self.ai._get_dec_diagonal_values(G_WO1, 1)
@@ -80,7 +83,7 @@ class TestAiService(unittest.TestCase):
         value = self.ai._get_dec_diagonal_values(G_WO1, 2)
         self.assertEqual(value, 0)   
         value = self.ai._get_dec_diagonal_values(G_DD1, 1)
-        self.assertEqual(value, 10010) 
+        self.assertEqual(value, math.inf) 
         value = self.ai._get_dec_diagonal_values(G_1W2, 2)
         self.assertEqual(value, 2) 
 
@@ -122,4 +125,4 @@ class TestAiService(unittest.TestCase):
     def test_minimax_returns_best_move(self):
         value, location = self.ai._minimax(G_SF2, 2, 6, True)
         self.assertEqual(value, math.inf)
-        self.assertEqual(location, (1, 4))
+        self.assertEqual(location, (1, 4))      
