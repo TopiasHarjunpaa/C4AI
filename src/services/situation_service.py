@@ -49,6 +49,15 @@ class SituationService:
                 available_columns.append((row, column))
         return available_columns
 
+    def get_available_locations_ranked(self, grid):
+        available_columns = []
+        column_order = [3,2,4,1,5,0,6]
+        for column in column_order:
+            row = self.check_column_available(grid, column)
+            if row != -1:
+                available_columns.append((row, column))
+        return available_columns      
+
     def check_draw(self, grid):
         """Checks if the game has ended draw.
         Game is draw if game grid is full of coins ie. no

@@ -82,7 +82,9 @@ class AiService:
         """
         self._time_limit = 10
         self._start_time = time.time()
-        return self._minimax(grid, player_number, depth, True)[1]
+        result = self._minimax(grid, player_number, 9, True)[1]
+        print(time.time() - self._start_time)
+        return result
 
     def _check_timeout(self):
         if self._time_limit + self._start_time < time.time():
@@ -91,7 +93,7 @@ class AiService:
 
     def calculate_next_move_id_minimax(self, grid, player_number):
         locations = {}
-        self._time_limit = 1
+        self._time_limit = 5
         self._start_time = time.time()
         depth = 1
         max_depth = self._situation.count_free_slots(grid)
@@ -121,11 +123,13 @@ class AiService:
         """
 
         value = 0
-        multipliers = {0: 10000, 1: 10, 2: 2}
+        opponent_number = player_number % 2 + 1
+        multipliers = {0: math.inf, 1: 10, 2: 2}
         for k, val in multipliers.items():
             if loc.count(player_number) == 4 - k and loc.count(0) == k:
                 value += val
-
+            if loc.count(opponent_number) == 4 - k and loc.count(0) == k:
+                value -= val            
         return value
 
     def _get_positional_values(self, grid, player_number):
@@ -350,7 +354,7 @@ class AiService:
         if depth == 0:
             return (self._heuristic_value(grid, player_number), None)
 
-        available_locations = self._situation.get_available_locations(grid)
+        available_locations = self._situation.get_available_locations_ranked(grid)
         targeted_location = available_locations[0]
 
         if maximizing_player:
