@@ -10,6 +10,8 @@ On tuesday, I started creating some improvements for the UI such as drawing game
 
 On wednesday I started finally implementing new stuff for the AI. I had studied earlier some methods to optimise Minimax algorithms and decided to give a go for iterative deepening. I think I managed to somehow do that, but I need to take a further look for that tomorrow and implement tests as well. I also managed to break one test for the game loop services which needs to be fixed.
 
+Thursday was little bit lazy day in terms of project work. During the day I occasionally tried to read from the internet some new information related to the improvements of the AI algorithms. Mostly related to the bitboard presentation and transposition tables. I did not start yet implementing those since there are still some uncertainties which I want to discover first. However, I did minor improvement for the AI by changing the order how the available locations will be looped inside the Minimax algorithm. Instead starting from first available column from the left, I decided to start from the closest to the middle column and end to the closest columns at the sides. Reasons for this change was that, at least in the early stages, the optimal moves are more likely to be found at the middle. With this change, I was able to increase search depth from 6 up to 9 which took roughly 7-8 seconds at the early stage. However, I did not test what will happen after few starting rounds.
+
 ### How has the program progressed?
 
 To be added
