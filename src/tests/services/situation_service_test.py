@@ -1,7 +1,7 @@
 import unittest
 from services.board_service import BoardService
 from services.situation_service import SituationService
-from tests.test_grids import G_VE1, G_HO1, G_UD1, G_DD1, G_SF1, G_WO1, G_SF2,G_AE2
+from tests.test_grids import G_1W1, G_AE1, G_VE1, G_HO1, G_UD1, G_DD1, G_SF1, G_WO1, G_SF2,G_AE2
 
 
 class TestSituationService(unittest.TestCase):
@@ -80,3 +80,19 @@ class TestSituationService(unittest.TestCase):
         self.assertEqual(slots, 9)
         slots = self.situation.count_free_slots(G_AE2)
         self.assertEqual(slots, 40)
+    
+    def test_check_win_with_bitboards_finds_win_correctly(self):
+        self.assertFalse(self.situation.check_win_bb(G_SF1, 1))
+        self.assertFalse(self.situation.check_win_bb(G_SF1, 2))
+        self.assertFalse(self.situation.check_win_bb(G_DD1, 2))
+        self.assertTrue(self.situation.check_win_bb(G_DD1, 1))
+        self.assertFalse(self.situation.check_win_bb(G_WO1, 1))
+        self.assertFalse(self.situation.check_win_bb(G_WO1, 2))
+        self.assertFalse(self.situation.check_win_bb(self.board.grid, 1))
+        self.assertFalse(self.situation.check_win_bb(self.board.grid, 2))
+        self.assertFalse(self.situation.check_win_bb(G_UD1, 1))
+        self.assertTrue(self.situation.check_win_bb(G_UD1, 2))
+        self.assertFalse(self.situation.check_win_bb(G_HO1, 1))
+        self.assertTrue(self.situation.check_win_bb(G_HO1, 2))
+        self.assertFalse(self.situation.check_win_bb(G_VE1, 2))
+        self.assertTrue(self.situation.check_win_bb(G_VE1, 1))

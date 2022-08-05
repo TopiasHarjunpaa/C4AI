@@ -25,6 +25,9 @@ class AiService:
         self._current_time = time.time()
         self._time_limit = 5
 
+        #Temp solution for testing. 1 = matrix, 2 = bitboard.
+        self._board_presentation = 1
+
     def _copy_grid(self, grid):
         """Creates copy of the grid using list comprehension.
 
@@ -82,7 +85,7 @@ class AiService:
         Returns:
             tuple: Returns column and row indexes of the next move location
         """
-
+        self._board_presentation = 2
         self._time_limit = 20
         self._start_time = time.time()
         result = self._minimax(grid, player_number, depth, True)[1]
@@ -315,15 +318,23 @@ class AiService:
         Returns:
             INF, -INF, 0 or None
         """
-
-        if self._situation.check_win(grid, player_number):
-            return math.inf
-
-        if self._situation.check_win(grid, opponent_number):
-            return -math.inf
-
+        #Temp solution for testing. 1 = matrix, 2 = bitboard.
         if self._situation.check_draw(grid):
             return 0
+
+        if self._board_presentation == 2:
+            if self._situation.check_win_bb(grid, player_number):
+                return math.inf
+
+            if self._situation.check_win_bb(grid, opponent_number):
+                return -math.inf
+
+        else:
+            if self._situation.check_win(grid, player_number):
+                return math.inf
+
+            if self._situation.check_win(grid, opponent_number):
+                return -math.inf
 
         return None
 

@@ -1,4 +1,5 @@
 from config import ROWS, COLUMNS
+from services.bitboard_service import BitboardService
 
 
 class SituationService:
@@ -9,6 +10,7 @@ class SituationService:
 
     def __init__(self, board):
         self._board = board
+        self._bb = BitboardService()
 
     def get_game_grid(self):
         return self._board.grid
@@ -103,6 +105,9 @@ class SituationService:
         for row in grid:
             free_slots += row.count(0)
         return free_slots
+
+    def check_win_bb(self, grid, player_number):
+        return self._bb.check_win(grid, player_number)
 
     def check_win(self, grid, player_number):
         """Checks if the player has won the game ie. gets four connect:
