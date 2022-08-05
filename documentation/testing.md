@@ -10,8 +10,6 @@ poetry run invoke coverage-report
 
 Report will be generated into the folder named `htmlcov`. Code related to the UI and testing has left out from the testing report. Coverage report can be also found from the [Codecov](https://app.codecov.io/gh/TopiasHarjunpaa/C4AI).
 
-### Test coverage:
-
 <img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/coverage_report.png" width="1000">
 
 Methods which were not tested: 
