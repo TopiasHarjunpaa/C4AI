@@ -28,7 +28,8 @@
 | 2.8 | 2 h    | Update UI by using picture of the game board and coins. |
 | 3.8 | 3 h    | Starting to implement iterative deepening. |
 | 4.8 | 2 h    | Change starting order for Minimax loop, docstring and tests |
-| **Total** | **14 h** | |
+| 5.8 | 1 h    | Creation of the preliminary testing document |
+| **Total** | **15 h** | |
 
 #### Week 4
 | Day | Hour | What did I do? |
