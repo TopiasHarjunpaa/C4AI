@@ -8,7 +8,7 @@ Coverage report can be generated using the command:
 poetry run invoke coverage-report
 ```
 
-Report will be generated into the folder named `htmlcov`. Code related to the UI and testing has left out from the testing report. Coverage report can be also found from the[Codecov](https://app.codecov.io/gh/TopiasHarjunpaa/C4AI).
+Report will be generated into the folder named `htmlcov`. Code related to the UI and testing has left out from the testing report. Coverage report can be also found from the [Codecov](https://app.codecov.io/gh/TopiasHarjunpaa/C4AI).
 
 ### Test coverage:
 
