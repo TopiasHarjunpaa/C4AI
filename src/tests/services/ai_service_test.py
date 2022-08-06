@@ -4,9 +4,7 @@ from services.ai_service import AiService
 from services.board_service import BoardService
 from services.situation_service import SituationService
 from tests.test_grids import (G_AE1, G_AE2, G_AE3, G_AE4, G_1W1,
-                              G_1W2, G_WO1, G_SF1, G_SF2, G_HO1,
-                              G_UD1, G_DD1, G_VE1)
-from tests.test_locs import L1W, L1T1, L1T2, L1F1, L1F2, L2TW1, L2F1
+                              G_1W2, G_WO1, G_SF1, G_SF2, G_VE1)
 
 
 class TestAiService(unittest.TestCase):

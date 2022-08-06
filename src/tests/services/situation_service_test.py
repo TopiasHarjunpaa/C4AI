@@ -1,7 +1,7 @@
 import unittest
 from services.board_service import BoardService
 from services.situation_service import SituationService
-from tests.test_grids import G_1W1, G_AE1, G_VE1, G_HO1, G_UD1, G_DD1, G_SF1, G_WO1, G_SF2,G_AE2
+from tests.test_grids import G_VE1, G_HO1, G_UD1, G_DD1, G_SF1, G_WO1, G_SF2,G_AE2
 
 
 class TestSituationService(unittest.TestCase):
