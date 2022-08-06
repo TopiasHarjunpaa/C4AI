@@ -47,8 +47,8 @@ class GameService:
         self._menu = menu
         self.player_number = 1
         #self._player_setup = {1: AI_ADVANCED, 2: PLAYER}
-        #self._player_setup = {1: PLAYER, 2: AI_ADVANCED}
-        self._player_setup = {1: PLAYER, 2: AI_INTERMEDIATE}
+        self._player_setup = {1: PLAYER, 2: AI_ADVANCED}
+        #self._player_setup = {1: PLAYER, 2: AI_INTERMEDIATE}
         self._situation = SituationService(self._board)
         self.ai_service = AiService(self._situation)
 

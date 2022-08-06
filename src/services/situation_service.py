@@ -10,7 +10,7 @@ class SituationService:
 
     def __init__(self, board):
         self._board = board
-        self._bb = BitboardService()
+        self.bitboard = BitboardService()
 
     def get_game_grid(self):
         return self._board.grid
@@ -107,7 +107,8 @@ class SituationService:
         return free_slots
 
     def check_win_bb(self, grid, player_number):
-        return self._bb.check_win(grid, player_number)
+        bitboard = self.bitboard.convert_to_bitboard(grid)
+        return self.bitboard.check_win(bitboard, player_number)
 
     def check_win(self, grid, player_number):
         """Checks if the player has won the game ie. gets four connect:
