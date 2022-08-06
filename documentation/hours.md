@@ -30,7 +30,8 @@
 | 4.8 | 2 h    | Change starting order for Minimax loop, docstring and tests |
 | 5.8 | 3 h    | Creation of the preliminary testing document and starting to implement bitboard presentation |
 | 6.8 | 1 h    | Refactoring and continue with implemention of bitboard presentation |
-| **Total** | **18 h** | |
+| 6.8 | 1 h    | Weekly report |
+| **Total** | **19 h** | |
 
 #### Week 4
 | Day | Hour | What did I do? |
