@@ -33,11 +33,15 @@ The following test classes has been made to test service classes:
 
     Description to be added
 
-2.  [TestBoardService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/board_service_test.py)
+2.  [BitboardService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/bitboard_service_test.py)
 
     Description to be added
 
-3.  [TestGameService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/game_service_test.py)
+3.  [TestBoardService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/board_service_test.py)
+
+    Description to be added
+
+4.  [TestGameService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/game_service_test.py)
 
     Description to be added
 
@@ -51,11 +55,15 @@ The following test classes has been made to test service classes:
 
     `GameService` class uses stub class functions which are unnecessary from the testing perspective.
 
-4.  [TestSituationService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/situation_service_test.py)
+5.  [TestHeuristicService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/heuristic_service_test.py)
 
     Description to be added
 
-Especially `AiService` and `SituationService` classes has multiple methods which keeps track of the game situation. In order to test different game situation, [test_grids.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_grids.py) and [test_locs.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_locs.py) has been created. Test grids obviously contains different game grid setups and Test locs contain different setups for Four Connect testing.
+6.  [TestSituationService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/situation_service_test.py)
+
+    Description to be added
+
+Many service classes has multiple methods which keeps track of the game situation. In order to test different game situation, [test_grids.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_grids.py) and [test_locs.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_locs.py) has been created. Test grids obviously contains different game grid setups and Test locs contain different setups for Four Connect testing.
 
 ## System testing
 
