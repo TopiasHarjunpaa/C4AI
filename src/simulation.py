@@ -19,6 +19,7 @@ def main():
     deep_simulation(ai_service, [empty, G_MG2], 8, 5)
 
 def many_simulations(ai_service, grids, depth, timeout):
+    ai_service.printer = False
     id_results = []
     mm_results = []
     print(f"Starting multiple iterative deepening with max depth {depth} and timeout {timeout}s")
@@ -54,7 +55,6 @@ def deep_simulation(ai_service, grids, depth, timeout):
     mg_mm= ai_service.calculate_next_move_minimax(grids[1], 1, depth + 2)
     print(f"id result: {mg_id} | mm result: {mg_mm}")
     print("")
-    ai_service.printer = False
 
 if __name__ == "__main__":
     main()
