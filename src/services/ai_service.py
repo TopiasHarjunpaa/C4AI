@@ -28,6 +28,7 @@ class AiService:
         self._current_time = time.time()
         self._time_limit = 5
         self.counter = 0
+        self.printer = False
 
     def _copy_grid(self, grid):
         """Creates copy of the grid using list comprehension.
@@ -98,12 +99,20 @@ class AiService:
             tuple: Returns column and row indexes of the next move location
         """
 
-        self._start_time = time.time()
-        result = self._minimax(grid, player_number, depth, True)[1]
-        print(time.time() - self._start_time)
-        return result
+        start_t = time.time()
+        self.counter = 0
+        result = self._minimax(grid, player_number, depth, True)
 
-    def calculate_next_move_id_minimax(self, grid, player_number):
+        if self.printer:
+            print(f"D: {depth} - Score: {result[0]} - Loc: {result[1]}")
+            print(f"total number of nodes searched {self.counter}")
+            print(f"time spend for iteration: {time.time() - start_t}")
+
+        self.counter = 0
+
+        return result[1]
+
+    def calculate_next_move_id_minimax(self, grid, player_number, timeout=5, max_depth=42):
         """Calculates next possible move using Minimax algorithm
         and iterative deepening. This method is used for the advanced level of AI:
 
@@ -122,30 +131,45 @@ class AiService:
         """
 
         locations = {}
-        self._time_limit = 5
+        self._time_limit = timeout
         self._start_time = time.time()
         depth = 1
-        max_depth = self._situation.count_free_slots(grid)
+        max_depth = min(self._situation.count_free_slots(grid), max_depth)
         col_order = None
 
-        while not self._check_timeout() and depth < max_depth:
-            st = time.time()
+        while not self._check_timeout() and depth <= max_depth:
+            start_t = time.time()
             self.counter = 0
-            locations[depth] = self._minimax_with_id_and_bb(grid, player_number, depth, True, -math.inf, math.inf, col_order)
+            locations[depth] = self._minimax_with_id_and_bb(grid, player_number, depth,
+                                                            True, -math.inf, math.inf, col_order)
             col_order = [value[1] for value in sorted(locations[depth][2], reverse=True)]
-            print(f"D: {depth} - Score: {locations[depth][0]} - Loc: {locations[depth][1]} - Order: {col_order}")
-            print(f"total number of nodes searched {self.counter}")
-            print(f"time spend for iteration: {time.time() - st}")
+
+            if self.printer:
+                score = locations[depth][0]
+                loc = locations[depth][1]
+                print((f"D: {depth} - Score: {score} - Loc: {loc} - Order: {col_order}"))
+                print(f"total number of nodes searched {self.counter}")
+                print(f"time spend for iteration: {time.time() - start_t}")
+                print("")
+
             depth += 1
         depth -= 1
+
+        if self.printer:
+            if depth == max_depth:
+                print(f"Max depth {max_depth} reached.")
+            else:
+                print(f"Depth {depth} terminated. Result from depth {depth - 1} is used.")
+            print("--------------------------")
+            print("")
 
         if depth == max_depth:
             return locations[depth][1]
         return locations[max(1, depth - 1)][1]
 
     # Update docstring
-    def _minimax_with_id_and_bb(self, grid, player_number, depth, maximizing_player, 
-                alpha=-math.inf, beta=math.inf, col_order=None):
+    def _minimax_with_id_and_bb(self, grid, player_number, depth, maximizing_player,
+                                alpha=-math.inf, beta=math.inf, col_order=None):
         """Evalutes the most optimal next move using Minimax algorithm
         and fail-soft alpha beta pruning:
 
@@ -189,7 +213,7 @@ class AiService:
             second item contains location coordinates of the next move (row index, col index)
         """
         self.counter += 1
-        
+
         if self._check_timeout():
             return (-math.inf, None, None)
 
@@ -207,7 +231,7 @@ class AiService:
                 available_locations = self._situation.get_available_locations_ranked(grid)
             else:
                 available_locations = col_order
-            
+
             targeted_location = available_locations[0]
             max_value = -math.inf
             cols = []
@@ -226,7 +250,7 @@ class AiService:
                 if value >= beta:
                     cols.append((beta, location))
                     break
-                
+
                 cols.append((value, location))
 
             return max_value, targeted_location, cols
@@ -251,7 +275,7 @@ class AiService:
 
         return min_value, targeted_location, None
 
-    def _minimax(self, grid, player_number, depth, maximizing_player, 
+    def _minimax(self, grid, player_number, depth, maximizing_player,
                 alpha=-math.inf, beta=math.inf):
         """Evalutes the most optimal next move using Minimax algorithm
         and fail-soft alpha beta pruning:
