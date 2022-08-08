@@ -5,6 +5,10 @@ def start(ctx):
     ctx.run("python3 src/index.py")
 
 @task
+def simulate(ctx):
+    ctx.run("python3 src/simulation.py")
+
+@task
 def test(ctx):
     ctx.run("pytest")
 
