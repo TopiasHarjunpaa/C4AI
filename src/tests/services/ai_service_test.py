@@ -36,44 +36,22 @@ class TestAiService(unittest.TestCase):
         location = self.ai.calculate_next_move_basic(G_1W1, 2)
         self.assertEqual(location, (4, 2))
 
-    def test_heuristic_value_returns_correct_value(self):
-        value = self.ai._heuristic_value(G_AE1, 1)
-        self.assertEqual(value, 2)
-        value = self.ai._heuristic_value(G_AE2, 2)
-        self.assertEqual(value, 1)
-        value = self.ai._heuristic_value(G_AE3, 2)
-        self.assertEqual(value, 2)
-
-    def test_check_terminal_node(self):
-        answer = self.ai._check_terminal_node(G_AE1, 1, 2)
-        self.assertEqual(answer, None)
-        answer = self.ai._check_terminal_node(G_VE1, 1, 2)
-        self.assertEqual(answer, math.inf)
-        answer = self.ai._check_terminal_node(G_VE1, 2, 1)
-        self.assertEqual(answer, -math.inf)
-        answer = self.ai._check_terminal_node(G_WO1, 1, 2)
-        self.assertEqual(answer, 0)
-        answer = self.ai._check_terminal_node(G_WO1, 2, 1)
-        self.assertEqual(answer, 0)
-
     def test_minimax_finds_terminal_situations(self):
         value = self.ai._minimax(G_1W1, 2, 4, True)[0]
         self.assertEqual(value, -math.inf)
-        value, location, cols = self.ai._minimax(G_1W2, 1, 4, True)
+        value, location = self.ai._minimax(G_1W2, 1, 4, True)
         self.assertEqual(value, math.inf)
         self.assertEqual(location, (5, 1))
-        value, location, cols = self.ai._minimax(G_WO1, 1, 4, True)
+        value, location = self.ai._minimax(G_WO1, 1, 4, True)
         self.assertEqual(value, 0)
         self.assertEqual(location, None)
-        self.assertEqual(cols, None)
-        value, location, cols = self.ai._minimax(G_WO1, 2, 4, True)
+        value, location = self.ai._minimax(G_WO1, 2, 4, True)
         self.assertEqual(value, 0)
         self.assertEqual(location, None)
-        self.assertEqual(cols, None)
         value = self.ai._minimax(G_SF1, 1, 7, True)[0]
         self.assertEqual(value, -math.inf)
 
     def test_minimax_returns_best_move(self):
-        value, location, cols = self.ai._minimax(G_SF2, 2, 6, True)
+        value, location = self.ai._minimax(G_SF2, 2, 6, True)
         self.assertEqual(value, math.inf)
-        self.assertEqual(location, (1, 4))      
+        self.assertEqual(location, (1, 4))    

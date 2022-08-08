@@ -1,3 +1,4 @@
+import math
 from config import ROWS, COLUMNS
 from services.bitboard_service import BitboardService
 
@@ -74,22 +75,6 @@ class SituationService:
                 available_columns.append((row, column))
         return available_columns
 
-    def check_draw(self, grid):
-        """Checks if the game has ended draw.
-        Game is draw if game grid is full of coins ie. no
-        available columns has been found from the game grid.
-
-        Args:
-            grid (list): Grid matrix of the game board.
-
-        Returns:
-            Boolean: Returns true if game is draw, otherwise returns false.
-        """
-
-        if len(self.get_available_locations(grid)) == 0:
-            return True
-        return False
-
     def count_free_slots(self, grid):
         """Counts the number of free slots ie. number of zeros (empty)
         remaining on the current game grid.
@@ -105,10 +90,6 @@ class SituationService:
         for row in grid:
             free_slots += row.count(0)
         return free_slots
-
-    def check_win_bb(self, grid, player_number):
-        bitboard = self.bitboard.convert_to_bitboard(grid)
-        return self.bitboard.check_win(bitboard, player_number)
 
     def check_win(self, grid, player_number):
         """Checks if the player has won the game ie. gets four connect:
@@ -152,3 +133,50 @@ class SituationService:
                     return True
 
         return False
+
+    def check_draw(self, grid):
+        """Checks if the game has ended draw.
+        Game is draw if game grid is full of coins ie. no
+        available columns has been found from the game grid.
+
+        Args:
+            grid (list): Grid matrix of the game board.
+
+        Returns:
+            Boolean: Returns true if game is draw, otherwise returns false.
+        """
+
+        if len(self.get_available_locations(grid)) == 0:
+            return True
+        return False
+
+    def check_terminal_node(self, grid, player_number):
+        """Checks if the game situation means that the game has ended.
+
+        Game ends if one of the player has gotten connect four. In that case
+        the method will return value of INF if the winning player is the same
+        with player number given for the method. Otherwise the return value will
+        be -INF. Game will end as draw if the grid is full and none of the players
+        has not won. In this case return value will be 0.
+
+        Game hasn't ended if none of the player has not won and the grid is not
+        full. In that case return value will be None.
+
+        Args:
+            grid (list): Grid matrix of the game board.
+            player_number (int): Player number (1 = first player, 2 = second player)
+
+        Returns:
+            INF, -INF, 0 or None
+        """
+
+        if self.check_win(grid, player_number):
+            return math.inf
+
+        if self.check_win(grid, player_number % 2 + 1):
+            return -math.inf
+
+        if self.check_draw(grid):
+            return 0
+
+        return None

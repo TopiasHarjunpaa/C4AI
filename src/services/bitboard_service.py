@@ -41,7 +41,7 @@ class BitboardService:
             return True
         return False
 
-    def check_terminal_situations(self, grid, player_number):
+    def check_terminal_node(self, grid, player_number):
         opponent_number = player_number % 2 + 1
         bitboards = self.convert_to_bitboard(grid)
 
