@@ -1,4 +1,3 @@
-import math
 from config import ROWS, COLUMNS
 
 
@@ -62,7 +61,7 @@ class BitboardService:
         height = col * 7 + (5 - row)
         bitboards[player_number - 1] ^=  (1 << height)
         return bitboards
-    
+
     def count_coins(self, bitboards, player_number):
         coins = bin(bitboards[player_number - 1]).count('1')
         return coins

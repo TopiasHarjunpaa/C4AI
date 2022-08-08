@@ -1,7 +1,6 @@
 import math
 import time
 from services.heuristic_service import HeuristicService
-from config import ROWS, COLUMNS
 
 
 class AiService:
