@@ -7,9 +7,7 @@ from tests.test_grids import G_AE1, G_VE1, G_HO1, G_UD1, G_DD1, G_SF1, G_WO1, G_
 
 class TestSituationService(unittest.TestCase):
     def setUp(self):
-        self.width = 640
-        self.height = 480
-        self.board = BoardService(self.width, self.height)
+        self.board = BoardService(640, 480)
         self.situation = SituationService(self.board)
 
     def copy_grid_allows_changes_without_modifying_original(self):

@@ -46,12 +46,28 @@ class BitboardService:
         bitboards = self.convert_to_bitboard(grid)
 
         if self.check_win(bitboards, player_number):
-            return math.inf
+            return 22 - self.count_coins(bitboards, player_number)
 
         if self.check_win(bitboards, opponent_number):
-            return -math.inf
+            return -22 + self.count_coins(bitboards, opponent_number)
 
         if self.check_draw(bitboards):
             return 0
 
         return None
+
+    def make_move(self, bitboards, location, player_number):
+        row = location[0]
+        col = location[1]
+        height = col * 7 + (5 - row)
+        bitboards[player_number - 1] ^=  (1 << height)
+        return bitboards
+    
+    def count_coins(self, bitboards, player_number):
+        coins = bin(bitboards[player_number - 1]).count('1')
+        return coins
+
+    def calculate_heuristic_value(self, bitboards, player_number):
+        if self.check_win(bitboards, player_number):
+            return 22 - self.count_coins(bitboards, player_number)
+        return 0

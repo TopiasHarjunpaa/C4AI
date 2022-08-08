@@ -28,7 +28,7 @@ class AiService:
         self._current_time = time.time()
         self._time_limit = 5
         self.counter = 0
-        self.printer = False
+        self.printer = True
 
     def _check_timeout(self):
         """Checks if certain time limit has exceeded.

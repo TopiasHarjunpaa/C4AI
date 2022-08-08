@@ -171,3 +171,6 @@ class HeuristicService:
         score += self._get_dec_diagonal_values(grid, player_number)
         score += self._get_positional_values(grid, player_number)
         return score
+    
+    def calculate_heuristic_value_with_bitboards(self, bitboards, player_number):
+        return self._bb.calculate_heuristic_value(bitboards, player_number)
