@@ -27,6 +27,7 @@ class AiService:
         self._start_time = time.time()
         self._current_time = time.time()
         self._time_limit = 5
+        self.counter = 0
 
         #Temp solution for testing. 1 = matrix, 2 = bitboard.
         self._board_presentation = 1
@@ -130,12 +131,19 @@ class AiService:
         self._start_time = time.time()
         depth = 1
         max_depth = self._situation.count_free_slots(grid)
-        print(f"free slots left: {max_depth}")
+        col_order = None
+
         while not self._check_timeout() and depth < max_depth:
-            locations[depth] = self._minimax(grid, player_number, depth, True)
-            print(f"D: {depth} - Score: {locations[depth][0]} - Loc: {locations[depth][1]}")
+            st = time.time()
+            self.counter = 0
+            locations[depth] = self._minimax(grid, player_number, depth, True, -math.inf, math.inf, col_order)
+            col_order = [value[1] for value in sorted(locations[depth][2], reverse=True)]
+            print(f"D: {depth} - Score: {locations[depth][0]} - Loc: {locations[depth][1]} - Order: {col_order}")
+            print(f"total number of nodes searched {self.counter}")
+            print(f"time spend for iteration: {time.time() - st}")
             depth += 1
         depth -= 1
+
         if depth == max_depth:
             return locations[depth][1]
         return locations[max(1, depth - 1)][1]
@@ -191,8 +199,8 @@ class AiService:
 
         return None
 
-    def _minimax(self, grid, player_number, depth,
-                maximizing_player, alpha=-math.inf, beta=math.inf):
+    def _minimax(self, grid, player_number, depth, maximizing_player, 
+                alpha=-math.inf, beta=math.inf, col_order=None):
         """Evalutes the most optimal next move using Minimax algorithm
         and fail-soft alpha beta pruning:
 
@@ -235,7 +243,7 @@ class AiService:
             tuple: Returns tuple which first item is heuristic value of the next move and
             second item contains location coordinates of the next move (row index, col index)
         """
-
+        self.counter += 1
         if self._check_timeout():
             return (-math.inf, None)
 
@@ -248,11 +256,15 @@ class AiService:
         if depth == 0:
             return (self._heuristic_value(grid, player_number), None)
 
-        available_locations = self._situation.get_available_locations_ranked(grid)
-        targeted_location = available_locations[0]
-
         if maximizing_player:
+            if col_order is None:
+                available_locations = self._situation.get_available_locations_ranked(grid)
+            else:
+                available_locations = col_order
+            
+            targeted_location = available_locations[0]
             max_value = -math.inf
+            cols = []
 
             for location in available_locations:
                 new_grid = self._copy_grid(grid)
@@ -264,12 +276,19 @@ class AiService:
                     max_value = value
                     targeted_location = location
 
+                
+
                 alpha = max(alpha, value)
                 if value >= beta:
+                    cols.append((beta, location))
                     break
+                
+                cols.append((value, location))
 
-            return max_value, targeted_location
+            return max_value, targeted_location, cols
 
+        available_locations = self._situation.get_available_locations_ranked(grid)
+        targeted_location = available_locations[0]
         min_value = math.inf
 
         for location in available_locations:
@@ -286,4 +305,4 @@ class AiService:
             if value <= alpha:
                 break
 
-        return min_value, targeted_location
+        return min_value, targeted_location, None

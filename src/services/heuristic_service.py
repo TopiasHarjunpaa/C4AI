@@ -29,6 +29,7 @@ class HeuristicService:
         value = 0
         opponent_number = player_number % 2 + 1
         multipliers = {0: math.inf, 1: 10, 2: 2}
+        #multipliers = {0: math.inf}
         for k, val in multipliers.items():
             if loc.count(player_number) == 4 - k and loc.count(0) == k:
                 value += val
