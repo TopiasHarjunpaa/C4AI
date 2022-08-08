@@ -36,10 +36,10 @@
 #### Week 4
 | Day | Hour | What did I do? |
 | :----:|:-----| :-----|
+| 7.8 | 1 h    | Preliminary move exploration ordering |
+| 8.8 | 4 h    | Move exploration ordering continues and bitboard presentation |
 | xx.x | 0 h    | xxx |
-| xx.x | 0 h    | xxx |
-| xx.x | 0 h    | xxx |
-| **Total** | **0 h** | |
+| **Total** | **5 h** | |
 
 #### Week 5
 | Day | Hour | What did I do? |
