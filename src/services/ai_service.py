@@ -245,16 +245,16 @@ class AiService:
         """
         self.counter += 1
         if self._check_timeout():
-            return (-math.inf, None)
+            return (-math.inf, None, None)
 
         terminal_value = self._check_terminal_node(
             grid, player_number, player_number % 2 + 1)
 
         if terminal_value is not None:
-            return (terminal_value, None)
+            return (terminal_value, None, None)
 
         if depth == 0:
-            return (self._heuristic_value(grid, player_number), None)
+            return (self._heuristic_value(grid, player_number), None, None)
 
         if maximizing_player:
             if col_order is None:

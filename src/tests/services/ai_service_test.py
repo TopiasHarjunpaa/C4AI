@@ -59,19 +59,21 @@ class TestAiService(unittest.TestCase):
     def test_minimax_finds_terminal_situations(self):
         value = self.ai._minimax(G_1W1, 2, 4, True)[0]
         self.assertEqual(value, -math.inf)
-        value, location = self.ai._minimax(G_1W2, 1, 4, True)
+        value, location, cols = self.ai._minimax(G_1W2, 1, 4, True)
         self.assertEqual(value, math.inf)
         self.assertEqual(location, (5, 1))
-        value, location = self.ai._minimax(G_WO1, 1, 4, True)
+        value, location, cols = self.ai._minimax(G_WO1, 1, 4, True)
         self.assertEqual(value, 0)
         self.assertEqual(location, None)
-        value, location = self.ai._minimax(G_WO1, 2, 4, True)
+        self.assertEqual(cols, None)
+        value, location, cols = self.ai._minimax(G_WO1, 2, 4, True)
         self.assertEqual(value, 0)
         self.assertEqual(location, None)
-        value, location = self.ai._minimax(G_SF1, 1, 7, True)
+        self.assertEqual(cols, None)
+        value = self.ai._minimax(G_SF1, 1, 7, True)[0]
         self.assertEqual(value, -math.inf)
 
     def test_minimax_returns_best_move(self):
-        value, location = self.ai._minimax(G_SF2, 2, 6, True)
+        value, location, cols = self.ai._minimax(G_SF2, 2, 6, True)
         self.assertEqual(value, math.inf)
         self.assertEqual(location, (1, 4))      
