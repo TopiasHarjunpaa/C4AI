@@ -16,6 +16,18 @@ class SituationService:
     def get_game_grid(self):
         return self._board.grid
 
+    def copy_grid(self, grid):
+        """Creates copy of the grid using list comprehension.
+
+        Args:
+            grid (list): Grid matrix of the game board.
+
+        Returns:
+            list: Returns copied list from the grid
+        """
+
+        return [[grid[row][col] for col in range(COLUMNS)] for row in range(ROWS)]
+
     def check_column_available(self, grid, col_number):
         """Check if certain column has room to put game coin.
         Uses the chosen column number and loops through

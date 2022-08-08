@@ -13,19 +13,6 @@ class TestAiService(unittest.TestCase):
         self.situation = SituationService(self.board)
         self.ai = AiService(self.situation)
 
-    def copy_grid_allows_changes_without_modifying_original(self):
-        original_grid1 = self.board.grid
-        original_grid2 = G_AE4
-        copy_grid1 = self.ai._copy_grid(original_grid1)
-        copy_grid2 = self.ai._copy_grid(original_grid2)
-        self.assertEqual(original_grid1, copy_grid1)
-        self.assertEqual(original_grid2, copy_grid2)
-        copy_grid1[0][0] = 9
-        self.assertNotEqual(original_grid1, copy_grid1)
-        self.assertNotEqual(original_grid1[0][0], copy_grid1[0][0])
-        self.assertEqual(copy_grid1[0][0], 9)
-        self.assertEqual(original_grid1[0][0], 0)
-
     def test_calculate_next_move_basic_returns_correct_choice(self):
         location = self.ai.calculate_next_move_basic(G_AE1, 1)
         self.assertEqual(location, (5, 2))

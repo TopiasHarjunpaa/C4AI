@@ -2,7 +2,7 @@ import unittest
 import math
 from services.board_service import BoardService
 from services.situation_service import SituationService
-from tests.test_grids import G_AE1, G_VE1, G_HO1, G_UD1, G_DD1, G_SF1, G_WO1, G_SF2,G_AE2
+from tests.test_grids import G_AE1, G_VE1, G_HO1, G_UD1, G_DD1, G_SF1, G_WO1, G_SF2, G_AE2
 
 
 class TestSituationService(unittest.TestCase):
@@ -11,6 +11,19 @@ class TestSituationService(unittest.TestCase):
         self.height = 480
         self.board = BoardService(self.width, self.height)
         self.situation = SituationService(self.board)
+
+    def copy_grid_allows_changes_without_modifying_original(self):
+        original_grid1 = self.board.grid
+        original_grid2 = G_AE2
+        copy_grid1 = self.situation.copy_grid(original_grid1)
+        copy_grid2 = self.situation.copy_grid(original_grid2)
+        self.assertEqual(original_grid1, copy_grid1)
+        self.assertEqual(original_grid2, copy_grid2)
+        copy_grid1[0][0] = 9
+        self.assertNotEqual(original_grid1, copy_grid1)
+        self.assertNotEqual(original_grid1[0][0], copy_grid1[0][0])
+        self.assertEqual(copy_grid1[0][0], 9)
+        self.assertEqual(original_grid1[0][0], 0)
 
     def test_column_available_return_correct_column_number(self):
         col_number = self.situation.check_column_available(self.board.grid, 0)

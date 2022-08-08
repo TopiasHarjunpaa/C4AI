@@ -30,18 +30,6 @@ class AiService:
         self.counter = 0
         self.printer = False
 
-    def _copy_grid(self, grid):
-        """Creates copy of the grid using list comprehension.
-
-        Args:
-            grid (list): Grid matrix of the game board.
-
-        Returns:
-            list: Returns copied list from the grid
-        """
-
-        return [[grid[row][col] for col in range(COLUMNS)] for row in range(ROWS)]
-
     def _check_timeout(self):
         """Checks if certain time limit has exceeded.
 
@@ -76,7 +64,7 @@ class AiService:
         targeted_location = available_locations[0]
 
         for location in available_locations:
-            new_grid = self._copy_grid(grid)
+            new_grid = self._situation.copy_grid(grid)
             new_grid[location[0]][location[1]] = player_number
             value = self._heuristics.calculate_heuristic_value(new_grid, player_number)
 
@@ -237,7 +225,7 @@ class AiService:
             cols = []
 
             for location in available_locations:
-                new_grid = self._copy_grid(grid)
+                new_grid = self._situation.copy_grid(grid)
                 new_grid[location[0]][location[1]] = player_number
                 value = self._minimax(
                     new_grid, player_number, depth - 1, False, alpha, beta)[0]
@@ -260,7 +248,7 @@ class AiService:
         min_value = math.inf
 
         for location in available_locations:
-            new_grid = self._copy_grid(grid)
+            new_grid = self._situation.copy_grid(grid)
             new_grid[location[0]][location[1]] = player_number % 2 + 1
             value = self._minimax(
                 new_grid, player_number, depth - 1, True, alpha, beta)[0]
@@ -336,7 +324,7 @@ class AiService:
             max_value = -math.inf
 
             for location in available_locations:
-                new_grid = self._copy_grid(grid)
+                new_grid = self._situation.copy_grid(grid)
                 new_grid[location[0]][location[1]] = player_number
                 value = self._minimax(
                     new_grid, player_number, depth - 1, False, alpha, beta)[0]
@@ -354,7 +342,7 @@ class AiService:
         min_value = math.inf
 
         for location in available_locations:
-            new_grid = self._copy_grid(grid)
+            new_grid = self._situation.copy_grid(grid)
             new_grid[location[0]][location[1]] = player_number % 2 + 1
             value = self._minimax(
                 new_grid, player_number, depth - 1, True, alpha, beta)[0]
