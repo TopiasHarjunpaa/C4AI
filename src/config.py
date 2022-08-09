@@ -15,6 +15,10 @@ RED = (255, 0, 0)
 GREEN = (0, 200, 0)
 BLUE = (0, 87, 217)
 
+FULL_GRID = int('0111111' * COLUMNS, 2)
+TOP_ROW = int('1000000' * COLUMNS, 2)
+MID_COL = int('1' * (ROWS) + '0' * 3 * (ROWS + 1), 2)
+
 dirname = os.path.dirname(__file__)
 
 try:
