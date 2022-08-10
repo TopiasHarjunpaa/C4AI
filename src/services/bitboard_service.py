@@ -1,4 +1,5 @@
-from config import ROWS, COLUMNS, FULL_GRID, MID_COL
+from config import ROWS, COLUMNS, FULL_GRID
+from entities.position import Position
 
 
 class BitboardService:
@@ -6,6 +7,11 @@ class BitboardService:
 
     def __init__(self):
         pass
+
+    def convert_to_position(self, grid):
+        bitboard = self.convert_to_bitboard(grid)
+        heights = self.convert_to_heights(grid)
+        return Position(bitboard, heights)
 
     def convert_to_bitboard(self, grid):
         first_player = '0' * 15
@@ -25,20 +31,16 @@ class BitboardService:
                     second_player += '1'
         return [int(first_player, 2), int(second_player, 2)]
 
-    def convert_to_heights(self, locations):
+    def convert_to_heights(self, grid):
         heights = []
-        for location in locations:
-            row = location[0]
-            col = location[1]
-            height = col * 7 + (5 - row)
+        for col in range(COLUMNS):
+            height = col * 7 + 6
+            for row in reversed(range(ROWS)):
+                if grid[row][col] == 0:
+                    height = col * 7 + (5 - row)
+                    break
             heights.append(height)
         return heights
-
-    def convert_to_counter(self, grid):
-        counter = 42
-        for row in grid:
-            counter -= row.count(0)
-        return counter
 
     def check_win(self, bitboard, index):
         board = bitboard[index]
@@ -55,10 +57,8 @@ class BitboardService:
             return True
         return False
 
-    def check_terminal_node(self, position):
+    def check_terminal_node(self, position, player_index):
         bitboard = position.get_bitboard()
-        counter = position.get_counter()
-        player_index = counter & 1
         opponent_index = (player_index + 1) % 2
 
         if self.check_win(bitboard, player_index):
@@ -75,9 +75,3 @@ class BitboardService:
     def count_coins(self, bitboard, player_index):
         coins = bin(bitboard[player_index]).count('1')
         return coins
-
-    def calculate_heuristic_value(self, position):
-        bitboard = position.get_bitboard()
-        counter = position.get_counter()
-        middle_coins = bin(bitboard[counter & 1] & MID_COL).count('1')
-        return middle_coins

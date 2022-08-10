@@ -2,17 +2,9 @@ from config import TOP_ROW
 
 class Position:
 
-    def __init__(self, bitboard=None, heights=None, counter=0, moves=None):
+    def __init__(self, bitboard, heights):
         self.bitboard = bitboard
-        if bitboard is None:
-            self.bitboard = [0, 0]
         self.heights = heights
-        if heights is None:
-            self.heights = [0, 7, 14, 21, 28, 35, 42]
-        self.counter = counter
-        self.moves = moves
-        if moves is None:
-            self.moves = []
 
     def get_bitboard(self):
         return self.bitboard
@@ -20,25 +12,15 @@ class Position:
     def get_heights(self):
         return self.heights
 
-    def get_counter(self):
-        return self.counter
-
-    def get_moves(self):
-        return self.moves
-
     def get_params(self):
         bitboard = self.bitboard.copy()
         heights = self.heights.copy()
-        counter = self.counter
-        moves = self.moves.copy()
-        return [bitboard, heights, counter, moves]
+        return [bitboard, heights]
 
-    def make_move(self, col):
+    def make_move(self, col, player_index):
         move = 1 << self.heights[col]
         self.heights[col] += 1
-        self.bitboard[(self.counter & 1)] ^= move
-        self.counter += 1
-        self.moves.append(col)
+        self.bitboard[player_index] ^= move
 
     def get_available_columns(self):
         cols = []

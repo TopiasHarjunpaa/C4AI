@@ -1,7 +1,6 @@
 import pygame
 from services.ai_service import AiService
 from services.situation_service import SituationService
-from entities.position import Position
 
 
 PLAYER = 1
@@ -52,7 +51,6 @@ class GameService:
         #self._player_setup = {1: PLAYER, 2: AI_INTERMEDIATE}
         self._situation = SituationService(self._board)
         self.ai_service = AiService(self._situation)
-        self._position = Position()
 
     def start_gameloop(self):
         """Starts the game loop and sets playing to true ie. game has started.
@@ -135,7 +133,7 @@ class GameService:
         """
 
         return self.ai_service.calculate_next_move_id_minimax(
-                                self._position)
+                                self._board.grid, self.player_number)
 
     def _check_terminal_situation(self):
         """Checks the terminal situation ie. current player wins or
@@ -180,7 +178,6 @@ class GameService:
 
         else:
             column = self._calculate_next_move_advanced()
-            print(column)
             row = self._situation.check_column_available(self._board.grid, column)
             location = (row, column)
 

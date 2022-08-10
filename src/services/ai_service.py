@@ -1,6 +1,7 @@
 import math
 import time
 from services.heuristic_service import HeuristicService
+from services.bitboard_service import BitboardService
 from entities.position import Position
 
 
@@ -26,9 +27,13 @@ class AiService:
         self._heuristics = HeuristicService(self._bitboard)
         self._start_time = time.time()
         self._current_time = time.time()
+        self._bb_service = BitboardService()
         self._time_limit = 5
         self.counter = 0
         self.printer = False
+
+        # In progress
+        self.t_table = {}
 
     def _check_timeout(self):
         """Checks if certain time limit has exceeded.
@@ -100,7 +105,7 @@ class AiService:
 
         return result[1]
 
-    def calculate_next_move_id_minimax(self, position, timeout=5, max_depth=42):
+    def calculate_next_move_id_minimax(self, grid, player_number, timeout=5, max_depth=42):
         """Calculates next possible move using Minimax algorithm
         and iterative deepening. This method is used for the advanced level of AI:
 
@@ -117,21 +122,19 @@ class AiService:
         Returns:
             tuple: Returns column and row indexes of the next move location
         """
-
+        position = self._bb_service.convert_to_position(grid)
+        player_index = player_number - 1
         self.printer = True
         locations = {}
         self._time_limit = timeout
         self._start_time = time.time()
         depth = 1
-        max_depth = min(42 - position.get_counter(), max_depth)
+        max_depth = min(self._situation.count_free_slots(grid), max_depth)
 
         while not self._check_timeout() and depth <= max_depth:
             start_t = time.time()
             self.counter = 0
-            locations[depth] = self._minimax_with_id_and_bb(position, depth,True)
-            position = locations[depth][2]
-            print(position)
-
+            locations[depth] = self._minimax_with_id_and_bb(position, player_index, depth, True)
             if self.printer:
                 score = locations[depth][0]
                 loc = locations[depth][1]
@@ -156,7 +159,7 @@ class AiService:
         return locations[max(1, depth - 1)][1]
 
     # Update docstring
-    def _minimax_with_id_and_bb(self, position, depth, maximizing_player,
+    def _minimax_with_id_and_bb(self, position, player_index, depth, maximizing_player,
                                 alpha=-math.inf, beta=math.inf):
         """Evalutes the most optimal next move using Minimax algorithm
         and fail-soft alpha beta pruning:
@@ -201,60 +204,74 @@ class AiService:
             second item contains location coordinates of the next move (row index, col index)
         """
 
-        if self._check_timeout():
-            return (-math.inf, None, None)
+        self.counter += 1
 
-        terminal_value = self._bitboard.check_terminal_node(position)
+        if self._check_timeout():
+            return (-math.inf, None)
+
+        # In progress
+        check_bitboard = tuple(position.get_bitboard())
+        if check_bitboard in self.t_table.keys():
+            value, saved_depth, column, max_p = self.t_table[check_bitboard]
+            if saved_depth >= depth and  max_p == maximizing_player:
+                return value, column
+
+        terminal_value = self._bitboard.check_terminal_node(position, player_index)
 
         if terminal_value is not None:
-            return (terminal_value, None, None)
+            return (terminal_value, None)
 
         if depth == 0:
-            return (self._heuristics.calculate_heuristic_value_with_bitboards(position), None, None)
+            return (0, None)
 
         if maximizing_player:
             columns = position.get_available_columns()
             column = columns[0]
             max_value = -math.inf
-            pos = None
 
             for col in columns:
-                board, heights, counter, moves = position.get_params()
-                new_position = Position(board, heights, counter, moves)
-                new_position.make_move(col)
-                value = self._minimax_with_id_and_bb(position, depth - 1, False, alpha, beta)[0]
+                board, heights = position.get_params()
+                new_position = Position(board, heights)
+                new_position.make_move(col, player_index)
+                value = self._minimax_with_id_and_bb(new_position, player_index, depth - 1,
+                                                    False, alpha, beta)[0]
+
+                # In progress
+                self.t_table[tuple(board)] = [value, depth - 1, col, True]
+
                 if value > max_value:
                     max_value = value
                     column = col
-                    pos = new_position
 
                 alpha = max(alpha, value)
                 if value >= beta:
                     break
 
-            return max_value, column, pos
+            return max_value, column
 
         columns = position.get_available_columns()
         column = columns[0]
         min_value = math.inf
-        pos = None
 
         for col in columns:
-            board, heights, counter, moves = position.get_params()
-            new_position = Position(board, heights, counter, moves)
-            new_position.make_move(col)
-            value = self._minimax_with_id_and_bb(position, depth - 1, False, alpha, beta)[0]
+            board, heights = position.get_params()
+            new_position = Position(board, heights)
+            new_position.make_move(col, (player_index + 1) % 2)
+            value = self._minimax_with_id_and_bb(new_position, player_index, depth - 1,
+                                                True, alpha, beta)[0]
+
+            # In progress
+            self.t_table[tuple(board)] = [value, depth - 1, col, False]
 
             if value < min_value:
                 min_value = value
                 column = col
-                pos = new_position
 
             beta = min(beta, value)
             if value <= alpha:
                 break
 
-        return min_value, column, pos
+        return min_value, column
 
     def _minimax(self, grid, player_number, depth, maximizing_player,
                 alpha=-math.inf, beta=math.inf):
