@@ -39,7 +39,8 @@
 | 7.8 | 1 h    | Preliminary move exploration ordering |
 | 8.8 | 4 h    | Move exploration ordering continues and bitboard presentation |
 | 9.8| 4 h    | Bitboard presentation reworks |
-| **Total** | **9 h** | |
+| 10.8| 3 h    | Bitboard presentation rework continues |
+| **Total** | **12 h** | |
 
 #### Week 5
 | Day | Hour | What did I do? |

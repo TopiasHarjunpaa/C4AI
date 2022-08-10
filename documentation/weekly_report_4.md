@@ -8,6 +8,8 @@ On monday, I continued working with the move ordering and simulations. It is sti
 
 On tuesday, I yet again continued working with the bitboards. I decided to create a new entity class called position, which keeps track of game situations using the bitboard presentation. I can now run the advanced AI using bitboard presentation without errors, but there is something wrong with the implementation because the output is not as expected. I will still continue working with that, but I really need to get it working during this week or otherwise I have to reroll back to the list matrix presentation.
 
+On wednesday I gave myself time until end of the day to get bitboards working as intended. There were plenty of bugs and I was about to give up many times, but luckily I managed to get it working. Iterative deepening can now reach up to depth between 12-13 at the early game stage with 5 second timeout, which is quite an improvement for the list matrix presentation, where I was able to reach depths between 8-9. However, algorithm only values terminal situations which means that the AI does not perform very well at the early game play. I think that even with optimisations this can be quite an issue, because with the ideal gameplay, terminal events should be happening at the very late game state. Anyway, the optimisations can wait some time because again, I am little bit behind with the tests, docstring and documentation, so these should be next things to do during this week.
+
 ### How has the program progressed?
 
 To be added.
