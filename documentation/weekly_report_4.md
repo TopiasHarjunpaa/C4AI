@@ -10,6 +10,8 @@ On tuesday, I yet again continued working with the bitboards. I decided to creat
 
 On wednesday I gave myself time until end of the day to get bitboards working as intended. There were plenty of bugs and I was about to give up many times, but luckily I managed to get it working. Iterative deepening can now reach up to depth between 12-13 at the early game stage with 5 second timeout, which is quite an improvement for the list matrix presentation, where I was able to reach depths between 8-9. However, algorithm only values terminal situations which means that the AI does not perform very well at the early game play. I think that even with optimisations this can be quite an issue, because with the ideal gameplay, terminal events should be happening at the very late game state. Anyway, the optimisations can wait some time because again, I am little bit behind with the tests, docstring and documentation, so these should be next things to do during this week.
 
+Yesterday I ended up creating very brief test code for transposition table and today on thursday I created very quickly own class for that. It clearly does not work as it should be right now, but I decided to keep it, so I continue from that if needed. Most of the time today I spend for creating new tests, playing around with the simulations and did couple of test matches against the advanced AI. Judging by the game results, the advanced AI is not quite ready yet.
+
 ### How has the program progressed?
 
 To be added.

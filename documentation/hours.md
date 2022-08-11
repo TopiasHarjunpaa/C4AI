@@ -40,7 +40,8 @@
 | 8.8 | 4 h    | Move exploration ordering continues and bitboard presentation |
 | 9.8| 4 h    | Bitboard presentation reworks |
 | 10.8| 3 h    | Bitboard presentation rework continues |
-| **Total** | **12 h** | |
+| 11.8| 2 h    | Create preliminary transposition table and add more tests |
+| **Total** | **14 h** | |
 
 #### Week 5
 | Day | Hour | What did I do? |
