@@ -3,6 +3,7 @@ import time
 from services.heuristic_service import HeuristicService
 from services.bitboard_service import BitboardService
 from entities.position import Position
+from entities.transposition_table import TranspositionTable
 
 
 class AiService:
@@ -28,12 +29,11 @@ class AiService:
         self._start_time = time.time()
         self._current_time = time.time()
         self._bb_service = BitboardService()
+        self.t_table = TranspositionTable()
         self._time_limit = 5
         self.counter = 0
         self.printer = False
 
-        # In progress
-        self.t_table = {}
 
     def _check_timeout(self):
         """Checks if certain time limit has exceeded.
@@ -209,12 +209,9 @@ class AiService:
         if self._check_timeout():
             return (-math.inf, None)
 
-        # In progress
-        check_bitboard = tuple(position.get_bitboard())
-        if check_bitboard in self.t_table.keys():
-            value, saved_depth, column, max_p = self.t_table[check_bitboard]
-            if saved_depth >= depth and  max_p == maximizing_player:
-                return value, column
+        #match = self.t_table.check_match(position.get_bitboard(), depth, maximizing_player)
+        #if match is not None:
+        #    return match
 
         terminal_value = self._bitboard.check_terminal_node(position, player_index)
 
@@ -236,8 +233,7 @@ class AiService:
                 value = self._minimax_with_id_and_bb(new_position, player_index, depth - 1,
                                                     False, alpha, beta)[0]
 
-                # In progress
-                self.t_table[tuple(board)] = [value, depth - 1, col, True]
+                #self.t_table.add(board, value, depth - 1, col, True)
 
                 if value > max_value:
                     max_value = value
@@ -260,8 +256,7 @@ class AiService:
             value = self._minimax_with_id_and_bb(new_position, player_index, depth - 1,
                                                 True, alpha, beta)[0]
 
-            # In progress
-            self.t_table[tuple(board)] = [value, depth - 1, col, False]
+            #self.t_table.add(board, value, depth - 1, col, False)
 
             if value < min_value:
                 min_value = value
