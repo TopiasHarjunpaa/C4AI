@@ -3,6 +3,7 @@ import math
 from services.ai_service import AiService
 from services.board_service import BoardService
 from services.situation_service import SituationService
+from config import ROWS, COLUMNS
 from tests.test_grids import (G_AE1, G_AE2, G_AE3, G_AE4, G_1W1,
                               G_1W2, G_WO1, G_SF1, G_SF2, G_VE1)
 
@@ -41,4 +42,17 @@ class TestAiService(unittest.TestCase):
     def test_minimax_returns_best_move(self):
         value, location = self.ai._minimax(G_SF2, 2, 6, True)
         self.assertEqual(value, math.inf)
-        self.assertEqual(location, (1, 4))    
+        self.assertEqual(location, (1, 4))
+    
+    def calculate_next_move_minimax_returns_valid_location(self):
+        result = self.ai.calculate_next_move_minimax(G_AE2, 1, 3)
+        self.assertEqual(result, (5, 3))
+        result = self.ai.calculate_next_move_minimax(G_WO1, 1, 3)
+        self.assertEqual(result, None)
+    
+    def calculate_next_move_id_minimax_returns_valid_column(self):
+        result = self.ai.calculate_next_move_id_minimax(G_AE3, 1, 0.5)
+        self.assertEqual(result, 3)
+        result = self.ai.calculate_next_move_id_minimax(G_WO1, 1, 0.5)
+        self.assertEqual(result, None)  
+
