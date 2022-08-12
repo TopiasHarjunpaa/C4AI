@@ -1,4 +1,4 @@
-from config import ROWS, COLUMNS, FULL_GRID
+from config import ROWS, COLUMNS, FULL_GRID, MID_COL
 from entities.position import Position
 
 
@@ -42,12 +42,11 @@ class BitboardService:
             heights.append(height)
         return heights
 
-    def check_win(self, bitboard, index):
-        board = bitboard[index]
+    def check_win(self, player_bitboard):
         multipliers = [1, 7, 6, 8]
 
         for mul in multipliers:
-            inter_res = board & (board >> mul)
+            inter_res = player_bitboard & (player_bitboard >> mul)
             if inter_res & (inter_res >> (2 * mul)) != 0:
                 return True
         return False
@@ -61,17 +60,32 @@ class BitboardService:
         bitboard = position.get_bitboard()
         opponent_index = (player_index + 1) % 2
 
-        if self.check_win(bitboard, player_index):
-            return 22 - self.count_coins(bitboard, player_index)
+        if self.check_win(bitboard[player_index]):
+            return 22 - self.count_coins(bitboard[player_index])
 
-        if self.check_win(bitboard, opponent_index):
-            return -22 + self.count_coins(bitboard, opponent_index)
+        if self.check_win(bitboard[opponent_index]):
+            return -22 + self.count_coins(bitboard[opponent_index])
 
         if self.check_draw(bitboard):
             return 0
 
         return None
 
-    def count_coins(self, bitboard, player_index):
-        coins = bin(bitboard[player_index]).count('1')
+    def count_coins(self, player_bitboard):
+        coins = bin(player_bitboard).count('1')
         return coins
+
+    def calculate_heuristic_value(self, position, player_index):
+        #player_bitboard = position.get_bitboard()[player_index]
+        #middle_coins = bin(player_bitboard & MID_COL).count('1')
+        #return middle_coins
+
+        #points = 0
+        #current_board = position.get_bitboard()[player_index]
+        #for col in position.get_available_columns():
+        #    new_board = current_board ^ (1 << position.get_heights()[col])
+        #    if self.check_win(new_board):
+        #        points += 1
+        #return points
+
+        return 0

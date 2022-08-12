@@ -79,7 +79,7 @@ class AiService:
 
         return targeted_location
 
-    def calculate_next_move_minimax(self, grid, player_number, depth=8):
+    def calculate_next_move_minimax(self, grid, player_number, depth=7):
         """Calculates next possible move using Minimax algorithm.
         This method is used for the intermediate level of AI.
 
@@ -105,7 +105,7 @@ class AiService:
 
         return result[1]
 
-    def calculate_next_move_id_minimax(self, grid, player_number, timeout=5, max_depth=42):
+    def calculate_next_move_id_minimax(self, grid, player_number, timeout=2, max_depth=42):
         """Calculates next possible move using Minimax algorithm
         and iterative deepening. This method is used for the advanced level of AI:
 
@@ -129,28 +129,47 @@ class AiService:
         self._time_limit = timeout
         self._start_time = time.time()
         depth = 1
-        max_depth = min(self._situation.count_free_slots(grid), max_depth)
+        round_number = 43 - self._situation.count_free_slots(grid)
+        max_depth = min(43 - round_number, max_depth)
+
+        print("")
+        print(f"Round number: {round_number}")
 
         while not self._check_timeout() and depth <= max_depth:
             start_t = time.time()
             self.counter = 0
             locations[depth] = self._minimax_with_id_and_bb(position, player_index, depth, True)
-            if self.printer:
+            #if self.printer:
+                #score = locations[depth][0]
+                #loc = locations[depth][1]
+                #print((f"D: {depth} - Score: {score} - Loc: {loc}"))
+                #print(f"total number of nodes searched {self.counter}")
+                #print(f"time spend for iteration: {time.time() - start_t}")
+                #print("")
+
+            depth += 1
+        depth -= 1
+
+        score = locations[depth][0]
+        loc = locations[depth][1]
+
+        if self.printer:
+            if depth == max_depth:
+                print(f"Max depth {max_depth-1} reached.")
                 score = locations[depth][0]
                 loc = locations[depth][1]
                 print((f"D: {depth} - Score: {score} - Loc: {loc}"))
                 print(f"total number of nodes searched {self.counter}")
                 print(f"time spend for iteration: {time.time() - start_t}")
                 print("")
-
-            depth += 1
-        depth -= 1
-
-        if self.printer:
-            if depth == max_depth:
-                print(f"Max depth {max_depth} reached.")
             else:
                 print(f"Depth {depth} terminated. Result from depth {depth - 1} is used.")
+                score = locations[depth-1][0]
+                loc = locations[depth-1][1]
+                print((f"D: {depth-1} - Score: {score} - Loc: {loc}"))
+                print(f"total number of nodes searched {self.counter}")
+                print(f"time spend for iteration: {time.time() - start_t}")
+                print("")
             print("--------------------------")
             print("")
 
@@ -219,7 +238,7 @@ class AiService:
             return (terminal_value, None)
 
         if depth == 0:
-            return (0, None)
+            return (self._heuristics.calculate_heuristic_value_w_bbs(position, player_index), None)
 
         if maximizing_player:
             columns = position.get_available_columns()
