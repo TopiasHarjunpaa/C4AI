@@ -12,20 +12,31 @@ On wednesday I gave myself time until end of the day to get bitboards working as
 
 Yesterday I ended up creating very brief test code for transposition table and today on thursday I created very quickly own class for that. It clearly does not work as it should be right now, but I decided to keep it, so I continue from that if needed. Most of the time today I spend for creating new tests, playing around with the simulations and did couple of test matches against the advanced AI. Judging by the game results, the advanced AI is not quite ready yet.
 
+On Friday I spend most of the time just playing around with the current model and tried to create optimisations without much of an improvements. I tried for example different heuristics and move ordering, but the problem most likely was that those tests were quite hastily made and probably weren't implemented properly. I need to focus on these optimisations more carefully at next week.
+
+On saturday I just refactored and formated code base and spend remaining time on the documentation.
+
 ### How has the program progressed?
 
-To be added.
+My last week goal was to create working bitboard presentation which I managed to do. Besides documentation that was unfortunately only solid thing I managed to do on this week. I did try out many other optimisations, but I did not manage to get those work. In general this week was little bit frustrating because my expectations for the improvements were higher. However I am trying to motivate myself that I still have a working solution which can beat myself most of the games even if it not playing perfectly.
 
 ### What did I learn this week?
 
-To be added.
+I would like to say binary operations, because I spend most of the time for the bitboard presentation. Although the current operations used on this project are mostly just taken from the pseudocode examples with small modifications. Anyway I at least can know understand the very basics of them.
+
+This was also first week on this project where things did not progress very smoothly so I needed to learn patience that everything can not always go as smoothly and expected. On this week I had some days where I changed a lot at the code base and after end of the day I needed to roll back most of the implementations.
 
 ### What was unclear or caused difficulties?
 
-To be added.
+After I managed to create bitboard presentation with terminal situation heuristics, I quite soon realised that algorithm does not play early game very well. I understand that increasing the search depth will make it better, but I still have to figure out a way how to make algorithm prevent opponents early moves which will be realised for opponents victory at the very end of the game. The current algorithm can see the outcome of the game at the turns between 15-20. Problem on that is that the opponent can create game situation within 15 first moves which will lead into victory (if not making bad mistakes) at very late game.
 
 ### What do I do next?
 
-To be added.
+Next week I am trying to solve this early game problem for the algorithm. There are several things I have planned to try out. I am not right not super confident that I will be to create a massive boost for the algorithm and right now I am happy if I can make it even tiny bit better. Some to mention I will try to create:
+
+- better move exploration ordering
+- use of transposition table
+- early game heuristics if needed to make the first two work properly
+- check if the board has symmetrical situation to narrow down search path
 
 
