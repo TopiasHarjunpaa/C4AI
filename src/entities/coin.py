@@ -26,7 +26,7 @@ class Coin(pygame.sprite.Sprite):
 
         self.image = pygame.image.load(COIN1_PATH)
         self.image = pygame.transform.scale(self.image, (size, size))
-        if player_number== 2:
+        if player_number == 2:
             self.image = pygame.image.load(COIN2_PATH)
             self.image = pygame.transform.scale(self.image, (size, size))
         self.rect = self.image.get_rect()

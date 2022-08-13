@@ -49,9 +49,11 @@ class TestSituationService(unittest.TestCase):
             self.board.grid)
         self.assertEqual(available_columns, [
                          (5, 3), (5, 2), (5, 4), (5, 1), (5, 5), (5, 0), (5, 6)])
-        available_columns = self.situation.get_available_locations_ranked(G_SF1)
+        available_columns = self.situation.get_available_locations_ranked(
+            G_SF1)
         self.assertEqual(available_columns, [(1, 3), (1, 4), (5, 0)])
-        available_columns = self.situation.get_available_locations_ranked(G_WO1)
+        available_columns = self.situation.get_available_locations_ranked(
+            G_WO1)
         self.assertEqual(available_columns, [])
 
     def test_check_win_finds_vertical_win(self):

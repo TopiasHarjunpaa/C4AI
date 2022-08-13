@@ -52,7 +52,7 @@ class Renderer:
         elif player_number == 2:
             color = YELLOW
 
-        player_text = f"PLAYER {player_number} TURN"      
+        player_text = f"PLAYER {player_number} TURN"
         if game_ended:
             if draw:
                 player_text = f"DRAW! (press N to play again)"
@@ -60,7 +60,8 @@ class Renderer:
                 player_text = f"PLAYER {player_number} HAS WON! (press N to play again)"
 
         self._display.blit(self._bg_img, (0, 0))
-        self._display.blit(self._game_logo, (self.width / 2 - self.width / 3840 * 720, self.height / 15))   
+        self._display.blit(self._game_logo, (self.width /
+                           2 - self.width / 3840 * 720, self.height / 15))
         board.all_sprites.draw(self._display)
 
         self._draw_text(player_text, self._extra_small,
@@ -68,8 +69,10 @@ class Renderer:
         self._draw_text(player_text, self._extra_small,
                         self.width / 2, self.height / 4, color)
         for i in range(-3, 4):
-            self._draw_text(str(i+4), self._small, self.width / 2 + i * self._cell_size + 3, self.height - 1.3 * self._cell_size + 3, BLACK)
-            self._draw_text(str(i+4), self._small, self.width / 2 + i * self._cell_size, self.height - 1.3 * self._cell_size, WHITE)
+            self._draw_text(str(i+4), self._small, self.width / 2 + i *
+                            self._cell_size + 3, self.height - 1.3 * self._cell_size + 3, BLACK)
+            self._draw_text(str(i+4), self._small, self.width / 2 + i *
+                            self._cell_size, self.height - 1.3 * self._cell_size, WHITE)
         pygame.display.flip()
 
     def render_menu(self, title, lines: list):
@@ -84,7 +87,8 @@ class Renderer:
         """
 
         self._display.blit(self._bg_img, (0, 0))
-        self._display.blit(self._game_logo, (self.width / 2 - self.width / 3840 * 720, self.height / 15))
+        self._display.blit(self._game_logo, (self.width /
+                           2 - self.width / 3840 * 720, self.height / 15))
         self._draw_text(title, self._big, self.width / 2 + 3,
                         self.height / 5 + 3 + (self._big * 1.2))
         self._draw_text(title, self._big, self.width / 2,

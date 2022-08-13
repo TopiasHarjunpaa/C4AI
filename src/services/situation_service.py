@@ -42,7 +42,6 @@ class SituationService:
             int: Returns row index if free row has been found. Otherwise returns -1.
         """
 
-
         for row_number in reversed(range(ROWS)):
             if grid[row_number][col_number] == 0:
                 return row_number
@@ -80,7 +79,7 @@ class SituationService:
         """
 
         available_columns = []
-        column_order = [3,2,4,1,5,0,6]
+        column_order = [3, 2, 4, 1, 5, 0, 6]
         for column in column_order:
             row = self.check_column_available(grid, column)
             if row != -1:

@@ -1,5 +1,6 @@
 from config import TOP_ROW
 
+
 class Position:
 
     def __init__(self, bitboard, heights):
@@ -24,7 +25,7 @@ class Position:
 
     def get_available_columns(self):
         cols = []
-        column_order = [3,2,4,1,5,0,6]
+        column_order = [3, 2, 4, 1, 5, 0, 6]
 
         for col in column_order:
             if (TOP_ROW & (1 << self.heights[col])) == 0:

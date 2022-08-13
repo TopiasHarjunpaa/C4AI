@@ -19,7 +19,7 @@ class TestHeuristicService(unittest.TestCase):
         value = self.heuristic._count_values(L1T1, 1)
         self.assertEqual(value, 10)
         value = self.heuristic._count_values(L1T1, 2)
-        self.assertEqual(value, -10)        
+        self.assertEqual(value, -10)
         value = self.heuristic._count_values(L1T2, 1)
         self.assertEqual(value, 10)
         value = self.heuristic._count_values(L1F1, 1)
@@ -38,7 +38,7 @@ class TestHeuristicService(unittest.TestCase):
     def test_get_vertical_values(self):
         value = self.heuristic._get_vertical_values(G_AE1, 1)
         self.assertEqual(value, 0)
-    
+
     def test_get_inc_diagonal_values(self):
         value = self.heuristic._get_inc_diagonal_values(G_HO1, 1)
         self.assertEqual(value, -6)
@@ -49,13 +49,13 @@ class TestHeuristicService(unittest.TestCase):
 
     def test_get_dec_diagonal_values(self):
         value = self.heuristic._get_dec_diagonal_values(G_WO1, 1)
-        self.assertEqual(value, 0)        
+        self.assertEqual(value, 0)
         value = self.heuristic._get_dec_diagonal_values(G_WO1, 2)
-        self.assertEqual(value, 0)   
+        self.assertEqual(value, 0)
         value = self.heuristic._get_dec_diagonal_values(G_DD1, 1)
-        self.assertEqual(value, math.inf) 
+        self.assertEqual(value, math.inf)
         value = self.heuristic._get_dec_diagonal_values(G_1W2, 2)
-        self.assertEqual(value, 2) 
+        self.assertEqual(value, 2)
 
     def test_heuristic_value_returns_correct_value(self):
         value = self.heuristic.calculate_heuristic_value(G_AE1, 1)

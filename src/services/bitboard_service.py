@@ -78,14 +78,14 @@ class BitboardService:
     def calculate_heuristic_value(self, position, player_index):
         #player_bitboard = position.get_bitboard()[player_index]
         #middle_coins = bin(player_bitboard & MID_COL).count('1')
-        #return middle_coins
+        # return middle_coins
 
         #points = 0
         #current_board = position.get_bitboard()[player_index]
-        #for col in position.get_available_columns():
+        # for col in position.get_available_columns():
         #    new_board = current_board ^ (1 << position.get_heights()[col])
         #    if self.check_win(new_board):
         #        points += 1
-        #return points
+        # return points
 
         return 0

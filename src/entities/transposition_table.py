@@ -14,3 +14,6 @@ class TranspositionTable:
             if saved_depth >= search_depth and max_player == maximizing_player:
                 return value, col
         return None
+
+    def reset(self):
+        self._t_table = {}
