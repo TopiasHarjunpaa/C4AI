@@ -77,5 +77,5 @@ class TestAiService(unittest.TestCase):
     def test_calculate_next_move_id_minimax_returns_valid_column(self):
         result = self.ai.calculate_next_move_id_minimax(G_AE3, 1, 0.5)
         self.assertEqual(result, 3)
-        #result = self.ai.calculate_next_move_id_minimax(G_WO1, 1, 0.5)
-        #self.assertEqual(result, None)
+        result = self.ai.calculate_next_move_id_minimax(G_WO1, 1, 0.5)
+        self.assertEqual(result, None)

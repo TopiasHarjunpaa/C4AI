@@ -138,12 +138,14 @@ class AiService:
 
         position = self._bb_service.convert_to_position(grid)
         player_index = player_number - 1
-        #self.printer = True
+        self.printer = True
         locations = {}
         column_order = position.get_available_columns()
         self._time_limit = timeout / 3
         self._start_time = time.time()
-        depth = 4
+        start_t = time.time() # To prevent printing bug when draw
+        locations[0] = None, None, None # When board is full
+        depth = 1
         round_number = 43 - self._situation.count_free_slots(grid)
         max_depth = min(43 - round_number, max_depth)
 
@@ -167,7 +169,7 @@ class AiService:
                 print(f"Max depth {max_depth} reached.")
             else:
                 print(f"Terminated after depth {depth}.")
-        #self.print_results(depth, locations[depth][0], locations[depth][1], time.time() - start_t)
+        self.print_results(depth, locations[depth][0], locations[depth][1], time.time() - start_t)
 
         return locations[depth][1]
 
