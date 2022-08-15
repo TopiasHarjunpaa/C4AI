@@ -52,6 +52,17 @@ class AiService:
             print(f"time spend for iteration: {time_spend}")
             print("")
 
+    def sort_column_order(self, columns):
+        column_order = []
+        default_order = [3, 2, 4, 1, 5, 0, 6]
+        values = sorted(set(map(lambda x:x[0], columns)), reverse=True)
+        grouped_by_value = [[t[1] for t in columns if t[0] == value] for value in values]
+        for cols in grouped_by_value:
+            for col in default_order:
+                if col in cols:
+                    column_order.append(col)
+        return column_order
+
     def calculate_next_move_basic(self, grid, player_number):
         """Calculates one of the possible moves using heuristic calculation.
         This method is used for the basic level AI:
@@ -86,7 +97,7 @@ class AiService:
 
         return targeted_location
 
-    def calculate_next_move_minimax(self, grid, player_number, depth=7):
+    def calculate_next_move_minimax(self, grid, player_number, depth=8):
         """Calculates next possible move using Minimax algorithm.
         This method is used for the intermediate level of AI.
 
@@ -107,7 +118,7 @@ class AiService:
         return result[1]
 
     # Update docstring
-    def calculate_next_move_id_minimax(self, grid, player_number, timeout=2, max_depth=10):
+    def calculate_next_move_id_minimax(self, grid, player_number, timeout=6, max_depth=42):
         """Calculates next possible move using Minimax algorithm
         and iterative deepening. This method is used for the advanced level of AI:
 
@@ -127,41 +138,42 @@ class AiService:
 
         position = self._bb_service.convert_to_position(grid)
         player_index = player_number - 1
-        self.printer = True
+        #self.printer = True
         locations = {}
-        self._time_limit = timeout
+        column_order = position.get_available_columns()
+        self._time_limit = timeout / 3
         self._start_time = time.time()
-        depth = 1
+        depth = 4
         round_number = 43 - self._situation.count_free_slots(grid)
         max_depth = min(43 - round_number, max_depth)
 
-        print("")
-        print(f"Round number: {round_number}")
+        if self.printer:
+            print("")
+            print(f"Round number: {round_number}")
 
         while not self._check_timeout() and depth <= max_depth:
-            # self.t_table.reset()
+            self.t_table.reset()
             start_t = time.time()
             self.counter = 0
             locations[depth] = self._minimax_with_id_and_bb(
-                position, player_index, depth, True)
+                position, player_index, depth, True, -math.inf, math.inf, column_order)
+            column_order = self.sort_column_order(locations[depth][2])
             depth += 1
         depth -= 1
 
-        if depth == max_depth:
-            print(f"Max depth {max_depth} reached.")
-            self.print_results(
-                depth, locations[depth][0], locations[depth][1], time.time() - start_t)
-            return locations[depth][1]
+        print(f"transpos length {len(self.t_table.get())}")
+        if self.printer:
+            if depth == max_depth:
+                print(f"Max depth {max_depth} reached.")
+            else:
+                print(f"Terminated after depth {depth}.")
+        #self.print_results(depth, locations[depth][0], locations[depth][1], time.time() - start_t)
 
-        print(
-            f"Depth {depth} terminated. Result from depth {depth - 1} is used.")
-        self.print_results(
-            depth - 1, locations[depth][0], locations[depth][1], time.time() - start_t)
-        return locations[max(1, depth - 1)][1]
+        return locations[depth][1]
 
     # Update docstring
     def _minimax_with_id_and_bb(self, position, player_index, depth, maximizing_player,
-                                alpha=-math.inf, beta=math.inf):
+                                alpha=-math.inf, beta=math.inf, column_order=None):
         """Evalutes the most optimal next move using Minimax algorithm
         and fail-soft alpha beta pruning:
 
@@ -205,27 +217,31 @@ class AiService:
             second item contains location coordinates of the next move (row index, col index)
         """
 
-        if self._check_timeout():
-            return (-math.inf, None)
+        self.counter += 1
 
-        #match = self.t_table.check_match(position.get_bitboard(), depth, maximizing_player)
-        # if match is not None:
-        #    return match
+        match = self.t_table.check_match(position.get_bitboard())
+        if match is not None:
+            return match
 
         terminal_value = self._bitboard.check_terminal_node(
             position, player_index)
 
         if terminal_value is not None:
-            return (terminal_value, None)
+            return (terminal_value, None, None)
 
         if depth == 0:
-            return (self._heuristics.calculate_heuristic_value_w_bbs(position, player_index), None)
+            return (self._heuristics.calculate_heuristic_value_w_bbs(
+                position, player_index), None, None)
 
         if maximizing_player:
-            self.counter += 1
-            columns = position.get_available_columns()
+            if column_order is None:
+                columns = position.get_available_columns()
+            else:
+                columns = column_order
+
             column = columns[0]
             max_value = -math.inf
+            cols = []
 
             for col in columns:
                 board, heights = position.get_params()
@@ -234,10 +250,7 @@ class AiService:
                 value = self._minimax_with_id_and_bb(new_position, player_index, depth - 1,
                                                      False, alpha, beta)[0]
 
-                if value == -math.inf:
-                    break
-
-                #self.t_table.add(board, value, depth - 1, col, True)
+                self.t_table.add(board, value, col)
 
                 if value > max_value:
                     max_value = value
@@ -245,9 +258,12 @@ class AiService:
 
                 alpha = max(alpha, value)
                 if value >= beta:
+                    cols.append((beta, col))
                     break
 
-            return max_value, column
+                cols.append((value, col))
+
+            return max_value, column, cols
 
         columns = position.get_available_columns()
         column = columns[0]
@@ -261,10 +277,7 @@ class AiService:
             value = self._minimax_with_id_and_bb(new_position, player_index, depth - 1,
                                                  True, alpha, beta)[0]
 
-            if value == -math.inf:
-                break
-
-            #self.t_table.add(board, value, depth - 1, col, False)
+            #self.t_table.add(board, value, col)
 
             if value < min_value:
                 min_value = value
@@ -274,7 +287,7 @@ class AiService:
             if value <= alpha:
                 break
 
-        return min_value, column
+        return min_value, column, None
 
     def _minimax(self, grid, player_number, depth, maximizing_player,
                  alpha=-math.inf, beta=math.inf):

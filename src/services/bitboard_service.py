@@ -1,4 +1,4 @@
-from config import ROWS, COLUMNS, FULL_GRID, MID_COL
+from config import ROWS, COLUMNS, FULL_GRID, MID_COL, BORDERS
 from entities.position import Position
 
 
@@ -61,10 +61,10 @@ class BitboardService:
         opponent_index = (player_index + 1) % 2
 
         if self.check_win(bitboard[player_index]):
-            return 22 - self.count_coins(bitboard[player_index])
+            return (22 - self.count_coins(bitboard[player_index])) * 1000
 
         if self.check_win(bitboard[opponent_index]):
-            return -22 + self.count_coins(bitboard[opponent_index])
+            return (-22 + self.count_coins(bitboard[opponent_index])) * 1000
 
         if self.check_draw(bitboard):
             return 0
@@ -76,16 +76,29 @@ class BitboardService:
         return coins
 
     def calculate_heuristic_value(self, position, player_index):
-        #player_bitboard = position.get_bitboard()[player_index]
-        #middle_coins = bin(player_bitboard & MID_COL).count('1')
-        # return middle_coins
+        points = 0
+        bitboard = position.get_bitboard()
+        opponent_index = (player_index + 1) % 2
+        player_bb = bitboard[player_index]
+        opponent_bb = bitboard[opponent_index]
+        points += self.check_three_connect(player_bb, opponent_bb)
+        points -= self.check_three_connect(opponent_bb, player_bb)
+        points += 3 * bin(bitboard[player_index] & MID_COL).count('1')
+        return points
 
-        #points = 0
-        #current_board = position.get_bitboard()[player_index]
-        # for col in position.get_available_columns():
-        #    new_board = current_board ^ (1 << position.get_heights()[col])
-        #    if self.check_win(new_board):
-        #        points += 1
-        # return points
-
-        return 0
+    def check_three_connect(self, player_bitboard, opponent_bitboard):
+        count = 0
+        multipliers = [1, 7, 6, 8]
+        opponent_bitboard = opponent_bitboard | BORDERS
+        for mul in multipliers:
+            inter_res = player_bitboard & (player_bitboard << mul)
+            threes = (inter_res & (inter_res << mul)) << mul
+            mask = threes & opponent_bitboard
+            threes = threes - mask
+            count += bin(threes).count('1')
+            inter_res = player_bitboard & (player_bitboard >> mul)
+            threes = (inter_res & (inter_res >> mul)) >> mul
+            mask = threes & opponent_bitboard
+            threes = threes - mask
+            count += bin(threes).count('1')
+        return count
