@@ -48,10 +48,9 @@
 #### Week 5
 | Day | Hour | What did I do? |
 | :----:|:-----| :-----|
-| xx.x | 0 h    | xxx |
-| xx.x | 0 h    | xxx |
-| xx.x | 0 h    | xxx |
-| **Total** | **0 h** | |
+| 14.8 | 1 h    | Testing again different implementations |
+| 16.8 | 5 h    | Better heuristic, move ordering and transposition table rework |
+| **Total** | **6 h** | |
 
 #### Week 6
 | Day | Hour | What did I do? |
