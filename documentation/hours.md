@@ -50,7 +50,8 @@
 | :----:|:-----| :-----|
 | 14.8 | 1 h    | Testing again different implementations |
 | 16.8 | 5 h    | Better heuristic, move ordering and transposition table rework |
-| **Total** | **6 h** | |
+| 17.8 | 3 h    | Removed losing paths from available locations and more docstring |
+| **Total** | **9 h** | |
 
 #### Week 6
 | Day | Hour | What did I do? |
