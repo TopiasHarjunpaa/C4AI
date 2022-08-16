@@ -7,6 +7,7 @@ class HeuristicService:
 
     def __init__(self, bitboard):
         """Constructs all the necessary attributes for the Heuristic service object."""
+
         self._bb_service = bitboard
 
     def _count_values(self, loc, player_number):
