@@ -59,7 +59,6 @@ class AiService:
         """
 
         if self.printer:
-            print(type(time_spend))
             print((f"D: {depth} - Score: {score} - Location: {location}"))
             print(f"total number of nodes searched {self.counter}")
             print(f"time spend for iteration: {time_spend}")
