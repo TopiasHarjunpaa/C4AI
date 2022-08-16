@@ -172,4 +172,17 @@ class HeuristicService:
         return score
 
     def calculate_heuristic_value_w_bbs(self, position, player_index):
+        """Calculates heuristic value for the player from the certain game situation.
+        Player will get one point per each open 3 connect and reduce one point per each
+        open 3 connect from opponent. Player will get additional 3 points for each coin
+        placed in the middle column.
+
+        Args:
+            position (Position): Bitboard presentation (Position object)
+            player_index (int): Player index (0 = first player, 1 = second player)
+
+        Returns:
+            int: Returns total heuristic value (score) from the game board.
+        """
+
         return self._bb_service.calculate_heuristic_value(position, player_index)
