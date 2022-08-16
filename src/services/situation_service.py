@@ -1,6 +1,5 @@
 import math
 from config import ROWS, COLUMNS
-from services.bitboard_service import BitboardService
 
 
 class SituationService:
@@ -11,7 +10,6 @@ class SituationService:
 
     def __init__(self, board):
         self._board = board
-        self.bitboard = BitboardService()
 
     def get_game_grid(self):
         return self._board.grid

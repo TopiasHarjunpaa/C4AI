@@ -9,7 +9,7 @@ AI_INTERMEDIATE = 3
 AI_ADVANCED = 4
 PLAYER_TYPES = {PLAYER: "Player",
                 AI_BASIC: "AI (basic)",
-                AI_INTERMEDIATE: "AI (Minimax depth 6)",
+                AI_INTERMEDIATE: "AI (Minimax depth 7)",
                 AI_ADVANCED: "AI (Minimax opt.)"}
 
 
@@ -46,10 +46,10 @@ class GameService:
         self.draw = False
         self._menu = menu
         self.player_number = 1
-        self._player_setup = {1: AI_ADVANCED, 2: PLAYER}
+        #self._player_setup = {1: AI_ADVANCED, 2: PLAYER}
         #self._player_setup = {1: AI_INTERMEDIATE, 2: AI_ADVANCED}
         #self._player_setup = {1: AI_ADVANCED, 2: AI_INTERMEDIATE}
-        #self._player_setup = {1: PLAYER, 2: AI_ADVANCED}
+        self._player_setup = {1: PLAYER, 2: AI_ADVANCED}
         self._situation = SituationService(self._board)
         self.ai_service = AiService(self._situation)
 

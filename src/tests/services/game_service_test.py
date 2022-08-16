@@ -116,7 +116,7 @@ class TestGameService(unittest.TestCase):
         self.assertEqual(setup, ("Player", "Player"))
         gameloop._player_setup = {1: 3, 2: 1}
         setup = gameloop.get_player_setup()
-        self.assertEqual(setup, ("AI (Minimax depth 6)", "Player"))
+        self.assertEqual(setup, ("AI (Minimax depth 7)", "Player"))
         gameloop._player_setup = {1: 1, 2: 4}
         setup = gameloop.get_player_setup()
         self.assertEqual(setup, ("Player", "AI (Minimax opt.)"))

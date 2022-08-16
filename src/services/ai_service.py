@@ -17,19 +17,22 @@ class AiService:
 
     def __init__(self, situation):
         """Constructs all the necessary attributes for the AI service object.
+        BitboardService is used for the advanced AI's bitboard operations.
+        HeuristicService is used for calculation heuristic values.
+        TranspositionTable is used for the advanced AI to store game situations.
         Several time variables are used to determine timeout limit for the
         AI functions.
 
         Args:
             situation (Situation): Situation service object
         """
+
         self._situation = situation
-        self._bitboard = situation.bitboard
-        self._heuristics = HeuristicService(self._bitboard)
+        self._bb_service = BitboardService()
+        self._heuristics = HeuristicService(self._bb_service)
+        self.transposition_table = TranspositionTable()
         self._start_time = time.time()
         self._current_time = time.time()
-        self._bb_service = BitboardService()
-        self.t_table = TranspositionTable()
         self._time_limit = 5
         self.counter = 0
         self.printer = False
@@ -46,13 +49,33 @@ class AiService:
         return False
 
     def print_results(self, depth, score, location, time_spend):
+        """To print results for debugging purposes
+
+        Args:
+            depth (int): Current search depth
+            score (int): Heuristic value of certain node
+            location (tuple): Location of the move
+            time_spend (float)): Time used for certain calculation
+        """
+
         if self.printer:
+            print(type(time_spend))
             print((f"D: {depth} - Score: {score} - Location: {location}"))
             print(f"total number of nodes searched {self.counter}")
             print(f"time spend for iteration: {time_spend}")
             print("")
 
     def sort_column_order(self, columns):
+        """Sorts available column order primarily by heuristic values
+        and secondarily by the middle column order (default order)
+
+        Args:
+            columns (list): List of available columns
+
+        Returns:
+            list: Returns sorted list of available columns
+        """
+
         column_order = []
         default_order = [3, 2, 4, 1, 5, 0, 6]
         values = sorted(set(map(lambda x:x[0], columns)), reverse=True)
@@ -97,7 +120,7 @@ class AiService:
 
         return targeted_location
 
-    def calculate_next_move_minimax(self, grid, player_number, depth=8):
+    def calculate_next_move_minimax(self, grid, player_number, depth=7):
         """Calculates next possible move using Minimax algorithm.
         This method is used for the intermediate level of AI.
 
@@ -117,30 +140,38 @@ class AiService:
 
         return result[1]
 
-    # Update docstring
     def calculate_next_move_id_minimax(self, grid, player_number, timeout=6, max_depth=42):
         """Calculates next possible move using Minimax algorithm
         and iterative deepening. This method is used for the advanced level of AI:
 
-        1.  Uses time limit of 5 seconds and initializes the start time.
-        2.  Loops Minimax algorithm starting from depth 1 and ends if time has exceeded
+        1.  Converts game grid into the bitboard presentation (position Object).
+        2.  Sets ranked column order from available columns which do not lead to lose
+            in a next round.
+        3.  Uses time limit of 6 seconds and initializes the start time. In order to
+            improve performance it is not using hard time limit. Allows next iteration
+            if time limit divided by 3 is not exceeded.
+        4.  Loops Minimax algorithm starting from depth 1 and ends if time has exceeded
             or if maximum depth has exceeded.
-        3.  Keeps track of the heuristic value and move location for each iteration
-        4.  Once the loop has ended, returns the last fully completed Minimax results
+        5.  Keeps track of columns and their heuristic values for each iteration separately.
+        6.  Updates column order and depth by one after each iteration.
+        7.  Once the loop has ended, returns column number with best heuristic value from
+            previous iteration (deepest achieved during time limit).
 
         Args:
             grid (list): Grid matrix of the game board.
             player_number (int): Player number (1 = first player, 2 = second player)
+            timeout (int): Time limit for iterative search
+            max_depth (int): Maximum depth for the search. Defaults to 42.
 
         Returns:
-            tuple: Returns column and row indexes of the next move location
+            tuple: Returns column index of the next move location
         """
 
         position = self._bb_service.convert_to_position(grid)
         player_index = player_number - 1
         self.printer = True
         locations = {}
-        column_order = position.get_available_columns()
+        column_order = self._bb_service.get_available_non_losing_columns(position, player_index)
         self._time_limit = timeout / 3
         self._start_time = time.time()
         start_t = time.time() # To prevent printing bug when draw
@@ -154,7 +185,7 @@ class AiService:
             print(f"Round number: {round_number}")
 
         while not self._check_timeout() and depth <= max_depth:
-            self.t_table.reset()
+            self.transposition_table.reset()
             start_t = time.time()
             self.counter = 0
             locations[depth] = self._minimax_with_id_and_bb(
@@ -163,7 +194,7 @@ class AiService:
             depth += 1
         depth -= 1
 
-        print(f"transpos length {len(self.t_table.get())}")
+        print(f"Table length {len(self.transposition_table.get())}")
         if self.printer:
             if depth == max_depth:
                 print(f"Max depth {max_depth} reached.")
@@ -173,59 +204,65 @@ class AiService:
 
         return locations[depth][1]
 
-    # Update docstring
     def _minimax_with_id_and_bb(self, position, player_index, depth, maximizing_player,
                                 alpha=-math.inf, beta=math.inf, column_order=None):
         """Evalutes the most optimal next move using Minimax algorithm
         and fail-soft alpha beta pruning:
 
-        0.  Check if the timer has ended. If so, returns location as a None and -INF value.
+        0.  Check if similar game situation can be found from the transposition table. Returns
+            the value stored in transposition table is match is found.
         1.  Check the terminal situation ie. when one of the players has won or game it is draw.
-            Returns location as a None and values INF, -INF or 0.
+            Returns location as a None and values depending from the terminal situation.
         2.  If search has reached depth 0, returns heuristic value and location as a None.
-        3.  Search all available locations where to put game coin. Available locations has been
-            ranked to start closest to the middle column and ending closest to the side columns.
+        3.  Search all columns where to put game coin. Available locations has been
+            ranked primarily by heuristic values and secondarily to start closest to the middle
+            column and ending closest to the side columns.
 
         4.  For the maximizing player:
-            4.1 Sets max heuristic value -INF and loops through all locations to place a game coin
-            4.2 For each of the locations, calls minimax algorithm with updated grid, smaller depth
-                and sets turn for minimizing player (false).
-            4.3 Keeps track of heuristic value and it's location recieved from minimax algorithm
-            4.4 Updates the min score for maximizing player if heuristic value is greater than that
-            4.5 Ends the loop if heuristic value is greater than maximum score for minimizing player
+            4.1 Sets max heuristic value -INF and loops through all columns to place a game coin
+            4.2 For each columns, calls minimax algorithm with updated bitboard
+                (new position object), smaller depth and sets turn for minimizing player (false).
+            4.3 Stores Minimax result into the transposition table.
+            4.4 Keeps track of heuristic value and column index recieved from minimax algorithm
+            4.5 Updates the min score for maximizing player if heuristic value is greater than that
+            4.6 Ends the loop if heuristic value is greater than maximum score for minimizing player
                 ie. no need to investigate remaining branches.
-            4.6 Returns maximum heuristic value and it's location
+            4.7 Stores column indexes and their heuristic values
+            4.8 Returns maximum heuristic value, column and list of columns and heuristic values
 
         5.  For the minimizing player:
-            5.1 Sets min heuristic value INF and loops through all locations to place a game coin
-            5.2 For each of the locations, calls minimax algorithm with updated grid, smaller depth
-                and sets turn for maximising player (true).
-            5.3 Keeps track of heuristic value and it's location recieved from minimax algorithm
+            5.1 Sets min heuristic value INF and loops through all columns to place a game coin
+            5.2 For each columns, calls minimax algorithm with updated bitboard
+                (new position object), smaller depth and sets turn for maximising player (true).
+            5.3 Keeps track of heuristic value and column index recieved from minimax algorithm
             5.4 Updates the max score for minimizing player if heuristic value is less than that
             5.5 Ends the loop if heuristic value is less than minimum score for maximizing player
                 ie. no need to investigate remaining branches.
-            5.6 Returns minimum heuristic value and it's location
+            5.6 Stores column indexes and their heuristic values
+            5.7 Returns minimum heuristic value, column and list of columns and heuristic values
 
         Args:
-            grid (list): Grid matrix of the game board.
-            player_number (int): Player number (1 = first player, 2 = second player)
+            position (Position): Bitboard presentation object named as position
+            player_index (int): Player index (0 = first player, 1 = second player)
             depth (int): Depth of the minimax search
             maximizing_player (boolean): True looks for max score and false min score
             alpha (int, optional): Minimum score for maximizing player. Defaults to -INF.
             beta (int, optional): Maximum score for minimizing player. Defaults to INF.
+            column_order (list, optional): Ranked order of available columns. Defaults to None.
 
         Returns:
-            tuple: Returns tuple which first item is heuristic value of the next move and
-            second item contains location coordinates of the next move (row index, col index)
+            tuple: Returns tuple which first item is heuristic value of the next move,
+            second item contains column index of the next move and third item contains
+            list of columns and their heuristic values.
         """
 
         self.counter += 1
 
-        match = self.t_table.check_match(position.get_bitboard())
+        match = self.transposition_table.check_match(position.get_bitboard())
         if match is not None:
             return match
 
-        terminal_value = self._bitboard.check_terminal_node(
+        terminal_value = self._bb_service.check_terminal_node(
             position, player_index)
 
         if terminal_value is not None:
@@ -237,11 +274,11 @@ class AiService:
 
         if maximizing_player:
             if column_order is None:
-                columns = position.get_available_columns()
+                columns = self._bb_service.get_available_non_losing_columns(position, player_index)
             else:
                 columns = column_order
 
-            column = columns[0]
+            column = None
             max_value = -math.inf
             cols = []
 
@@ -252,7 +289,7 @@ class AiService:
                 value = self._minimax_with_id_and_bb(new_position, player_index, depth - 1,
                                                      False, alpha, beta)[0]
 
-                self.t_table.add(board, value, col)
+                self.transposition_table.add(board, value, col)
 
                 if value > max_value:
                     max_value = value
@@ -267,8 +304,8 @@ class AiService:
 
             return max_value, column, cols
 
-        columns = position.get_available_columns()
-        column = columns[0]
+        columns = self._bb_service.get_available_non_losing_columns(position, player_index)
+        column = None
         min_value = math.inf
 
         for col in columns:
@@ -278,8 +315,6 @@ class AiService:
             new_position.make_move(col, (player_index + 1) % 2)
             value = self._minimax_with_id_and_bb(new_position, player_index, depth - 1,
                                                  True, alpha, beta)[0]
-
-            #self.t_table.add(board, value, col)
 
             if value < min_value:
                 min_value = value
@@ -300,8 +335,8 @@ class AiService:
         1.  Check the terminal situation ie. when one of the players has won or game it is draw.
             Returns location as a None and values INF, -INF or 0.
         2.  If search has reached depth 0, returns heuristic value and location as a None.
-        3.  Search all available locations where to put game coin. Available locations has been
-            ranked to start closest to the middle column and ending closest to the side columns.
+        3.  Search all non losing available locations where to put game coin. Available columns has
+            been ranked starting closest to middle column and ending closest to side columns.
 
         4.  For the maximizing player:
             4.1 Sets max heuristic value -INF and loops through all locations to place a game coin

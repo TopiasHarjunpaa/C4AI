@@ -7,7 +7,7 @@ class HeuristicService:
 
     def __init__(self, bitboard):
         """Constructs all the necessary attributes for the Heuristic service object."""
-        self._bb = bitboard
+        self._bb_service = bitboard
 
     def _count_values(self, loc, player_number):
         """Counts the total score for line of connect. Line of connect is a 4 cells long list
@@ -29,7 +29,6 @@ class HeuristicService:
         value = 0
         opponent_number = player_number % 2 + 1
         multipliers = {0: math.inf, 1: 10, 2: 2}
-        #multipliers = {0: math.inf}
         for k, val in multipliers.items():
             if loc.count(player_number) == 4 - k and loc.count(0) == k:
                 value += val
@@ -173,5 +172,4 @@ class HeuristicService:
         return score
 
     def calculate_heuristic_value_w_bbs(self, position, player_index):
-        return self._bb.calculate_heuristic_value(position, player_index)
-        #return 0
+        return self._bb_service.calculate_heuristic_value(position, player_index)

@@ -102,3 +102,17 @@ class BitboardService:
             threes = threes - mask
             count += bin(threes).count('1')
         return count
+
+    def get_available_non_losing_columns(self, position, player_index):
+        cols = []
+        available_cols = position.get_available_columns()
+        opponent_index = (player_index + 1) % 2
+        for col in available_cols:
+            board, heights = position.get_params()
+            new_position = Position(board, heights)
+            new_position.make_move(col, opponent_index)
+            if self.check_win(new_position.get_bitboard()[opponent_index]):
+                cols.append(col)
+        if len(cols) != 0:
+            return cols
+        return available_cols
