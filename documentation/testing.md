@@ -8,7 +8,7 @@ Most of the `Entities` class testing has been made at the integration test level
 
 1. [TestSprites](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/entities/sprites_test.py) -class  is used for testing initialization of the game board, drawing new coins and adding them to the corresponding sprite groups.
 
-*Note. These tests could be considered trivial ones and perhaps test wouldn't be necessary. However, at the earlier stage of the project, these were invented in a different way and I decided to keep these tests instead of deleting them*
+    *Note. These tests could be considered trivial ones and perhaps test wouldn't be necessary. However, at the earlier stage of the project, these were invented in a different way and I decided to keep these tests instead of deleting them*
 
 2. [TestPosition](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/entities/position_test.py) -class is used for testing binary operations for the Position class such as making a move and returning available columns.
 
