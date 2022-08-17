@@ -8,14 +8,19 @@ Coverage report can be generated using the command:
 poetry run invoke coverage-report
 ```
 
-Report will be generated into the folder named `htmlcov`. Code related to the UI and testing has left out from the testing report. Coverage report can be also found from the [Codecov](https://app.codecov.io/gh/TopiasHarjunpaa/C4AI).
+Report will be generated into the folder named `htmlcov`. Coverage report can be also found from the [Codecov](https://app.codecov.io/gh/TopiasHarjunpaa/C4AI).
+
+Following files are left out from the coverage report:
+* UI -files
+* testing -files
+* configuration-, simulation- and index file
 
 <img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/coverage_report.png" width="1000">
 
 Methods which were not tested: 
-* Trivial methods, such as Getters and Setters.
-* `config.py` FileNotFoundError -virheen toimivuus tilanteissa, joissa tiedostoa ei löydy
-* More to be added...
+* Trivial methods, such as Getters, Setters and few pygame event key checks
+* Printing methods
+* AI move calculations methods in `GameService` class which are already tested in `AiService` class.
 
 ## Unit and integration testing
 
