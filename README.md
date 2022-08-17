@@ -8,7 +8,7 @@ C4AI is the University of Helsinki's Data Structures Lab 2022 course project. C4
 
 ## Releases
 
-To be added.
+- [Week 4 -release](https://github.com/TopiasHarjunpaa/C4AI/releases/tag/week4)
 
 ## Documentation
 
