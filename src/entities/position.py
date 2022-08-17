@@ -70,19 +70,26 @@ class Position:
         self.heights[col] += 1
         self.bitboard[player_index] ^= move
 
-    def get_available_columns(self):
+    def get_available_columns(self, symmetrical=False):
         """Returns available columns where to put coins ranked by middlest column
-        order. TOP_ROW corresponds bit numbers of 6, 13, 20, 27, 34, 41 and 48 which
+        order. Narrows column order to be left sided only if board is symmetrical.
+        TOP_ROW corresponds bit numbers of 6, 13, 20, 27, 34, 41 and 48 which
         are located right above the top-most game board row. If bit operation results
         value of 1, it means that the current column is already full and it will be
         left out from the available columns.
+
+        Args:
+            symmetrical (bool, optional): True if game board is symmetrical. Defaults to False.
 
         Returns:
             list: List of available column indexes ranked in order
         """
 
         cols = []
-        column_order = [3, 2, 4, 1, 5, 0, 6]
+        if symmetrical:
+            column_order = [3, 2, 1, 0]
+        else:
+            column_order = [3, 2, 4, 1, 5, 0, 6]
 
         for col in column_order:
             if (TOP_ROW & (1 << self.heights[col])) == 0:

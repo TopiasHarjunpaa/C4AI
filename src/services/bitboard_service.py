@@ -234,30 +234,57 @@ class BitboardService:
             count += bin(threes).count('1')
         return count
 
-    def get_available_non_losing_columns(self, position, player_index):
+    def is_symmetrical(self, bitboard):
+        """Checks if the game board is symmetrical.
+        Compares first and last columns, second first and second last columns
+        and third first and third last columns. Returns true if these matches
+        in all comparisons for the both bitboards. Otherwise returns false.
+
+        Args:
+            bitboard (int): list of two 64 bit integers
+
+        Returns:
+            boolean: Returns true if game board is symmetrical, otherwise returns false.
+        """
+
+        for i in range(2):
+            for j in range(3):
+                if ((bitboard[i] >> j * 7) & 0b111111) != ((bitboard[i] >> 42 - j * 7) & 0b111111):
+                    return False
+        return True
+
+    def get_available_non_losing_columns(self, position, player_index, check_symmetry=False):
         """Checks if the opponent has forced player to put coins into certain
         column in order to prevent opponents victory at the next turn. If so,
         all other columns will lead to lose and can be left out from available
         column list.
 
-        1.  Checks available current available columns.
-        2.  Loops through available columns.
-        3.  Creates new move for each available columns and checks for the victory.
-        4.  Adds all columns leading victory to the column list.
-        5.  If victories has found, returns only list with columns to prevent victory
+        1.  Checks symmetry if game board has been considered symmetrical before new iteration.
+            Chooses only left sided columns if game board is found to still be symmetrical.
+        2.  Checks available current available columns.
+        3.  Loops through available columns.
+        4.  Creates new move for each available columns and checks for the victory.
+        5.  Adds all columns leading victory to the column list.
+        6.  If victories has found, returns only list with columns to prevent victory
             (one column can be saved, multiple columns will lead to lose anyway).
-        6.  Normal available columns list can be used if no victories are found.
+        7.  Normal available columns list can be used if no victories are found.
 
         Args:
             position (Position): Bitboard presentation (Position object)
             player_index (int): Player index (0 = first player, 1 = second player)
+            check_symmetry (bool, optional): True if game board is symmetrical. Defaults to False.
 
         Returns:
             list: list of column indexes representing available non losing columns
         """
 
+        if check_symmetry:
+            available_cols = position.get_available_columns(
+                self.is_symmetrical(position.get_bitboard()))
+        else:
+            available_cols = position.get_available_columns()
+
         cols = []
-        available_cols = position.get_available_columns()
         opponent_index = (player_index + 1) % 2
         for col in available_cols:
             board, heights = position.get_params()

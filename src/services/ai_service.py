@@ -17,11 +17,14 @@ class AiService:
 
     def __init__(self, situation):
         """Constructs all the necessary attributes for the AI service object.
-        BitboardService is used for the advanced AI's bitboard operations.
-        HeuristicService is used for calculation heuristic values.
-        TranspositionTable is used for the advanced AI to store game situations.
-        Several time variables are used to determine timeout limit for the
-        AI functions.
+
+        1.  BitboardService is used for the advanced AI's bitboard operations.
+        2.  HeuristicService is used for calculation heuristic values.
+        3.  TranspositionTable is used for the advanced AI to store game situations.
+        4.  Several time variables are used to determine timeout limit for the
+            AI functions.
+        5.  Time limit is used for iterative deepening and symmetria is for the advanced
+            AI to narrow down the search three while the game board is symmetrical.
 
         Args:
             situation (Situation): Situation service object
@@ -36,6 +39,7 @@ class AiService:
         self._time_limit = 5
         self.counter = 0
         self.printer = False
+        self.symmetry = True
 
     def _check_timeout(self):
         """Checks if certain time limit has exceeded.
@@ -77,8 +81,9 @@ class AiService:
 
         column_order = []
         default_order = [3, 2, 4, 1, 5, 0, 6]
-        values = sorted(set(map(lambda x:x[0], columns)), reverse=True)
-        grouped_by_value = [[t[1] for t in columns if t[0] == value] for value in values]
+        values = sorted(set(map(lambda x: x[0], columns)), reverse=True)
+        grouped_by_value = [[t[1]
+                             for t in columns if t[0] == value] for value in values]
         for cols in grouped_by_value:
             for col in default_order:
                 if col in cols:
@@ -119,7 +124,7 @@ class AiService:
 
         return targeted_location
 
-    def calculate_next_move_minimax(self, grid, player_number, depth=7):
+    def calculate_next_move_minimax(self, grid, player_number, depth=8):
         """Calculates next possible move using Minimax algorithm.
         This method is used for the intermediate level of AI.
 
@@ -145,7 +150,7 @@ class AiService:
 
         1.  Converts game grid into the bitboard presentation (position Object).
         2.  Sets ranked column order from available columns which do not lead to lose
-            in a next round.
+            in a next round. Considers only left handed columns if game board is still symmetrical.
         3.  Uses time limit of 6 seconds and initializes the start time. In order to
             improve performance it is not using hard time limit. Allows next iteration
             if time limit divided by 3 is not exceeded.
@@ -170,11 +175,14 @@ class AiService:
         player_index = player_number - 1
         self.printer = True
         locations = {}
-        column_order = self._bb_service.get_available_non_losing_columns(position, player_index)
+        self.symmetry = self._bb_service.is_symmetrical(
+            position.get_bitboard())
+        column_order = self._bb_service.get_available_non_losing_columns(
+            position, player_index, self.symmetry)
         self._time_limit = timeout / 3
         self._start_time = time.time()
-        start_t = time.time() # To prevent printing bug when draw
-        locations[0] = None, None, None # When board is full
+        start_t = time.time()  # To prevent printing bug when draw
+        locations[0] = None, None, None  # When board is full
         depth = 1
         round_number = 43 - self._situation.count_free_slots(grid)
         max_depth = min(43 - round_number, max_depth)
@@ -199,7 +207,8 @@ class AiService:
                 print(f"Max depth {max_depth} reached.")
             else:
                 print(f"Terminated after depth {depth}.")
-        self.print_results(depth, locations[depth][0], locations[depth][1], time.time() - start_t)
+        self.print_results(
+            depth, locations[depth][0], locations[depth][1], time.time() - start_t)
 
         return locations[depth][1]
 
@@ -215,7 +224,8 @@ class AiService:
         2.  If search has reached depth 0, returns heuristic value and location as a None.
         3.  Search all columns where to put game coin. Available locations has been
             ranked primarily by heuristic values and secondarily to start closest to the middle
-            column and ending closest to the side columns.
+            column and ending closest to the side columns. In addition to that symmetria is used
+            to narrow search three if possible.
 
         4.  For the maximizing player:
             4.1 Sets max heuristic value -INF and loops through all columns to place a game coin
@@ -273,7 +283,8 @@ class AiService:
 
         if maximizing_player:
             if column_order is None:
-                columns = self._bb_service.get_available_non_losing_columns(position, player_index)
+                columns = self._bb_service.get_available_non_losing_columns(
+                    position, player_index, self.symmetry)
             else:
                 columns = column_order
 
@@ -288,7 +299,7 @@ class AiService:
                 value = self._minimax_with_id_and_bb(new_position, player_index, depth - 1,
                                                      False, alpha, beta)[0]
 
-                self.transposition_table.add(board, value, col)
+                self.transposition_table.add(board, value, column)
 
                 if value > max_value:
                     max_value = value
@@ -303,12 +314,12 @@ class AiService:
 
             return max_value, column, cols
 
-        columns = self._bb_service.get_available_non_losing_columns(position, player_index)
+        columns = self._bb_service.get_available_non_losing_columns(
+            position, player_index, self.symmetry)
         column = None
         min_value = math.inf
 
         for col in columns:
-            self.counter += 1
             board, heights = position.get_params()
             new_position = Position(board, heights)
             new_position.make_move(col, (player_index + 1) % 2)
