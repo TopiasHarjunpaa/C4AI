@@ -26,13 +26,19 @@ Methods which were not tested:
 
 ### Entities classes
 
-Most of the `Entities` class testing has been made at the integration test level. There are few tests made for the [TestSprites](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/entities/sprites_test.py) class which tests initialization of game board, drawing new coins and adding them to the corresponding sprite groups.
+Most of the `Entities` class testing has been made at the integration test level. The following test classes has been made to test entities:
+
+1. [TestSprites](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/entities/sprites_test.py) -class  is used for testing initialization of the game board, drawing new coins and adding them to the corresponding sprite groups.
 
 *Note. These tests could be considered trivial ones and perhaps test wouldn't be necessary. However, at the earlier stage of the project, these were invented in a different way and I decided to keep these tests instead of deleting them*
 
+2. [TestPosition](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/entities/position_test.py) -class is used for testing binary operations for the Position class such as making a move and returning available columns.
+
+3. [TestTranspositionTable](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/entities/transposition_table_test.py) -class is used for testing key check operation for the Transposition class.
+
 ### Service classes
 
-The following test classes has been made to test service classes:
+The following test classes has been made to test services:
 
 1.  [TestAiService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/ai_service_test.py)
 
@@ -68,7 +74,7 @@ The following test classes has been made to test service classes:
 
     Description to be added
 
-Many service classes has multiple methods which keeps track of the game situation. In order to test different game situation, [test_grids.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_grids.py) and [test_locs.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_locs.py) has been created. Test grids obviously contains different game grid setups and Test locs contain different setups for Four Connect testing.
+Many service classes has multiple methods which keeps track of the game situation. In order to test different game situation, [test_grids.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_grids.py) and [test_locs.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_locs.py) has been created. Test grids obviously contains different game grid setups and Test locs contains different setups for Four Connect testing.
 
 ## System testing
 
