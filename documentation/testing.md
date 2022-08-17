@@ -1,27 +1,5 @@
 # Testing document
 
-## Test coverage report
-
-Coverage report can be generated using the command:
-
-```
-poetry run invoke coverage-report
-```
-
-Report will be generated into the folder named `htmlcov`. Coverage report can be also found from the [Codecov](https://app.codecov.io/gh/TopiasHarjunpaa/C4AI).
-
-Following files are left out from the coverage report:
-* UI -files
-* testing -files
-* configuration-, simulation- and index file
-
-<img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/coverage_report.png" width="1000">
-
-Methods which were not tested: 
-* Trivial methods, such as Getters, Setters and few pygame event key checks
-* Printing methods
-* AI move calculations methods in `GameService` class which are already tested in `AiService` class.
-
 ## Unit and integration testing
 
 ### Entities classes
@@ -75,6 +53,23 @@ The following test classes has been made to test services:
     Description to be added
 
 Many service classes has multiple methods which keeps track of the game situation. In order to test different game situation, [test_grids.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_grids.py) and [test_locs.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_locs.py) has been created. Test grids obviously contains different game grid setups and Test locs contains different setups for Four Connect testing.
+
+## Test coverage report
+
+Coverage report can be generated using the command:
+
+```
+poetry run invoke coverage-report
+```
+
+Report will be generated into the folder named `htmlcov`. Coverage report can be also found from the [Codecov](https://app.codecov.io/gh/TopiasHarjunpaa/C4AI).Some of the files are left out from the coverage report such as files related to the UI and testing along with configuration-, simulation- and index- files.
+
+<img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/coverage_report.png" width="1000">
+
+Methods which were not tested: 
+* Trivial methods, such as Getters, Setters and few pygame event key checks
+* Printing methods
+* AI move calculations methods in `GameService` class which are already tested in `AiService` class.
 
 ## System testing
 
