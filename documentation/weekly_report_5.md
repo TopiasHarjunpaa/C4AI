@@ -10,6 +10,8 @@ On tuesday I created additional check for finding available columns which cuts t
 
 On wednesday I created checking for the symmetrical game board situations. I assumed that this will be beneficial to narrow down search paths at the early game. I also created additional boolean parameter for the AI class to keep track if the game board has evolved from the symmetrical situation to non-symmetrical situation. There may be some cases when game can actually evolve back to the symmetrical, but I assume that the time saving from not running the symmetrical checks after game has evolved to non-symmetrical will be more beneficial than consider cases where game might evolve back to symmetrical. Anyway this wasn't the game changer for the algorithm. Judging by the few tests, this reduced roughly 10 - 15% of calculation time on a last iteration at the early game. On top of that I did few additional tests for the game service class and updated testing documentation which is still quite an incomplete.
 
+On thursday I started implementing multiprocessing first to the Minimax algorithm, but I did not manage to get it working. I also tried multiprocessing and multithreading to run looped binaryoperations which I actually managed to run without errors, but I ended up using more calculation time instead of benefiting anything. I quite quickle rolled back where I left yesterday and decided to spend time for other things. Most of the time I spend for peer reviewing and state of the actual project did not get any improvement today.
+
 ### How has the program progressed?
 
 To be added.
