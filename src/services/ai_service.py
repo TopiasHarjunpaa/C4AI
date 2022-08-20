@@ -144,7 +144,7 @@ class AiService:
 
         return result[1]
 
-    def calculate_next_move_id_minimax(self, grid, player_number, timeout=6, max_depth=42):
+    def calculate_next_move_id_minimax(self, grid, player_number, timeout=8, max_depth=42):
         """Calculates next possible move using Minimax algorithm
         and iterative deepening. This method is used for the advanced level of AI:
 
@@ -209,6 +209,7 @@ class AiService:
                 print(f"Terminated after depth {depth}.")
         self.print_results(
             depth, locations[depth][0], locations[depth][1], time.time() - start_t)
+        print(f"Total time: {time.time() - self._start_time}")
 
         return locations[depth][1]
 

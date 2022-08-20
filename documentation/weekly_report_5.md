@@ -12,18 +12,24 @@ On wednesday I created checking for the symmetrical game board situations. I ass
 
 On thursday I started implementing multiprocessing first to the Minimax algorithm, but I did not manage to get it working. I also tried multiprocessing and multithreading to run looped binaryoperations which I actually managed to run without errors, but I ended up using more calculation time instead of benefiting anything. I quite quickle rolled back where I left yesterday and decided to spend time for other things. Most of the time I spend for peer reviewing and state of the actual project did not get any improvement today.
 
+On Friday I decided to take day off from the project and on saturday I spend time on updating the documentation and reports.
+
 ### How has the program progressed?
 
-To be added.
+My primary goal from the last week was to solve problem with early game playing. I solved this by adding some heuristics calculations. As results the AI is playing significantly better early game. I also had set other optimisation goals for this week, such as better move exploration ordering, use of transposition table and symmetrical checks. I ended up doing them all, even though I still think that the transposition table implementation is still a bit incomplete.
+
+At the start of this week, iterative deepening algorithm was able to reach up to depth 14 in early game within 5 second time limit and at around round 20 it was able to calculate up to the full remaining depth. Currently the algorithm is performing equally well, but with better early game heuristics. I removed the hard calculation limit (because it complicated the iterative deepening logic and slightly slowed down Minimax) so the precise comparison a bit hard. However, it can now calculate up to depths of 14-15 in early game in less than 5 seconds solve the game at around same round than earlier.
 
 ### What did I learn this week?
 
-To be added.
+Last week I mentioned that the binary operations I had implemented where taken pretty much according to the pseudocode examples. This week I had to create new operations for the open three and symmetry checks which means that I yet again know these a least little bit better than previous week. I also very briefly studied multiprocessing and multithreading to solve parallel problems in faster time, but I did not manange to get any improvements with them.
 
 ### What was unclear or caused difficulties?
 
-To be added.
+Generally I am still quite uncertain about many of my implementations. I can see that with some of them I can get performance improvements but I am still a bit uncertain if those are implemented properly or not. During this project I have for example created a new implementations which has increased the calculation speed and seemed to be still making good choices, but at some point I have found a clear bug of the implementation. I recall I had this kind of bug at least on a transposition table and perhaps also on move exploration ordering. So my biggest uncertainty is that whenever I create new optimisation is it actually improving the AI or is it skipping some valid paths due some bug. Luckily however, I can use this list matrix algorithm as a benchmark to at least see if the new implementation still beats it or not.
 
 ### What do I do next?
 
-To be added.
+I feel like the current AI implementation is already good enough as it is right now. I also know that there won't be any realistic possibility for me to improve it so that I can perfectly solve the whole game starting from the new round. This being said, I will still try to make some minor improvements, such as reworking with transposition table, trying to optimise alpha-beta window and perhaps test little bit multiprocessing again. Most likely I am not going to spend too much time on these optimisation and I will reroll the solution back to previous stage with a small threshold. So ideally I will expect small improvements, but I am not very unsatisfied even though I do not get any improvements at all.
+
+There are still lot's of work left on the documentations and perhaps I will put my primary focus on them. I do not want to end up in the situation where I am not forced to the documentation on a last day just because I have to do them. Instead of that, I want to be in a situation that I can do the optimisation work during the last days on a project if I want to, but not necessarily need to.

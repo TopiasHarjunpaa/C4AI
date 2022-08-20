@@ -10,7 +10,7 @@ Most of the `Entities` class testing has been made at the integration test level
 
     *Note. These tests could be considered trivial ones and perhaps test wouldn't be necessary. However, at the earlier stage of the project, these were invented in a different way and I decided to keep these tests instead of deleting them*
 
-2. [TestPosition](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/entities/position_test.py) -class is used for testing binary operations for the Position class such as making a move and returning available columns.
+2. [TestPosition](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/entities/position_test.py) -class is used for testing binary operations for the `Position` class such as making a move and returning available columns.
 
 3. [TestTranspositionTable](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/entities/transposition_table_test.py) -class is used for testing key check operation for the Transposition class.
 
@@ -18,19 +18,21 @@ Most of the `Entities` class testing has been made at the integration test level
 
 The following test classes has been made to test services:
 
-1.  [TestAiService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/ai_service_test.py)
+1.  [TestAiService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/ai_service_test.py) -class is mainly used for checking next move calculations for different AI's. These tests have primary focus on terminal situations as those can be quite clearly determined if the move is either right or wrong. This test class also contains some tests for column order sorting used by advanced AI.
+
+2.  [TestBitboardService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/bitboard_service_test.py) -class is used for testing binary operations for the `BitboardService` class. This class contains tests for checking terminal situations, finding a open three connects and symmetry checks.
+
+3.  [TestSituationService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/situation_service_test.py) -class is used for testing list matrix operations for the `SituationServce` class. Tests are checking similar functionalities than `TestBitboardService` and `TestPosition` are doing suchs as checking terminal situations and returning available columns.
+
+4.  [TestHeuristicService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/heuristic_service_test.py) -class is used for 
 
     Description to be added
 
-2.  [BitboardService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/bitboard_service_test.py)
+5.  [TestBoardService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/board_service_test.py)
 
     Description to be added
 
-3.  [TestBoardService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/board_service_test.py)
-
-    Description to be added
-
-4.  [TestGameService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/game_service_test.py)
+6.  [TestGameService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/game_service_test.py)
 
     Description to be added
 
@@ -43,14 +45,6 @@ The following test classes has been made to test services:
     * `StubUI`
 
     `GameService` class uses stub class functions which are unnecessary from the testing perspective.
-
-5.  [TestHeuristicService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/heuristic_service_test.py)
-
-    Description to be added
-
-6.  [TestSituationService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/situation_service_test.py)
-
-    Description to be added
 
 Many service classes has multiple methods which keeps track of the game situation. In order to test different game situation, [test_grids.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_grids.py) and [test_locs.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_locs.py) has been created. Test grids obviously contains different game grid setups and Test locs contains different setups for Four Connect testing.
 

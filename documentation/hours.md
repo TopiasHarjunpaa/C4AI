@@ -49,10 +49,10 @@
 | Day | Hour | What did I do? |
 | :----:|:-----| :-----|
 | 14.8 | 1 h    | Testing again different implementations |
-| 16.8 | 5 h    | Better heuristic, move ordering and transposition table rework |
-| 17.8 | 3 h    | Removed losing paths from available locations and more docstring |
-| 18.8 | 3 h    | Created symmetrical board check to narrow search paths. Also updated tests and test documentation |
-| 19.8 | 3 h    | Tried to implement multiprocessing but did not get any benefit. Also peer reviewing. |
+| 15.8 | 5 h    | Better heuristic, move ordering and transposition table rework |
+| 16.8 | 3 h    | Removed losing paths from available locations and more docstring |
+| 17.8 | 3 h    | Created symmetrical board check to narrow search paths. Also updated tests and test documentation |
+| 18.8 | 3 h    | Tried to implement multiprocessing but did not get any benefit. Also peer reviewing. |
 | **Total** | **15 h** | |
 
 #### Week 6
