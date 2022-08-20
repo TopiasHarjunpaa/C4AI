@@ -26,7 +26,7 @@ The following test classes has been made to test services:
 
 4.  [TestHeuristicService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/heuristic_service_test.py) -class is used for 
 
-    Description to be added
+    Description to be added..
 
 5.  [TestBoardService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/board_service_test.py)
 

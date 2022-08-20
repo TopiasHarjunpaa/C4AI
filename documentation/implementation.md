@@ -44,11 +44,11 @@ Situation services are handled by classes [SituationService](https://github.com/
 * Keeping track of how many coins are placed on the game board is handled by `SituationService` method `count_free_slots(grid)` and `BitboardService` method `count_coins(player_bitboard)`. As the name refers, the first one counts how many free slots are at the game board when the last one counts how many game coins has placed on a board for each player.
 * `BitboardService` -class has also `convert_to_position(grid)` -method which converts the list matrix from the current game board into bitboard. This is needed because the game services are keeping track of the game board in list matrix format.
 
-Heuristic services are handled by [HeuristicService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/services/heuristic_service.py) class which is used for the heuristic calculations used by AI services. Primary functionalities are:
+Heuristic services are handled by [HeuristicService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/services/heuristic_service.py) -class which is used for the heuristic calculations used by AI services. Primary functionalities are:
 
 * To be added later...
 
-AI services are handled by [AiService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/services/ai_service.py) class which is to calculate next move for different level AI opponents. Primary functionalities are:
+AI services are handled by [AiService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/services/ai_service.py) -class which is to calculate next move for different level AI opponents. Primary functionalities are:
 
 * To be added later...
 

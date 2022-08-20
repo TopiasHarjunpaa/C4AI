@@ -53,7 +53,8 @@
 | 16.8 | 3 h    | Removed losing paths from available locations and more docstring |
 | 17.8 | 3 h    | Created symmetrical board check to narrow search paths. Also updated tests and test documentation |
 | 18.8 | 3 h    | Tried to implement multiprocessing but did not get any benefit. Also peer reviewing. |
-| **Total** | **15 h** | |
+| 20.8 | 2 h    | Documentation and reports |
+| **Total** | **12 h** | |
 
 #### Week 6
 | Day | Hour | What did I do? |
