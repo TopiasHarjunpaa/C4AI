@@ -61,7 +61,7 @@ Logic services are handled with the packet `services`, which has the following t
     * Improved move exploration ordering which uses heuristic calculation results and removes losing move paths
     * Skips symmetrical paths
 
-*Note. Ideas for several optimisation methods used for the advanced AI has been taken from the Pascal Pons blog post: Solving connect 4: How to build a perfect AI* [^3]
+    *Ideas for several optimisation methods used for the advanced AI has been taken from the Pascal Pons blog post: Solving connect 4: How to build a perfect AI* [^3]
 
 ## Space and time complexity
 
