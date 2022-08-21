@@ -64,7 +64,7 @@ Coverage report can be generated using the command:
 poetry run invoke coverage-report
 ```
 
-Report will be generated into the folder named `htmlcov`. Code related to the UI and testing has left out from the testing report. Coverage report can be also found from the [Codecov](https://app.codecov.io/gh/TopiasHarjunpaa/C4AI).
+Report will be generated into the folder named `htmlcov`. Coverage report can be also found from the [Codecov](https://app.codecov.io/gh/TopiasHarjunpaa/C4AI). Some of the files are left out from the coverage report such as files related to the UI and testing along with configuration-, simulation- and index- files.
 
 #### Pylint:
 
@@ -81,4 +81,4 @@ Font style:
 * Author **Khurasan**
 
 C4AI logo:
-* Generated from address [COOLTEXT](https://cooltext.com/)
+* Generated at website [Cooltext](https://cooltext.com/)
