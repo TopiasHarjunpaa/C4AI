@@ -124,7 +124,7 @@ class AiService:
 
         return targeted_location
 
-    def calculate_next_move_minimax(self, grid, player_number, depth=8):
+    def calculate_next_move_minimax(self, grid, player_number, depth=7):
         """Calculates next possible move using Minimax algorithm.
         This method is used for the intermediate level of AI.
 
