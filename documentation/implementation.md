@@ -67,7 +67,7 @@ Logic services are handled with the packet `services`, which has the following t
 
 To be added later...
 
-## Sources:
+### Sources:
 
 [^1]: Wikipedia, [Minimax](https://en.wikipedia.org/wiki/Minimax), readed 19.7.2022  
 [^2]: Wikipedia, [Alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha_beta_pruning), readed 19.7.2022   
