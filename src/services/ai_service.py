@@ -279,7 +279,7 @@ class AiService:
             return (terminal_value, None, None)
 
         if depth == 0:
-            return (self._heuristics.calculate_heuristic_value_w_bbs(
+            return (self._heuristics.calculate_heuristic_value_with_bitboards(
                 position, player_index), None, None)
 
         if maximizing_player:

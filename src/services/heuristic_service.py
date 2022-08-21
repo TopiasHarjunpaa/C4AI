@@ -1,5 +1,5 @@
 import math
-from config import ROWS, COLUMNS
+from config import ROWS, COLUMNS, MID_COL
 
 
 class HeuristicService:
@@ -172,7 +172,7 @@ class HeuristicService:
         score += self._get_positional_values(grid, player_number)
         return score
 
-    def calculate_heuristic_value_w_bbs(self, position, player_index):
+    def calculate_heuristic_value_with_bitboards(self, position, player_index):
         """Calculates heuristic value for the player from the certain game situation.
         Player will get one point per each open 3 connect and reduce one point per each
         open 3 connect from opponent. Player will get additional 3 points for each coin
@@ -186,4 +186,12 @@ class HeuristicService:
             int: Returns total heuristic value (score) from the game board.
         """
 
-        return self._bb_service.calculate_heuristic_value(position, player_index)
+        points = 0
+        bitboard = position.get_bitboard()
+        opponent_index = (player_index + 1) % 2
+        player_bb = bitboard[player_index]
+        opponent_bb = bitboard[opponent_index]
+        points += self._bb_service.check_three_connect(player_bb, opponent_bb)
+        points -= self._bb_service.check_three_connect(opponent_bb, player_bb)
+        points += 3 * bin(bitboard[player_index] & MID_COL).count('1')
+        return points

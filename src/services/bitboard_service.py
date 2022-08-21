@@ -179,30 +179,6 @@ class BitboardService:
         coins = bin(player_bitboard).count('1')
         return coins
 
-    def calculate_heuristic_value(self, position, player_index):
-        """Calculates heuristic value for the player from the certain game situation.
-        Player will get one point per each open 3 connect and reduce one point per each
-        open 3 connect from opponent. Player will get additional 3 points for each coin
-        placed in the middle column.
-
-        Args:
-            position (Position): Bitboard presentation (Position object)
-            player_index (int): Player index (0 = first player, 1 = second player)
-
-        Returns:
-            int: Returns total heuristic value (score) from the game board.
-        """
-
-        points = 0
-        bitboard = position.get_bitboard()
-        opponent_index = (player_index + 1) % 2
-        player_bb = bitboard[player_index]
-        opponent_bb = bitboard[opponent_index]
-        points += self.check_three_connect(player_bb, opponent_bb)
-        points -= self.check_three_connect(opponent_bb, player_bb)
-        points += 3 * bin(bitboard[player_index] & MID_COL).count('1')
-        return points
-
     def check_three_connect(self, player_bitboard, opponent_bitboard):
         """Counts number of open 3 connects for one of the player at the current game
         situation using binary operations. Opponent bitboard will be modified by the
