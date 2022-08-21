@@ -24,7 +24,7 @@ C4AI is the University of Helsinki's Data Structures Lab 2022 course project. C4
 - [Week 3](https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/weekly_report_3.md)
 - [Week 4](https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/weekly_report_4.md)
 - [Week 5](https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/weekly_report_5.md)
-- [Week 6 (placeholder)](https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/weekly_report_6.md)
+- [Week 6](https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/weekly_report_6.md)
 - [Hours](https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/hours.md)
 
 ## Assembly instructions

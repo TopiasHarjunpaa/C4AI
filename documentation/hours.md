@@ -54,14 +54,12 @@
 | 17.8 | 3 h    | Created symmetrical board check to narrow search paths. Also updated tests and test documentation |
 | 18.8 | 3 h    | Tried to implement multiprocessing but did not get any benefit. Also peer reviewing. |
 | 20.8 | 2 h    | Documentation and reports |
-| **Total** | **12 h** | |
+| **Total** | **17 h** | |
 
 #### Week 6
 | Day | Hour | What did I do? |
 | :----:|:-----| :-----|
-| xx.x | 0 h    | xxx |
-| xx.x | 0 h    | xxx |
-| xx.x | 0 h    | xxx |
-| **Total** | **0 h** | |
+| 21.8 | 1 h    | Documentation and small refactoring |
+| **Total** | **1 h** | |
 
 #### Total hours: 0 h
