@@ -54,14 +54,14 @@ Logic services are handled with the packet `services`, which has the following t
 
 * Next move calculation for the basic AI is handled by `calculate_next_move_basic(grid, player_number)` method which simply loops through all possible moves, calculates heuristic values for each move and returns the move which gets the highest heuristic value. This is basically just very stupid AI and does not give any match against the human player.
 * Next move calculation for the intermediate AI is handled by `calculate_next_move_minimax(grid, player_number, depth)` method which uses Minimax algorithm [^1] and alpha beta pruning [^2] with default depth of 7 to calculate next move. This is actually playing suprisingly well against the human player and is already quite hard to beat for the average player.
-* Next move calculation for the advanced AI is handled by `calculate_next_move_id_minimax(grid, player_number, timeout, max_depth)` method which uses iterative deepening and Minimax algorithm [^1] to calculate next move within certain time limit as deep as it gets. There are also several optimisations made in order to reach better search depth:
+* Next move calculation for the advanced AI is handled by `calculate_next_move_id_minimax(grid, player_number, timeout, max_depth)` method which uses iterative deepening and Minimax algorithm to calculate next move within certain time limit as deep as it gets. There are also several optimisations made in order to reach better search depth:
 
     * List matrix presentation has been converted into bitboard presentation [^4]
     * Transposition table to prevent recalcution of the similar game situation
     * Improved move exploration ordering which uses heuristic calculation results and removes losing move paths
     * Skips symmetrical paths
 
-*Note. Ideas for several optimisation methods used for the advanced AI has been taken from the Pascal Pons blog post SOLVING CONNECT 4: HOW TO BUILD A PERFECT AI* [^3]
+*Note. Ideas for several optimisation methods used for the advanced AI has been taken from the Pascal Pons blog post: Solving connect 4: How to build a perfect AI* [^3]
 
 ## Space and time complexity
 
@@ -71,5 +71,5 @@ To be added later...
 
 [^1]: Wikipedia, [Minimax](https://en.wikipedia.org/wiki/Minimax), readed 19.7.2022  
 [^2]: Wikipedia, [Alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha_beta_pruning), readed 19.7.2022   
-[^3]: Pascal Pons 2019 [Solving connect 4: How to build a perfect AI](http://blog.gamesolver.org/), readed 19.7.2022  
-[^4]: Dominikus Herzberg [Bitboards and Connect Four](https://github.com/denkspuren/BitboardC4/blob/master/BitboardDesign.md), readed 5.8.2022
+[^3]: Dominikus Herzberg [Bitboards and Connect Four](https://github.com/denkspuren/BitboardC4/blob/master/BitboardDesign.md), readed 5.8.2022
+[^4]: Pascal Pons 2019 [Solving connect 4: How to build a perfect AI](http://blog.gamesolver.org/), readed 19.7.2022
