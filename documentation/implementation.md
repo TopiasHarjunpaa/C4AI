@@ -31,7 +31,7 @@ Logic services are handled with the packet `services`, which has the following t
 3. Heuristic services
 4. AI services
 
-Game services are handled by classes [GameService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/services/game_service.py) and [BoardService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/services/board_service.py). These are handling updating game situations such as keeping up the board situations, player turns and terminal situations. Primary functionalities are:
+Game services are handled by the classes [GameService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/services/game_service.py) and [BoardService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/services/board_service.py). These are handling updating game situations such as keeping up the board situations, player turns and terminal situations. Primary functionalities are:
 
 * `GameService` -class has `start_gameloop()` -method which starts the game loop, initializes the game situation, follows the player commands and forwards turns for the AI services.
 * During the initialization `BoardService` -class uses `reset()` -method to clear the game board.
@@ -46,7 +46,9 @@ Situation services are handled by classes [SituationService](https://github.com/
 
 Heuristic services are handled by [HeuristicService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/services/heuristic_service.py) -class which is used for the heuristic calculations used by AI services. Primary functionalities are:
 
-* To be added later...
+* Most of the methods are used by intermediate AI to evaluate list matrix and calculate score for several directions such as `_count_values(oc, player_number)`, `_get_positional_values(grid, player_number)`, `_get_vertical_values(grid, player_number)` etc. Total score for intermediate AI will be calculated with method `calculate_heuristic_value(grid, player_number)`.
+* Heuristic value for the advanced AI is calculated with method `calculate_heuristic_value_with_bitboards(position, player_index)` while necessary evaluation of the bitboard has been made with `BitboardService` -class method `check_three_connect(player_bitboard, opponent_bitboard)`.
+
 
 AI services are handled by [AiService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/services/ai_service.py) -class which is to calculate next move for different level AI opponents. Primary functionalities are:
 
