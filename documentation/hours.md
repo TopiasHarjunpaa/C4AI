@@ -60,6 +60,7 @@
 | Day | Hour | What did I do? |
 | :----:|:-----| :-----|
 | 21.8 | 1 h    | Documentation and small refactoring |
-| **Total** | **1 h** | |
+| 22.8 | 2 h    | Documentation and reports |
+| **Total** | **3 h** | |
 
 #### Total hours: 0 h
