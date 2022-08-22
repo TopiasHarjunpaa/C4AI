@@ -65,7 +65,9 @@ Logic services are handled with the packet `services`, which has the following t
 
 ## Space and time complexity
 
-Time complexity of simple Minimax algorithm is...
+Time complexity of simple Minimax algorithm is $O(b^d)$ where $b$ is a branching factor ie. number of possible moves and $d$ is a search depth. Connect four game board has board with 6 rows and 7 columns which means that maximum number of possible moves $b=7$ and maximum search depth $d=6\times7=42$. 
+Time complexity can be reduced by alpha-beta pruning. With optimal move ordering ie. best moves are always searched first, time complexity can be reduced up to $O(\sqrt(b^d))$ which means that the search depth can be doubled with same amount of computation compared for the simple Minimax algorithm. If the moves are considered at the random order, time complexity is $O((b - 1 + \sqrt(b^2 + 14b + 1) / 4)^d)$. [^2] 
+Space complexity is the same for both Minimax and Minimax with alpha-beta pruning $O(bd)$. [^5]
 
 ### Sources:
 
@@ -73,3 +75,4 @@ Time complexity of simple Minimax algorithm is...
 [^2]: Wikipedia, [Alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha_beta_pruning), readed 19.7.2022   
 [^3]: Dominikus Herzberg [Bitboards and Connect Four](https://github.com/denkspuren/BitboardC4/blob/master/BitboardDesign.md), readed 5.8.2022
 [^4]: Pascal Pons 2019 [Solving connect 4: How to build a perfect AI](http://blog.gamesolver.org/), readed 19.7.2022
+[^5]: GitBook [Property of alpha-beta pruning algorithm](https://ai-master.gitbooks.io/adversarial-search/content/property-of-alpha-beta-pruning-algorithm.html), readed 22.8.2022
