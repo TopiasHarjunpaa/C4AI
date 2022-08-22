@@ -4,13 +4,6 @@ Download the latest [release (placeholder)](https://github.com/TopiasHarjunpaa/C
 
 ## Assembly instructions
 
-Start by cloning the repository:
-
-```
-$ git clone git@github.com:TopiasHarjunpaa/C4AI.git
-$ cd C4AI
-```
-
 Install dependencies
 
 ```
