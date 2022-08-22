@@ -22,19 +22,13 @@ The following test classes has been made to test services:
 
 2.  [TestBitboardService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/bitboard_service_test.py) -class is used for testing binary operations for the `BitboardService` class. This class contains tests for checking terminal situations, finding a open three connects and symmetry checks.
 
-3.  [TestSituationService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/situation_service_test.py) -class is used for testing list matrix operations for the `SituationServce` class. Tests are checking similar functionalities than `TestBitboardService` and `TestPosition` are doing suchs as checking terminal situations and returning available columns.
+3.  [TestSituationService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/situation_service_test.py) -class is used for testing list matrix operations for the `SituationService` class. Tests are checking similar functionalities than `TestBitboardService` and `TestPosition` are doing suchs as checking terminal situations and returning available columns.
 
-4.  [TestHeuristicService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/heuristic_service_test.py) -class is used for 
+4.  [TestHeuristicService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/heuristic_service_test.py) -class is used for testing heuristic value calculations for the `HeuristicService` class. Most of the methods for `HeuristicService` and therefore tests as well are checking evaluation of list matrix and calculation of score for different directions such as vertical, horizontal and diagonal directions. There are several tests made for these methods and the main tests for calculating total heuristic values are handled by the methods `test_heuristic_value_returns_correct_value` and `test_heuristic_value_with_bitboards_returns_correct_value()`. First one is used for the intermediate AI calculation using the list matrix and the second one is used for the advanced AI calculation using the bitboards. Evaluation of the bitboard has been made with `BitboardService` -class which tests are carried out with `TestBitboardService` mentioned above.
 
-    Description to be added..
+5.  [TestBoardService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/board_service_test.py) -class is used for testing game board operation for the `BoardService` -class. Tests are checking if the game board and game coins are updated properly and the reseting of the board works.
 
-5.  [TestBoardService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/board_service_test.py)
-
-    Description to be added
-
-6.  [TestGameService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/game_service_test.py)
-
-    Description to be added
+6.  [TestGameService](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/services/game_service_test.py) -class is used for testing game loop operations for the `GameService` -class. Tests are checking that the game loop starts and ends as intended, key presses are working and the player setup can be changed and updated properly. In order to easily test `GameService` -class, it uses stub classes which are unnecessary from the testing perspective.
 
     Stub classes used:
 
@@ -44,9 +38,7 @@ The following test classes has been made to test services:
     * `StubAudio`
     * `StubUI`
 
-    `GameService` class uses stub class functions which are unnecessary from the testing perspective.
-
-Many service classes has multiple methods which keeps track of the game situation. In order to test different game situation, [test_grids.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_grids.py) and [test_locs.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_locs.py) has been created. Test grids obviously contains different game grid setups and Test locs contains different setups for Four Connect testing.
+Many service classes has multiple methods which keeps track of the game situation. In order to test different game situation, [test_grids.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_grids.py) and [test_locs.py](https://github.com/TopiasHarjunpaa/C4AI/blob/main/src/tests/test_locs.py) has been created. `Test grids` contains different board setups and `Test locs` ie. *lines of connects* contains different setups for Four Connect testing. These premade setups are arrays of length 4 containing integers 0, 1 and 2.
 
 ## Test coverage report
 
@@ -58,7 +50,7 @@ poetry run invoke coverage-report
 
 Report will be generated into the folder named `htmlcov`. Coverage report can be also found from the [Codecov](https://app.codecov.io/gh/TopiasHarjunpaa/C4AI). Some of the files are left out from the coverage report such as files related to the UI and testing along with configuration-, simulation- and index- files.
 
-<img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/coverage_report.png" width="1000">
+<img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/coverage_report.png" width="700">
 
 Methods which were not tested: 
 * Trivial methods, such as Getters, Setters and few pygame event key checks
@@ -71,12 +63,8 @@ System testing has been carried out manually.
 
 ### Installation and configuration
 
-To be added.
+Software has been uploaded and tested according to [User instructions](https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/instructions.md) in Linux environment.
 
 ### Functionalities
 
-To be added.
-
-## Performance testing
-
-To be added.
+Game functionalities has been manually tested by playing the game against all versions of AI, with 2 human players and making the different AI versions to play against each other. During the manual testing, screen resolution has been 1920 x 1080. No flaws with UI transitions and key presses has been found during the manual testing. However, currently it is not implemented possibility to end the game while two AI's are playing against each other before game has ended.
