@@ -1,6 +1,6 @@
 # User instructions
 
-Download the latest release [placeholder]()
+Download the latest [release (placeholder)](https://github.com/TopiasHarjunpaa/C4AI/releases/tag/week4)
 
 ## Assembly instructions
 
@@ -25,7 +25,12 @@ $ poetry run invoke start
 
 ## Playing instructions
 
-Intro words to be added...
+C4AI name refers to board game [Connect Four](https://en.wikipedia.org/wiki/Connect_Four). In this game, user can play against different level AI's or against other human player. Game has following views / states:
+
+1. Main menu
+2. Game setup
+3. Game view
+4. Game over view
 
 ### Main menu:
 
@@ -49,7 +54,7 @@ In a game setup user can change the opponent type and difficulty level of the AI
 <img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/C4AI_setup1.png" width="700">
 <img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/C4AI_setup2.png" width="700">
 
-### New game:
+### New game / Game view:
 
 New game with empty game board. On top of the board text indicates which player turn it is currently. Red color means player 1 and yellow color means player 2. Column to drop game coin will be chosen by pressing the keys 1-7 which indicates the column numbers from left to right. Column numbers are indicated below the game board.
 
