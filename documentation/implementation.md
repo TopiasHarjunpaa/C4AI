@@ -65,7 +65,7 @@ Logic services are handled with the packet `services`, which has the following t
 
 ## Space and time complexity
 
-To be added later...
+Time complexity of simple Minimax algorithm is...
 
 ### Sources:
 
