@@ -2,7 +2,7 @@ import unittest
 import math
 from services.heuristic_service import HeuristicService
 from services.bitboard_service import BitboardService
-from tests.test_grids import G_AE1, G_AE2, G_AE3, G_1W2, G_WO1, G_HO1, G_UD1, G_DD1
+from tests.test_grids import G_1W1, G_AE1, G_AE2, G_AE3, G_1W2, G_CG1, G_CG2, G_WO1, G_HO1, G_UD1, G_DD1
 from tests.test_locs import L1W, L1T1, L1T2, L1F1, L1F2, L2TW1, L2F1
 
 
@@ -64,3 +64,23 @@ class TestHeuristicService(unittest.TestCase):
         self.assertEqual(value, 1)
         value = self.heuristic.calculate_heuristic_value(G_AE3, 2)
         self.assertEqual(value, 2)
+    
+    def test_heuristic_value_with_bitboards_returns_correct_value(self):
+        position = self.bb.convert_to_position(G_AE1)
+        value = self.heuristic.calculate_heuristic_value_with_bitboards(position, 0)
+        self.assertEqual(value, 3)
+        value = self.heuristic.calculate_heuristic_value_with_bitboards(position, 1)
+        self.assertEqual(value, 3)
+        position = self.bb.convert_to_position(G_CG1)
+        value = self.heuristic.calculate_heuristic_value_with_bitboards(position, 0)
+        self.assertEqual(value, 0)
+        position = self.bb.convert_to_position(G_CG2)
+        value = self.heuristic.calculate_heuristic_value_with_bitboards(position, 0)
+        self.assertEqual(value, -2)
+        value = self.heuristic.calculate_heuristic_value_with_bitboards(position, 1)
+        self.assertEqual(value, 11)
+        position = self.bb.convert_to_position(G_1W1)
+        value = self.heuristic.calculate_heuristic_value_with_bitboards(position, 0)
+        self.assertEqual(value, 5)
+        value = self.heuristic.calculate_heuristic_value_with_bitboards(position, 1)
+        self.assertEqual(value, 1)
