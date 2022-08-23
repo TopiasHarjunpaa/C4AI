@@ -61,6 +61,7 @@
 | :----:|:-----| :-----|
 | 21.8 | 1 h    | Documentation and small refactoring |
 | 22.8 | 2 h    | Documentation and reports |
-| **Total** | **3 h** | |
+| 23.8 | 3 h    | Peer review |
+| **Total** | **6 h** | |
 
 #### Total hours: 0 h
