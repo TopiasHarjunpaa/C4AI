@@ -24,13 +24,13 @@ class TestSituationService(unittest.TestCase):
         self.assertEqual(original_grid1[0][0], 0)
 
     def test_column_available_return_correct_column_number(self):
-        col_number = self.situation.check_column_available(self.board.grid, 0)
+        col_number = self.situation.check_available_location(self.board.grid, 0)
         self.assertEqual(col_number, 5)
-        col_number = self.situation.check_column_available(G_SF1, 0)
+        col_number = self.situation.check_available_location(G_SF1, 0)
         self.assertEqual(col_number, 5)
-        col_number = self.situation.check_column_available(G_SF1, 1)
+        col_number = self.situation.check_available_location(G_SF1, 1)
         self.assertEqual(col_number, -1)
-        col_number = self.situation.check_column_available(G_SF1, 4)
+        col_number = self.situation.check_available_location(G_SF1, 4)
         self.assertEqual(col_number, 1)
 
     def test_get_available_locations_returns_all_available_columns(self):

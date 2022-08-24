@@ -10,7 +10,7 @@ class HeuristicService:
 
         self._bb_service = bitboard
 
-    def _count_values(self, loc, player_number):
+    def _count_values(self, line_of_connect, player_number):
         """Counts the total score for line of connect. Line of connect is a 4 cells long list
         of cell values (0, 1, 2) which can be in any directions at the game grid
         (horizontal, vertical, both diagonals). If:
@@ -20,7 +20,7 @@ class HeuristicService:
         Player has 2 coins and 2 empty at line of connect - player gets little score
 
         Args:
-            loc (list): Line of connect ie. line which contains 4 grid cell values in any directions
+            line_of_connect (list): line which contains 4 grid cell values in any directions
             player_number (int): Player number (1 = first player, 2 = second player)
 
         Returns:
@@ -31,9 +31,9 @@ class HeuristicService:
         opponent_number = player_number % 2 + 1
         multipliers = {0: math.inf, 1: 10, 2: 2}
         for k, val in multipliers.items():
-            if loc.count(player_number) == 4 - k and loc.count(0) == k:
+            if line_of_connect.count(player_number) == 4 - k and line_of_connect.count(0) == k:
                 value += val
-            if loc.count(opponent_number) == 4 - k and loc.count(0) == k:
+            if line_of_connect.count(opponent_number) == 4 - k and line_of_connect.count(0) == k:
                 value -= val
         return value
 
@@ -80,8 +80,8 @@ class HeuristicService:
         for col in range(COLUMNS):
             col = [row[col] for row in grid]
             for row in range(ROWS - 3):
-                loc = col[row:row + 4]
-                total_value += self._count_values(loc, player_number)
+                line_of_connect = col[row:row + 4]
+                total_value += self._count_values(line_of_connect, player_number)
         return total_value
 
     def _get_horizontal_values(self, grid, player_number):
@@ -103,8 +103,8 @@ class HeuristicService:
         for row in range(ROWS):
             row = grid[row]
             for col in range(COLUMNS - 3):
-                loc = row[col:col + 4]
-                total_value += self._count_values(loc, player_number)
+                line_of_connect = row[col:col + 4]
+                total_value += self._count_values(line_of_connect, player_number)
         return total_value
 
     def _get_inc_diagonal_values(self, grid, player_number):
@@ -125,8 +125,8 @@ class HeuristicService:
         total_value = 0
         for row in range(3, ROWS):
             for col in range(COLUMNS - 3):
-                loc = [grid[row-i][col+i] for i in range(4)]
-                total_value += self._count_values(loc, player_number)
+                line_of_connect = [grid[row-i][col+i] for i in range(4)]
+                total_value += self._count_values(line_of_connect, player_number)
         return total_value
 
     def _get_dec_diagonal_values(self, grid, player_number):
@@ -147,8 +147,8 @@ class HeuristicService:
         total_value = 0
         for row in range(ROWS - 3):
             for col in range(COLUMNS - 3):
-                loc = [grid[row+i][col+i] for i in range(4)]
-                total_value += self._count_values(loc, player_number)
+                line_of_connect = [grid[row+i][col+i] for i in range(4)]
+                total_value += self._count_values(line_of_connect, player_number)
         return total_value
 
     def calculate_heuristic_value(self, grid, player_number):

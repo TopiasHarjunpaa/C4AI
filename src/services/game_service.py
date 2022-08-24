@@ -93,7 +93,7 @@ class GameService:
             if event.type == pygame.KEYDOWN:
                 if event.key in accepted_keys:
                     col_number = event.key - 49
-                    row_number = self._situation.check_column_available(
+                    row_number = self._situation.check_available_location(
                         self._board.grid, col_number)
                     if row_number != -1:
                         self._board.add_coin(
@@ -126,7 +126,6 @@ class GameService:
         return self.ai_service.calculate_next_move_minimax(
             self._board.grid, self.player_number)
 
-    # Update docstring
     def _calculate_next_move_advanced(self):
         """Calculates next possible move using optimised Minimax algorithm.
         This method is used for the advanced level of AI.
@@ -135,7 +134,7 @@ class GameService:
             tuple: Returns column and row indexes of the next move location
         """
 
-        return self.ai_service.calculate_next_move_id_minimax(
+        return self.ai_service.calculate_next_move_iterative_minimax(
             self._board.grid, self.player_number)
 
     def _check_terminal_situation(self):
@@ -181,7 +180,7 @@ class GameService:
 
         else:
             column = self._calculate_next_move_advanced()
-            row = self._situation.check_column_available(
+            row = self._situation.check_available_location(
                 self._board.grid, column)
             location = (row, column)
 

@@ -26,7 +26,7 @@ class SituationService:
 
         return [[grid[row][col] for col in range(COLUMNS)] for row in range(ROWS)]
 
-    def check_column_available(self, grid, col_number):
+    def check_available_location(self, grid, col_number):
         """Check if certain column has room to put game coin.
         Uses the chosen column number and loops through
         row indexes in reversed order in order to find
@@ -59,7 +59,7 @@ class SituationService:
 
         available_columns = []
         for column in range(COLUMNS):
-            row = self.check_column_available(grid, column)
+            row = self.check_available_location(grid, column)
             if row != -1:
                 available_columns.append((row, column))
         return available_columns
@@ -79,7 +79,7 @@ class SituationService:
         available_columns = []
         column_order = [3, 2, 4, 1, 5, 0, 6]
         for column in column_order:
-            row = self.check_column_available(grid, column)
+            row = self.check_available_location(grid, column)
             if row != -1:
                 available_columns.append((row, column))
         return available_columns
@@ -118,27 +118,27 @@ class SituationService:
         for col in range(COLUMNS):
             col = [row[col] for row in grid]
             for row in range(ROWS - 3):
-                loc = col[row:row + 4]
-                if loc.count(player_number) == 4:
+                line_of_connect = col[row:row + 4]
+                if line_of_connect.count(player_number) == 4:
                     return True
 
         for row in range(ROWS):
             row = grid[row]
             for col in range(COLUMNS - 3):
-                loc = row[col:col + 4]
-                if loc.count(player_number) == 4:
+                line_of_connect = row[col:col + 4]
+                if line_of_connect.count(player_number) == 4:
                     return True
 
         for row in range(3, ROWS):
             for col in range(COLUMNS - 3):
-                loc = [grid[row-i][col+i] for i in range(4)]
-                if loc.count(player_number) == 4:
+                line_of_connect = [grid[row-i][col+i] for i in range(4)]
+                if line_of_connect.count(player_number) == 4:
                     return True
 
         for row in range(ROWS - 3):
             for col in range(COLUMNS - 3):
-                loc = [grid[row+i][col+i] for i in range(4)]
-                if loc.count(player_number) == 4:
+                line_of_connect = [grid[row+i][col+i] for i in range(4)]
+                if line_of_connect.count(player_number) == 4:
                     return True
 
         return False

@@ -144,7 +144,7 @@ class AiService:
 
         return result[1]
 
-    def calculate_next_move_id_minimax(self, grid, player_number, timeout=8, max_depth=42):
+    def calculate_next_move_iterative_minimax(self, grid, player_number, timeout=8, max_depth=42):
         """Calculates next possible move using Minimax algorithm
         and iterative deepening. This method is used for the advanced level of AI:
 
@@ -195,7 +195,7 @@ class AiService:
             self.transposition_table.reset()
             start_t = time.time()
             self.counter = 0
-            locations[depth] = self._minimax_with_id_and_bb(
+            locations[depth] = self._minimax_with_bitboards(
                 position, player_index, depth, True, -math.inf, math.inf, column_order)
             column_order = self.sort_column_order(locations[depth][2])
             depth += 1
@@ -213,7 +213,7 @@ class AiService:
 
         return locations[depth][1]
 
-    def _minimax_with_id_and_bb(self, position, player_index, depth, maximizing_player,
+    def _minimax_with_bitboards(self, position, player_index, depth, maximizing_player,
                                 alpha=-math.inf, beta=math.inf, column_order=None):
         """Evalutes the most optimal next move using Minimax algorithm
         and fail-soft alpha beta pruning:
@@ -297,7 +297,7 @@ class AiService:
                 board, heights = position.get_params()
                 new_position = Position(board, heights)
                 new_position.make_move(col, player_index)
-                value = self._minimax_with_id_and_bb(new_position, player_index, depth - 1,
+                value = self._minimax_with_bitboards(new_position, player_index, depth - 1,
                                                      False, alpha, beta)[0]
 
                 self.transposition_table.add(board, value, column)
@@ -324,7 +324,7 @@ class AiService:
             board, heights = position.get_params()
             new_position = Position(board, heights)
             new_position.make_move(col, (player_index + 1) % 2)
-            value = self._minimax_with_id_and_bb(new_position, player_index, depth - 1,
+            value = self._minimax_with_bitboards(new_position, player_index, depth - 1,
                                                  True, alpha, beta)[0]
 
             if value < min_value:

@@ -1,4 +1,4 @@
-from config import ROWS, COLUMNS, FULL_GRID, MID_COL, BORDERS
+from config import ROWS, COLUMNS, FULL_GRID, BORDERS
 from entities.position import Position
 
 
