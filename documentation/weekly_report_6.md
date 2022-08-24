@@ -8,6 +8,8 @@ On monday I continued working with documentation. I created user instruction doc
 
 On tuesday I only did peer reviewing. It took quite some time but it was nice experience especially because the subject wasn't familiar to me.
 
+On wednesday I tried to investigate new optimisation possibilities, but did not implement anything. Instead of that, I spend few moments for renaming the variable names and some methods according to the comments from the peer review.
+
 ### How has the program progressed?
 
 To be added.
