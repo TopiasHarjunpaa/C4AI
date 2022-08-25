@@ -62,13 +62,16 @@ Methods which were not tested:
 Explanation to be added...
 
 advanced vs advanced
-<img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/simulation_advanced30_vs_advanced30.png" width="700">
+
+<img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/simulation_advanced30_vs_advanced30.png" width="500">
 
 intermediate vs advanced
-<img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/simulation_intermediate7_vs_advanced30.png" width="700">
+
+<img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/simulation_intermediate7_vs_advanced30.png" width="500">
 
 advanced vs intermediate
-<img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/simulation_advanced30_vs_intermediate7.png" width="700">
+
+<img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/simulation_advanced30_vs_intermediate7.png" width="500">
 
 ## System testing
 
