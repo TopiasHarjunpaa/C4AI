@@ -63,6 +63,7 @@
 | 22.8 | 2 h    | Documentation and reports |
 | 23.8 | 3 h    | Peer review |
 | 24.8 | 1 h    | Variable and method renaming according to the peer review comments |
-| **Total** | **7 h** | |
+| 25.8 | 3 h    | Testing transposition table variations and simulation reworks |
+| **Total** | **10 h** | |
 
 #### Total hours: 0 h
