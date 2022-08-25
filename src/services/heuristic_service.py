@@ -193,5 +193,5 @@ class HeuristicService:
         opponent_bb = bitboard[opponent_index]
         points += self._bb_service.check_three_connect(player_bb, opponent_bb)
         points -= self._bb_service.check_three_connect(opponent_bb, player_bb)
-        points += 3 * bin(bitboard[player_index] & MID_COL).count('1')
+        points += bin(bitboard[player_index] & MID_COL).count('1')
         return points

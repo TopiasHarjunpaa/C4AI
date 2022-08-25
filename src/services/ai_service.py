@@ -144,7 +144,7 @@ class AiService:
 
         return result[1]
 
-    def calculate_next_move_iterative_minimax(self, grid, player_number, timeout=8, max_depth=42):
+    def calculate_next_move_iterative_minimax(self, grid, player_number, timeout=40, max_depth=42):
         """Calculates next possible move using Minimax algorithm
         and iterative deepening. This method is used for the advanced level of AI:
 
@@ -179,7 +179,7 @@ class AiService:
             position.get_bitboard())
         column_order = self._bb_service.get_available_non_losing_columns(
             position, player_index, self.symmetry)
-        self._time_limit = timeout / 3
+        self._time_limit = timeout / 2
         self._start_time = time.time()
         start_t = time.time()  # To prevent printing bug when draw
         locations[0] = None, None, None  # When board is full
