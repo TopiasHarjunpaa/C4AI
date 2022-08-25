@@ -57,6 +57,19 @@ Methods which were not tested:
 * Printing methods
 * AI move calculations methods in `GameService` class which are already tested in `AiService` class.
 
+## Simulations
+
+Explanation to be added...
+
+advanced vs advanced
+<img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/simulation_advanced30_vs_advanced30.png" width="700">
+
+intermediate vs advanced
+<img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/simulation_intermediate7_vs_advanced30.png" width="700">
+
+advanced vs intermediate
+<img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/simulation_advanced30_vs_intermediate7.png" width="700">
+
 ## System testing
 
 System testing has been carried out manually.
