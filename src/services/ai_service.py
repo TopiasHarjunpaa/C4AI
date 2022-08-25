@@ -168,12 +168,12 @@ class AiService:
             max_depth (int): Maximum depth for the search. Defaults to 42.
 
         Returns:
-            tuple: Returns column index of the next move location
+            int: Returns column index of the next move location
         """
 
         position = self._bb_service.convert_to_position(grid)
         player_index = player_number - 1
-        self.printer = True
+        #self.printer = True
         locations = {}
         self.symmetry = self._bb_service.is_symmetrical(
             position.get_bitboard())
@@ -211,7 +211,7 @@ class AiService:
             depth, locations[depth][0], locations[depth][1], time.time() - start_t)
         print(f"Total time: {time.time() - self._start_time}")
 
-        return locations[depth][1]
+        return (locations[depth][1], depth)
 
     def _minimax_with_bitboards(self, position, player_index, depth, maximizing_player,
                                 alpha=-math.inf, beta=math.inf, column_order=None):

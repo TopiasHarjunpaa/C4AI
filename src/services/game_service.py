@@ -179,7 +179,7 @@ class GameService:
             location = self._calculate_next_move_intermediate()
 
         else:
-            column = self._calculate_next_move_advanced()
+            column = self._calculate_next_move_advanced()[0]
             row = self._situation.check_available_location(
                 self._board.grid, column)
             location = (row, column)
