@@ -5,8 +5,16 @@ def start(ctx):
     ctx.run("python3 src/index.py")
 
 @task
-def simulate(ctx):
-    ctx.run("python3 src/simulation.py")
+def simulate_fast(ctx):
+    ctx.run("python3 src/simulation.py 5 0.5")
+
+@task
+def simulate_normal(ctx):
+    ctx.run("python3 src/simulation.py 7 5")
+
+@task
+def simulate_full(ctx):
+    ctx.run("python3 src/simulation.py 7 30")
 
 @task
 def test(ctx):
