@@ -59,19 +59,63 @@ Methods which were not tested:
 
 ## Simulations
 
-Explanation to be added...
+### Simulation instructions
 
-advanced vs advanced
+There are three kinds of simulations available. Each simulation runs three different game scenarios against AI's which results will be plotted after each scenario has finished:
+- Intermediate AI vs advanced AI
+- Advanced AI vs intermediate AI
+- Advanced AI vs advanced AI
+
+
+First simulation sets search depth of intermediate AI to 5 and timeout limit for advanced AI to 0.5 seconds. This simulation takes less than 30 seconds to complete. Simulation can be executed using the command:
+
+```
+poetry run invoke simulate-fast
+```
+
+Second simulation sets search depth of intermediate AI to 7 and timeout limit for advanced AI to 5 seconds. This simulation takes less than 2 minutes to complete. Simulation can be executed using the command:
+
+```
+poetry run invoke simulate-normal
+```
+
+Third simulation sets search depth of intermediate AI to 7 and timeout limit for advanced AI to 30 seconds. This simulation takes less than 20 minutes to complete. Simulation can be executed using the command:
+
+```
+poetry run invoke simulate-full
+```
+
+### Simulation results
+
+The following results has been obtained from the full simulations where intermediate AI uses normal Minimax algorithm and alpha-beta pruning with constant depth of 7 while advanced AI uses 30 second soft timeout limit for the iterative deepening Minimax and alpha-beta pruning.
+
+Plots indicates how many rounds the game has lasted before terminal situation, who has won and how far has the search depth reached during each round. Blue line is the first player and red line is the second player.
+
+#### Advanced AI vs advanced AI
+
+First player wins when two similar advanced AI's plays against each other. Both AI's can reach the depth which is little bit less than 20 during the first rounds and they can see the outcome of the game at around round 15. In perfect game, there will be game coins placed in the middle column during the first rounds, which the AI's are doing even without seeing the full game during these rounds. This means that there will be roughly 10 rounds where neither of these AI will be playing perfect game and roughly 30 rounds while they are playing perfectly.
 
 <img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/simulation_advanced30_vs_advanced30.png" width="500">
 
-intermediate vs advanced
+#### Intermediate AI vs advanced AI
+
+Advanced AI wins when it is playing against intermediate AI which is starting the game. Intermediate AI uses search depth of 7 constantly from the beginning of the game which means that it can only get slightly more information after each round and can see outcome of the game only 7 rounds before losing the game. On this simulation advanced AI can see maximum depth (42) at round 18 and outcome of the game (win at round 30) at round 14. Advanced AI is not playing perfectly during the rounds 8, 10 and 12 but it is still enough for the victory as intermediate AI is not playing as well as the advanced one.
 
 <img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/simulation_intermediate7_vs_advanced30.png" width="500">
 
-advanced vs intermediate
+**Advanced AI vs intermediate AI**
+
+Advanced AI also wins when it is playing against intermediate AI while advanced AI is starting the game. On this simulation advanced AI can see maximum depth at round 21 and outcome of the game at round 15. Again there are few round where advanced AI is not playing perfectly but that is enough to reach victory against intermediate AI.
 
 <img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/simulation_advanced30_vs_intermediate7.png" width="500">
+
+#### Conclusions
+
+Judging by the results, advanced AI can beat the intermediate AI (as expected) in all scenarios. It can reach the better search depth and therefore find the optimal moves to win game earlier. It is still important to keep in mind and the advanced AI is not even close to be able to play perfectly. My personal findings, while working with this project, is that most critical moves will be made within the rounds between 6 and 15. During these rounds, very good opponent, can create a situations which will lead to victory at very late game no matter if the AI is playing perfectly from the mid-game till the end. My earliest advanced AI could reach almost similar depths than the current advanced AI without heuristics, but it made very bad choices during the early game. During that time intermediate AI with search depth 7 was able to beat it on both simulations. I was also able to beat the early advanced AI as long as was able to play decent early game and avoid mistakes till the end.
+
+Intermediate and advanced AI's are running with little bit different heuristic functions so the search depth is not only thing the measure superiority. As matter of fact, intermediate AI has more detailed heuristic and therefore it can beat the advanced AI with lower search depth as long as advanced AI timelimit will be significantly reduced.
+
+As mentioned above, the current advanced AI is always playing non-optimal at least during few rounds. This may sound like it is not a big deal, but there is actually big impact while playing against the perfect opponent. As for example, while advanced player starts the game against perfect opponent, it will create it's first mistake at round 7. During that round, it can see up to round 28 which is nowhere enough because the winning move will be made at round 41 against two optimal players. Therefore in order to improve advanced AI to beat optimal player, would require increment of search depth by 13.
 
 ## System testing
 
