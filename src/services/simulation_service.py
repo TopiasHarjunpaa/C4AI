@@ -67,7 +67,7 @@ class SimulationService:
 
         if self._situation.check_draw(self._board.grid):
             self._playing = False
-            self._game_result = f"Game has ended draw"
+            self._game_result = "Game has ended draw"
             return True
 
         self._change_turn()
@@ -82,7 +82,7 @@ class SimulationService:
 
         index = self._player_number - 1
         self._rounds[index].append(self._round)
-        self._depths[index].append(depth)  
+        self._depths[index].append(depth)
 
     def simulate_intermediate_vs_advanced(self):
         """Simulates the game against intermediate AI vs advanced AI where
@@ -101,7 +101,7 @@ class SimulationService:
                 self._calculate_advanced_move()
 
         self._create_plot("Search distance intermediate AI vs advanced AI")
-        
+
     def simulate_advanced_vs_intermediate(self):
         """Simulates the game against advanced AI vs intermediate AI where
         advanced AI begins. Plots the result of the simulation.
@@ -131,7 +131,7 @@ class SimulationService:
         while self._playing:
             self._round += 1
             self._calculate_advanced_move()
-        
+
         self._create_plot("Search distance advanced AI vs advanced AI")
 
     def _calculate_advanced_move(self):
@@ -139,7 +139,9 @@ class SimulationService:
         during the process.
         """
 
-        result = self._ai.calculate_next_move_iterative_minimax(self._board.grid, self._player_number, self._advanced_timeout)
+        result = self._ai.calculate_next_move_iterative_minimax(self._board.grid,
+                                                                self._player_number,
+                                                                self._advanced_timeout)
         print(f"results: {result} at round {self._round}")
         col = result[0]
         row = self._situation.check_available_location(self._board.grid, col)
@@ -147,13 +149,15 @@ class SimulationService:
         depth = min(result[1] + self._round, 42)
         self._update_params(depth)
         self._check_terminal_situation_and_update("advanced AI")
-    
+
     def _calculate_intermediate_move(self):
         """Calculates next move using the intermediate AI and stores the simulation information
         during the process.
         """
 
-        row, col = self._ai.calculate_next_move_minimax(self._board.grid, self._player_number, self._intermediate_depth)
+        row, col = self._ai.calculate_next_move_minimax(self._board.grid,
+                                                        self._player_number,
+                                                        self._intermediate_depth)
         self._board.add_coin(row, col, self._player_number)
         depth = min(self._intermediate_depth + self._round, 42)
         self._update_params(depth)
@@ -169,7 +173,8 @@ class SimulationService:
 
         colors = ["blue", "red"]
         for index in range(2):
-            plt.plot(self._rounds[index], self._depths[index], color=colors[index], label=self._infos[index])
+            plt.plot(self._rounds[index], self._depths[index],
+                    color=colors[index], label=self._infos[index])
         plt.title(f"{title} \n {self._game_result}")
         plt.xlabel("round number")
         plt.ylabel("search distance")

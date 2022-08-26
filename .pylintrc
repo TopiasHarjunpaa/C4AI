@@ -8,7 +8,7 @@
 extension-pkg-whitelist=pygame
 
 # Specify a score threshold to be exceeded before program exits with error.
-fail-under=10.0
+fail-under=9.5
 
 # Add files or directories to the blacklist. They should be base names, not
 # paths.
@@ -261,7 +261,7 @@ indent-after-paren=4
 indent-string='    '
 
 # Maximum number of characters on a single line.
-max-line-length=100
+max-line-length=105
 
 # Maximum number of lines in a module.
 max-module-lines=1000
@@ -488,7 +488,7 @@ valid-metaclass-classmethod-first-arg=cls
 max-args=8
 
 # Maximum number of attributes for a class (see R0902).
-max-attributes=12
+max-attributes=13
 
 # Maximum number of boolean expressions in an if statement (see R0916).
 max-bool-expr=5
