@@ -104,7 +104,7 @@ poetry run invoke simulate-full
 
 Font style:
 * Loaded from the website [dafont](https://www.dafont.com/no-virus.font)
-* Author **Khurasan**
+* Author Khurasan
 
 C4AI logo:
-* Generated from the website [Cooltext](https://cooltext.com/)
+* Generated from the website [cooltext](https://cooltext.com/)
