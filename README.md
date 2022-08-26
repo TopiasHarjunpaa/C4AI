@@ -74,6 +74,32 @@ Style checks can be executed using the command:
 poetry run invoke lint
 ```
 
+#### Simulations:
+
+There are three kinds of simulations available. Each simulation runs three different game scenarios against AI's which results will be plotted after each scenario has finished:
+- Intermediate AI vs advanced AI
+- Advanced AI vs intermediate AI
+- Advanced AI vs advanced AI
+
+
+First simulation sets search depth of intermediate AI to 5 and timeout limit for advanced AI to 0.5 seconds. This simulation takes less than 30 seconds to complete. Simulation can be executed using the command:
+
+```
+poetry run invoke simulate-fast
+```
+
+Second simulation sets search depth of intermediate AI to 7 and timeout limit for advanced AI to 5 seconds. This simulation takes less than 2 minutes to complete. Simulation can be executed using the command:
+
+```
+poetry run invoke simulate-normal
+```
+
+Third simulation sets search depth of intermediate AI to 7 and timeout limit for advanced AI to 30 seconds. This simulation takes less than 20 minutes to complete. Simulation can be executed using the command:
+
+```
+poetry run invoke simulate-full
+```
+
 ## Credits
 
 Font style:
