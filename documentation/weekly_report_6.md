@@ -22,6 +22,8 @@ The results were pretty much as expected. Advanced AI beats the intermediate AI 
 
 On friday I did added up possibility to add arguments for the simulations. I also created docstring and formated simulation code base. On top of that I wrote descriptions about the simulation results to the testing document.
 
+Next week monday I did small updates for the documentation and prepared final release.
+
 ### How has the program progressed?
 
 To be short I think the program is pretty much ready right now. My primary focus for this week was to finish all the missing documentations which I did at the start of the week. There are still minor stuff to add up, but it should be at tops one evening work to finalise everything. As I additional goal to try different optimisation which I did, but did not get much of an improvement. I ended up just slightly tweaking heuristic calculation and increased the timeout limit for the calculation. The increment for the timeout limit gave a nice boost for the search depth (2-3 levels) even though no real optimisation work was made. My original goal was to create a AI which can beat me with 5 second timeout. I haven't been able to beat the latest implementation of the AI anymore, even though I recall I beated it one or two times before latest few optimisations. That being said, I think the original goal is definately reached.
@@ -36,12 +38,10 @@ During this week I had very dark moments when I tried to figure out what optimis
 
 ### What do I do next?
 
-This is the last project week and next week is time to prepare final release. Things I need to do before final release are following:
+This is the last project week and next week is time to prepare final release. Following modifications has been made prior final release:
 
 - Class diagram for the implementation document
-- More in detail description for the system testing in testing document
-- Remove comments and prints from the code base (most likely only at AI services right now)
+- Remove comments and prints from the code base
 - Update total hours
-- Reply for the latest peer review
 - Create final release
 - Link to the final release in README and user instructions
