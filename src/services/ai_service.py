@@ -35,9 +35,7 @@ class AiService:
         self._heuristics = HeuristicService(self._bb_service)
         self.transposition_table = TranspositionTable()
         self._start_time = time.time()
-        self._current_time = time.time()
         self._time_limit = 5
-        self.counter = 0
         self.printer = False
         self.symmetry = True
 
@@ -137,23 +135,20 @@ class AiService:
             tuple: Returns column and row indexes of the next move location
         """
 
-        start_t = time.time()
-        self.counter = 0
         result = self._minimax(grid, player_number, depth, True)
-        self.print_results(depth, result[0], result[1], time.time() - start_t)
 
         return result[1]
 
-    def calculate_next_move_iterative_minimax(self, grid, player_number, timeout=40, max_depth=42):
+    def calculate_next_move_iterative_minimax(self, grid, player_number, timeout=3, max_depth=42):
         """Calculates next possible move using Minimax algorithm
         and iterative deepening. This method is used for the advanced level of AI:
 
         1.  Converts game grid into the bitboard presentation (position Object).
         2.  Sets ranked column order from available columns which do not lead to lose
             in a next round. Considers only left handed columns if game board is still symmetrical.
-        3.  Uses time limit of 6 seconds and initializes the start time. In order to
+        3.  Uses time limit of 30 seconds and initializes the start time. In order to
             improve performance it is not using hard time limit. Allows next iteration
-            if time limit divided by 3 is not exceeded.
+            if time limit divided by 2 is not exceeded.
         4.  Loops Minimax algorithm starting from depth 1 and ends if time has exceeded
             or if maximum depth has exceeded.
         5.  Keeps track of columns and their heuristic values for each iteration separately.
@@ -173,43 +168,24 @@ class AiService:
 
         position = self._bb_service.convert_to_position(grid)
         player_index = player_number - 1
-        #self.printer = True
-        locations = {}
+        locations = {0: (None, None, None)}
         self.symmetry = self._bb_service.is_symmetrical(
             position.get_bitboard())
         column_order = self._bb_service.get_available_non_losing_columns(
             position, player_index, self.symmetry)
         self._time_limit = timeout / 2
         self._start_time = time.time()
-        start_t = time.time()  # To prevent printing bug when draw
-        locations[0] = None, None, None  # When board is full
         depth = 1
         round_number = 43 - self._situation.count_free_slots(grid)
         max_depth = min(43 - round_number, max_depth)
 
-        if self.printer:
-            print("")
-            print(f"Round number: {round_number}")
-
         while not self._check_timeout() and depth <= max_depth:
             self.transposition_table.reset()
-            start_t = time.time()
-            self.counter = 0
             locations[depth] = self._minimax_with_bitboards(
                 position, player_index, depth, True, -math.inf, math.inf, column_order)
             column_order = self.sort_column_order(locations[depth][2])
             depth += 1
         depth -= 1
-
-        print(f"Table length {len(self.transposition_table.get())}")
-        if self.printer:
-            if depth == max_depth:
-                print(f"Max depth {max_depth} reached.")
-            else:
-                print(f"Terminated after depth {depth}.")
-        self.print_results(
-            depth, locations[depth][0], locations[depth][1], time.time() - start_t)
-        print(f"Total time: {time.time() - self._start_time}")
 
         return (locations[depth][1], depth)
 
@@ -265,8 +241,6 @@ class AiService:
             second item contains column index of the next move and third item contains
             list of columns and their heuristic values.
         """
-
-        self.counter += 1
 
         match = self.transposition_table.check_match(position.get_bitboard())
         if match is not None:
@@ -382,7 +356,6 @@ class AiService:
             second item contains location coordinates of the next move (row index, col index)
         """
 
-        self.counter += 1
         terminal_value = self._situation.check_terminal_node(
             grid, player_number)
 
