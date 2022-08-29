@@ -10,7 +10,7 @@ General structure of the software consist from the following packages:
 2. Logic services `services`
 4. Datastructures and object `entities`
 
-Placeholder for picture
+<img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/class_diagram.png" width="1000">
 
 ### UI
 
