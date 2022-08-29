@@ -29,8 +29,7 @@ C4AI name refers to board game [Connect Four](https://en.wikipedia.org/wiki/Conn
 
 Main menu will be shown after game has launched. There are following options:
 1. Start new game by pressing the key `N`
-2. Open game settings by pressing the key `L`
-3. Avata asetusvalikon painamalla näppäimistöllä kirjainta `S`
+2. Open game settings by pressing the key `S`
 4. Exit the game by pressing the key `ESC` or the closing icon at the top-right of the screen.
 
 <img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/C4AI_main_menu.png" width="700">
