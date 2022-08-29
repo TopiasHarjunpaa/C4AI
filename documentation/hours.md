@@ -1,4 +1,5 @@
 # Hours
+### Total: 99 h
 
 #### Week 1
 | Day | Hour | What did I do? |
@@ -65,6 +66,5 @@
 | 24.8 | 1 h    | Variable and method renaming according to the peer review comments |
 | 25.8 | 3 h    | Testing transposition table variations and simulation reworks |
 | 26.8 | 3 h    | Small tweaks for the simulations and updating the documentation |
-| **Total** | **13 h** | |
-
-#### Total hours: 97 h
+| 29.8 | 2 h    | Preparations for the final release |
+| **Total** | **15 h** | |
