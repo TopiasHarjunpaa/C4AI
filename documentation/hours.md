@@ -1,5 +1,4 @@
-# Hours
-### Total: 99 h
+# Total hours: 99 h
 
 #### Week 1
 | Day | Hour | What did I do? |
