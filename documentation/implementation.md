@@ -8,7 +8,8 @@ General structure of the software consist from the following packages:
 
 1. User interface `ui`
 2. Logic services `services`
-4. Datastructures and object `entities`
+3. Datastructures and object `entities`
+4. Simulation service which can be also found from the `services`
 
 <img src="https://github.com/TopiasHarjunpaa/C4AI/blob/main/documentation/pictures/class_diagram.png" width="1000">
 
