@@ -139,7 +139,7 @@ class AiService:
 
         return result[1]
 
-    def calculate_next_move_iterative_minimax(self, grid, player_number, timeout=3, max_depth=42):
+    def calculate_next_move_iterative_minimax(self, grid, player_number, timeout=30, max_depth=42):
         """Calculates next possible move using Minimax algorithm
         and iterative deepening. This method is used for the advanced level of AI:
 
